@@ -11,3 +11,33 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+model Usuario {
+  id        Int     @id @default(autoincrement())
+  nombre    String  @db.VarChar(100)
+  apellido  String  @db.VarChar(100)
+  correo    String  @unique
+  password  String  @db.VarChar(255)
+  rol       String  @db.VarChar(50)
+  verficado Boolean @default(false)
+}
+
+model Producto {
+  id          Int       @id @default(autoincrement())
+  nombre      String 
+  idAroma     Int
+  precio      Float
+  stock       Int
+  idTamanio   Int?
+  mililitros  Float?
+  premium     Boolean   @default(false)
+
+  aroma       Aroma     @relation(fields: [idAroma], references: [id])
+}
+
+model Aroma {
+  id        Int     @id @default(autoincrement())
+  aroma     String  @unique
+
+  productos Producto[]
+}

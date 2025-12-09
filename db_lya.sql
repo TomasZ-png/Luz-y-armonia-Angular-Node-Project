@@ -5,7 +5,7 @@ CREATE TABLE "Usuario" (
     "apellido" VARCHAR(100) NOT NULL,
     "correo" TEXT NOT NULL,
     "password" VARCHAR(255) NOT NULL,
-    "rol" VARCHAR(50) NOT NULL,
+    "rol" VARCHAR(50) NOT NULL DEFAULT 'USER',
     "verficado" BOOLEAN DEFAULT false,
 
     CONSTRAINT "Usuario_pkey" PRIMARY KEY ("id")

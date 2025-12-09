@@ -52,4 +52,8 @@ export class ProductoRepository{
             }
         })
     }
+
+    async getAll(){
+        return await prisma.producto.findMany();
+    }
 }

@@ -1,43 +1,36 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model Usuario {
-  id        Int     @id @default(autoincrement())
-  nombre    String  @db.VarChar(100)
-  apellido  String  @db.VarChar(100)
-  correo    String  @unique
-  password  String  @db.VarChar(255)
-  rol       String  @db.VarChar(50)
-  verficado Boolean @default(false)
+  id        Int      @id @default(autoincrement())
+  nombre    String   @db.VarChar(100)
+  apellido  String   @db.VarChar(100)
+  correo    String   @unique
+  password  String   @db.VarChar(255)
+  rol       String   @db.VarChar(50)
+  verficado Boolean? @default(false)
 }
 
 model Producto {
-  id          Int       @id @default(autoincrement())
-  nombre      String 
-  idAroma     Int
-  precio      Float
-  stock       Int
-  idTamanio   Int?
-  mililitros  Float?
-  premium     Boolean   @default(false)
-
-  aroma       Aroma     @relation(fields: [idAroma], references: [id])
+  id         Int      @id @default(autoincrement())
+  nombre     String
+  idAroma    Int
+  precio     Float
+  stock      Int
+  idTamanio  Int?
+  mililitros Float?
+  premium    Boolean? @default(false)
+  aroma      Aroma    @relation(fields: [idAroma], references: [id], map: "fk_producto_aroma")
 }
 
 model Aroma {
-  id        Int     @id @default(autoincrement())
-  aroma     String  @unique
-
-  productos Producto[]
+  id       Int        @id @default(autoincrement())
+  aroma    String     @unique
+  Producto Producto[]
 }

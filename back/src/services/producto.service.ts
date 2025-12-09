@@ -47,4 +47,15 @@ export class ProductoService {
 
         return product;
     }
+
+    async getAllProducts(){
+        const products = await this.productoRepository.getAll();
+
+        if(!products){
+            throw new Error('No se encontraron ningun producto.');
+        }
+
+        return products;
+    }
+
 }

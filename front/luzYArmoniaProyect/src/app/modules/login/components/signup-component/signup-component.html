@@ -1,1 +1,13 @@
-<p>signup-component works!</p>
+<div>
+  <form [formGroup]="formSignUp" (ngSubmit)="signUp()">
+    <label for="name">Nombre:</label>
+    <input id="name" type="text" formControlName="nombre">
+    <label for="lastName">Apellido:</label>
+    <input id="lastName" type="text" formControlName="apellido">
+    <label for="email">Correo:</label>
+    <input id="email" type="email" formControlName="correo">
+    <label for="contrasenia">Contraseña:</label>
+    <input id="contrasenia" type="password" formControlName="password">
+    <button type="submit">Registrarse</button>
+  </form>
+</div>

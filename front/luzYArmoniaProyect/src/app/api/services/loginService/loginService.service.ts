@@ -19,7 +19,7 @@ export class LoginService{
   private isBrowser = isPlatformBrowser(this.platformId);
 
   registrarse(data: any): Observable<any>{
-    return this.http.post(`${this.url}/signup`, data);
+    return this.http.post(`${this.url}/registrarse`, data);
   }
 
   login(data: {email:string, pass:string}): Observable<any>{

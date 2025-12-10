@@ -1,4 +1,5 @@
 import { UsuarioRepository } from "../repository/usuario.repository";
+import bcrypt from "bcrypt";
 
 export class UsuarioService{
 
@@ -6,12 +7,16 @@ export class UsuarioService{
 
     async signUp(data: any){
         const email = data.correo;
-
+        
         const usuario = await this.usuarioRepository.getUserByEmail(email);
-
+        
         if(usuario !== null){
             throw new Error('El email ingresado ya existe.');
         }
+        
+        const passHashed = await bcrypt.hash(data.password, 10);
+        data.password = passHashed;
+
         return await this.usuarioRepository.createUser(data);
     }
 
@@ -22,7 +27,9 @@ export class UsuarioService{
             throw new Error('No existe registros con el correo ingresado.');
         }
 
-        if(usuario.password !== pass){
+        const passHashed = await bcrypt.compare(pass, usuario.password)
+        
+        if(!passHashed){
             throw new Error("La contraseña no coincide.");            
         }
 

@@ -1,0 +1,27 @@
+.form-container{
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+}
+
+.form-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-container input{
+  padding: 7px;
+  border-radius: 5px;
+}
+
+.group-2{
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+}
+
+.block{
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+}

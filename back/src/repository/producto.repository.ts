@@ -38,7 +38,9 @@ export class ProductoRepository{
 
     async getProductById(id:number){
         return await prisma.producto.findUnique({
-            where: {id}
+            where: {id},
+
+            include: {aroma: true}
         })
     }
 
@@ -49,11 +51,15 @@ export class ProductoRepository{
                     contains: nombre,
                     mode: 'insensitive'
                 }
-            }
+            },
+
+            include: {aroma: true}
         })
     }
 
     async getAll(){
-        return await prisma.producto.findMany();
+        return await prisma.producto.findMany({
+            include: {aroma: true}
+        });
     }
 }

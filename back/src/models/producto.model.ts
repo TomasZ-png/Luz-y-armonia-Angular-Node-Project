@@ -5,7 +5,7 @@ export interface Producto {
     idAroma: number;
     precio: number;
     stock: number;
-    militros?: number;
+    mililitros?: number;
     idTamanio: number;
     premium: boolean;
 

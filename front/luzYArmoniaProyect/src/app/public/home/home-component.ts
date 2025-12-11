@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { LoginService } from '../../api/services/loginService/loginService.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home-component',
@@ -8,6 +10,13 @@ import { Component } from '@angular/core';
 })
 export class HomeComponent {
 
+  private loginService = inject(LoginService);
+  private router = inject(Router);
 
+
+  logout(){
+    localStorage.removeItem('USER');
+    this.router.navigate(['/login']);
+  }
 
 }

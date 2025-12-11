@@ -22,7 +22,7 @@ export class LoginService{
     return this.http.post(`${this.url}/registrarse`, data);
   }
 
-  login(data: {email:string, pass:string}): Observable<any>{
+  login(data: {correo:string, password:string}): Observable<any>{
     return this.http.post(`${this.url}/login`, data)
   }
 

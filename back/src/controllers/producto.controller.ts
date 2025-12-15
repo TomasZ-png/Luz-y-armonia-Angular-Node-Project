@@ -20,7 +20,7 @@ export class ProductoController{
     async getAllProducts(req: Request, res:Response){
         try {
             const products = await productoService.getAllProducts();
-            res.status(200).json({message: `Productos encontrados: ${products.length}`, productos: products}); 
+            res.status(200).json(products); 
         } catch (error) {
             res.status(400).json({error:error});
         }
@@ -35,7 +35,7 @@ export class ProductoController{
             }
 
             const products = await productoService.getProductoByName(nombre)
-            res.status(200).json({ message: `Coincidencias con ${nombre} de ${products.length} productos`, productos: products})
+            res.status(200).json(products)
         } catch (error) {
             res.status(400).json({error:error});
         }
@@ -55,7 +55,7 @@ export class ProductoController{
                 return res.status(404).json({message: `Producto con id ${id} no encontrado`});
             }
 
-            res.status(200).json({ message: `Producto de id ${id} encontrado.`, producto: product}); 
+            res.status(200).json(product); 
         } catch (error:any) {
             res.status(400).json({error: error.message});
         }

@@ -43,4 +43,6 @@ CREATE UNIQUE INDEX "Aroma_aroma_key" ON "Aroma"("aroma");
 ALTER TABLE "Producto" ADD CONSTRAINT "fk_producto_aroma" FOREIGN KEY ("idAroma") REFERENCES "Aroma"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 
-INSERT INTO "Aroma" (id, aroma) VALUES (1, 'Vainilla');
+INSERT INTO "Aroma" (aroma) VALUES ('Vainilla');
+-- 12345678
+INSERT INTO "Usuario" (nombre, apellido, correo, password, rol, verificado) VALUES ('Admin', '-', 'admin@test.com', '$2b$10$fHaFdK2Fe5fVGddRs1FYAuPoM/.4MGErky/oRPCelbFmKWl8s4/0G', 'ADMIN', true);

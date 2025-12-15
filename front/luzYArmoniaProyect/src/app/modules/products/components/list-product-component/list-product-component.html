@@ -1,10 +1,14 @@
 <div class="products-container">
   @for(producto of productos; track producto.id){
     <div class="product">
-      <p class="titles-main">{{producto.nombre}}</p>
-      <p>{{producto.precio}}</p>
-      <p>{{producto.stock}}</p>
-      <p>{{producto.aroma?.aroma}}</p>
+      <div class="img-container">
+        <img src="https://media.istockphoto.com/id/2092837677/es/vector/vela-arom%C3%A1tica-en-un-vaso-con-coraz%C3%B3n-ilustraci%C3%B3n-vectorial-plana-de-dibujos-animados.jpg?s=612x612&w=0&k=20&c=ZzbYUQZFGyBLVZMUD2r7wLUX3X4lQT_pRW2U9wUtE3g=" alt="">
+      </div>
+      <div class="header-product-container">
+        <p class="titles-main">{{producto.nombre}}</p>
+        <p class="product-price">${{producto.precio}}</p>
+      </div>
+      <p class="product-aroma">Aroma: {{producto.aroma?.aroma}}</p>
       @if(producto.premium){
         <span>Premium</span>
       }

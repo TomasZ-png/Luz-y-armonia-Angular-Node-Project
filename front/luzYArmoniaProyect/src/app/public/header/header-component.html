@@ -7,32 +7,43 @@
     </div>
     <div class="function-container">
       <ul class="items-nav">
+        @if (!admin) {
+          <li class="item-nav">
+            <a href="" class="nav-list">
+              <span class="material-symbols-outlined">shopping_cart</span>
+              Mi carrito
+            </a>
+          </li>
+          <li class="item-nav">
+            <a href="" class="nav-list">
+              <span class="material-symbols-outlined">favorite</span>
+              Mis favoritos
+            </a>
+          </li>
+          <li class="item-nav">
+            <a href="" class="nav-list">
+              <span class="material-symbols-outlined">inventory</span>
+              Mis compras
+            </a>
+          </li>
+        } @else {
+          <li class="item-nav">
+            <a href="" class="nav-list">
+              <span class="material-symbols-outlined">add</span>
+              Agregar producto
+            </a>
+          </li>
+        }
         <li class="item-nav">
-          <a href="" class="nav-list">
-            <span class="material-symbols-outlined">shopping_cart</span>
-            Mi carrito
-          </a>
-        </li>
-        <li class="item-nav">
-          <a href="" class="nav-list">
-            <span class="material-symbols-outlined">favorite</span>
-            Mis favoritos
-          </a>
-        </li>
-        <li class="item-nav">
-          <a href="" class="nav-list">
-            <span class="material-symbols-outlined">inventory</span>
-            Mis compras
-          </a>
-        </li>
-        <li class="item-nav">
-          <a href="" class="nav-list">
-            <span class="material-symbols-outlined">account_circle</span>
-            {{usuario}}
-          </a>
-        </li>
-
-      </ul>
-    </div>
+            <a href="" class="nav-list">
+              <span class="material-symbols-outlined">account_circle</span>
+              {{usuario}}
+              <span class="material-symbols-outlined">
+                keyboard_arrow_down
+              </span>
+            </a>
+          </li>
+        </ul>
+      </div>
   </div>
   </nav>

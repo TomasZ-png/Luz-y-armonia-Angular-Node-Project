@@ -1,0 +1,35 @@
+nav{
+  background-color: pink;
+  width: 100%;
+}
+
+.nav-container{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.brand-container a {
+  text-decoration: none;
+  color: black;
+}
+
+.items-nav{
+  display: flex;
+  gap: 15px;
+}
+
+.items-nav li{
+  list-style: none;
+}
+
+.items-nav li a{
+  text-decoration: none;
+  color: black;
+}
+
+.item-nav a{
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}

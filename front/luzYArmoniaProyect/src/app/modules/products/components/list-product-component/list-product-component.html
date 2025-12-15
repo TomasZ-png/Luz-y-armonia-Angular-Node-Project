@@ -1,9 +1,14 @@
-@for(producto of productos; track producto.id){
-  <p>{{producto.nombre}}</p>
-  <p>{{producto.precio}}</p>
-  <p>{{producto.stock}}</p>
-  <p>{{producto.aroma?.aroma}}</p>
-  <p>{{producto.premium}}</p>
-}
+<div class="products-container">
+  @for(producto of productos; track producto.id){
+    <div class="product">
+      <p class="titles-main">{{producto.nombre}}</p>
+      <p>{{producto.precio}}</p>
+      <p>{{producto.stock}}</p>
+      <p>{{producto.aroma?.aroma}}</p>
+      @if(producto.premium){
+        <span>Premium</span>
+      }
+    </div>
+    }
+</div>
 
-<h1>Holaa</h1>

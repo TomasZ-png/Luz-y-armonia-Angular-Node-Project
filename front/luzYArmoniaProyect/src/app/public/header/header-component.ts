@@ -15,11 +15,13 @@ export class HeaderComponent implements OnInit{
 
   private loginService = inject(LoginService);
   usuario = null;
+  admin = false;
 
   private router = inject(Router);
 
   ngOnInit(): void {
     this.usuario = this.getUserSession();
+    this.isAdmin();
   }
 
   goToHome(){
@@ -30,5 +32,16 @@ export class HeaderComponent implements OnInit{
     const user = this.loginService.getUsuarioEnSession();
     console.log(user);
     return user.nombre;
+  }
+
+  isAdmin(){
+    const user = localStorage.getItem('USER');
+
+    if(user){
+      const userData = JSON.parse(user);
+      if(userData.rol === 'ADMIN'){
+        this.admin = true;
+      }
+    }
   }
 }

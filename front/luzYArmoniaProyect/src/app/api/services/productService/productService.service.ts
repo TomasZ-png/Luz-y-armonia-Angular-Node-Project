@@ -18,4 +18,19 @@ export class ProductService{
     return this.http.get(`${this.url}`);
   }
 
+  createProduct(data:any): Observable<any>{
+    return this.http.post(`${this.url}/agregar`, data);
+  }
+
+  updateProduct(id:number, data:any): Observable<any>{
+    return this.http.put(`${this.url}/modificar/${id}`, data);
+  }
+
+  deleteProduct(id:number): Observable<any>{
+    return this.http.delete(`${this.url}/eliminar/${id}`);
+  }
+
+  getProduct(id:number): Observable<any>{
+    return this.http.get(`${this.url}/${id}`);
+  }
 }

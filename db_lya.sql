@@ -3,7 +3,7 @@ CREATE TABLE "Usuario" (
     "id" SERIAL NOT NULL,
     "nombre" VARCHAR(100) NOT NULL,
     "apellido" VARCHAR(100) NOT NULL,
-    "correo" TEXT NOT NULL,
+    "correo" VARCHAR(255) NOT NULL,
     "password" VARCHAR(255) NOT NULL,
     "rol" VARCHAR(50) NOT NULL DEFAULT 'USER',
     "verificado" BOOLEAN DEFAULT false,
@@ -11,27 +11,41 @@ CREATE TABLE "Usuario" (
     CONSTRAINT "Usuario_pkey" PRIMARY KEY ("id")
 );
 
--- CreateTable
-CREATE TABLE "Producto" (
-    "id" SERIAL NOT NULL,
-    "nombre" TEXT NOT NULL,
-    "idAroma" INTEGER NOT NULL,
-    "precio" DOUBLE PRECISION NOT NULL,
-    "stock" INTEGER NOT NULL,
-    "idTamanio" INTEGER,
-    "mililitros" DOUBLE PRECISION,
-    "premium" BOOLEAN DEFAULT false,
 
-    CONSTRAINT "Producto_pkey" PRIMARY KEY ("id")
+CREATE TABLE "Tipo_de_productos" (
+    "id" SERIAL PRIMARY KEY,
+    "tipo" VARCHAR(100) NOT NULL
 );
 
--- CreateTable
+INSERT INTO "Tipo_de_productos" (tipo) VALUES ('VELA'), ('DIFUSOR'), ('BODY SPLASH');
+
 CREATE TABLE "Aroma" (
     "id" SERIAL NOT NULL,
     "aroma" TEXT NOT NULL,
 
     CONSTRAINT "Aroma_pkey" PRIMARY KEY ("id")
 );
+
+-- CreateTable
+CREATE TABLE "Producto" (
+    "id" SERIAL NOT NULL,
+    "nombre" TEXT NOT NULL,
+    "descripcion" TEXT NOT NULL,
+    "idAroma" INTEGER NOT NULL,
+    "precio" DOUBLE PRECISION NOT NULL,
+    "stock" INTEGER NOT NULL,
+    "alto" DOUBLE PRECISION,
+    "ancho" DOUBLE PRECISION,
+    "mililitros" DOUBLE PRECISION,
+    "premium" BOOLEAN DEFAULT false,
+    "idTipoProducto" INTEGER NOT NULL,
+    CONSTRAINT "Producto_pkey" PRIMARY KEY ("id"),
+    CONSTRAINT fk_tipo_producto
+    FOREIGN KEY ("idTipoProducto") REFERENCES "Tipo_de_productos"("id")
+);
+
+-- CreateTable
+
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Usuario_correo_key" ON "Usuario"("correo");

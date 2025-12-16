@@ -2,12 +2,12 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { LoginService } from '../../api/services/loginService/loginService.service';
 import { Usuario } from '../../modules/products/interface/usuario.interface';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 
 @Component({
   selector: 'app-header-component',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './header-component.html',
   styleUrl: './header-component.css',
 })
@@ -44,4 +44,9 @@ export class HeaderComponent implements OnInit{
       }
     }
   }
+
+  redirectToAgregar(){
+    this.router.navigate(['producto/agregar'])
+  }
+
 }

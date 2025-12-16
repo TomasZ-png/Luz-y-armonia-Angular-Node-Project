@@ -17,6 +17,10 @@ export const routes: Routes = [
     pathMatch: 'full'
   },
   {
+    path: 'producto',
+    loadChildren: () => import('./modules/products/components/product.routes').then(p=>p.productRoutes)
+  },
+  {
     path: 'home',
     canActivate: [AuthGuard],
     component: HomeComponent

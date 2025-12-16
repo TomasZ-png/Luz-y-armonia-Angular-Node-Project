@@ -8,29 +8,39 @@ datasource db {
 }
 
 model Usuario {
-  id        Int      @id @default(autoincrement())
-  nombre    String   @db.VarChar(100)
-  apellido  String   @db.VarChar(100)
-  correo    String   @unique
-  password  String   @db.VarChar(255)
-  rol       String?   @db.VarChar(50) @default("USER")
+  id         Int      @id @default(autoincrement())
+  nombre     String   @db.VarChar(100)
+  apellido   String   @db.VarChar(100)
+  correo     String   @unique @db.VarChar(255)
+  password   String   @db.VarChar(255)
+  rol        String   @default("USER") @db.VarChar(50)
   verificado Boolean? @default(false)
 }
 
 model Producto {
-  id         Int      @id @default(autoincrement())
-  nombre     String
-  idAroma    Int
-  precio     Float
-  stock      Int
-  idTamanio  Int?
-  mililitros Float?
-  premium    Boolean? @default(false)
-  aroma      Aroma    @relation(fields: [idAroma], references: [id], map: "fk_producto_aroma")
+  id                Int               @id @default(autoincrement())
+  nombre            String
+  descripcion       String
+  idAroma           Int
+  precio            Float
+  stock             Int
+  alto              Float?
+  ancho             Float?
+  mililitros        Float?
+  premium           Boolean?          @default(false)
+  idTipoProducto    Int
+  aroma             Aroma             @relation(fields: [idAroma], references: [id], map: "fk_producto_aroma")
+  Tipo_de_productos Tipo_de_productos @relation(fields: [idTipoProducto], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_tipo_producto")
 }
 
 model Aroma {
   id       Int        @id @default(autoincrement())
   aroma    String     @unique
+  Producto Producto[]
+}
+
+model Tipo_de_productos {
+  id       Int        @id @default(autoincrement())
+  tipo     String     @db.VarChar(100)
   Producto Producto[]
 }

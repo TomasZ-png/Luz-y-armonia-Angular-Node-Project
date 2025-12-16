@@ -12,13 +12,20 @@ import { FormProductsComponent } from "../form-products-component/form-products-
 export class AgregarProductoComponent {
 
   private productoService = inject(ProductService);
+  exito: boolean = false;
 
   crearProducto(producto: Producto){
   console.log('ENVÍO AL BACK:', producto);
 
   this.productoService.createProduct(producto).subscribe({
-    next: () => console.log('OK'),
-    error: err => console.error('ERROR BACK', err)
+    next: () => {
+      console.log('OK');
+      this.exito = true;
+    },
+    error: err => {
+      console.error('ERROR BACK', err);
+      this.exito = false;
+    }
   });  }
 
 }

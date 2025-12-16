@@ -14,7 +14,11 @@ export class AgregarProductoComponent {
   private productoService = inject(ProductService);
 
   crearProducto(producto: Producto){
-    this.productoService.createProduct(producto).subscribe();
-  }
+  console.log('ENVÍO AL BACK:', producto);
+
+  this.productoService.createProduct(producto).subscribe({
+    next: () => console.log('OK'),
+    error: err => console.error('ERROR BACK', err)
+  });  }
 
 }

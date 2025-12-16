@@ -87,12 +87,14 @@ export class FormProductsComponent implements OnInit{
       return;
     }
 
-    const productForm: Producto = {
-      ...this.producto,
-      ...this.formProduct.value
+    const formValue = this.formProduct.value;
+
+    const product: Producto = {
+      ...formValue,
+      idTipoProducto: Number(formValue.idTipoProducto)
     } as Producto;
 
-    this.submitForm.emit(productForm);
+    this.submitForm.emit(product);
   }
 
   activarTamanio(){

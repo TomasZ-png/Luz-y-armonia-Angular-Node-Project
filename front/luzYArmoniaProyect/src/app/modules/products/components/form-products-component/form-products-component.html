@@ -1,0 +1,52 @@
+<h2>
+  {{modo === 'crear' ? 'Agregar Producto': 'Editar Producto'}}
+</h2>
+
+<form [formGroup]="formProduct" (ngSubmit)="sendProduct()">
+
+  <label for="tipo-producto">Tipo de producto:</label>
+  <select id="tipo-producto" formControlName="idTipoProducto">
+    <option value="" disabled>-- Seleccione un producto --</option>
+    @for(tipo of tiposDeProductos; track tipo.id){
+      <option [value]="tipo.id">{{tipo.tipo}}</option>
+    }
+  </select>
+
+  <label for="name">Nombre:</label>
+  <input type="text" id="name" formControlName="nombre" placeholder="Nombre del producto">
+
+  <label for="des">Descripcion:</label>
+  <input type="text" id="des" formControlName="descripcion" placeholder="Descripcion del producto">
+
+  <label for="arom">Aroma:</label>
+  <select formControlName="idAroma" id="arom">
+    <option value="" disabled>-- Seleccione un aroma --</option>
+    @for(aroma of aromas; track aroma.id){
+      <option [ngValue]="aroma.id">{{aroma.aroma}}</option>
+    }
+  </select>
+
+  <label for="price">Precio:</label>
+  <input type="number" formControlName="precio" id="price" placeholder="Precio del producto por unidad">
+
+  <label for="stck">Stock:</label>
+  <input type="number" formControlName="stock" id="stck" placeholder="Stock del producto">
+
+  @if(mostrarTamanio){
+    <label for="size-h">Alto:</label>
+    <input type="number" formControlName="alto" id="size-h" placeholder="Alto del producto en cm">
+
+    <label for="size-w">Ancho:</label>
+    <input type="number" formControlName="ancho" id="size-w" placeholder="Ancho del producto en cm">
+  } @else {
+    <label for="size-m">Mililitros:</label>
+    <input type="number" formControlName="mililitros" id="size-m" placeholder="Cantidad de mililitros del producto">
+  }
+
+  <label for="isPrem">Premium</label>
+  <input type="checkbox" formControlName="premium" id="isPrem">
+
+  <button type="submit">
+    {{modo === 'crear' ? 'Agregar' : 'Actualizar'}}
+  </button>
+</form>

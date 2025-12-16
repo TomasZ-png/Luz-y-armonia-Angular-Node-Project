@@ -1,6 +1,8 @@
 import { Router } from "express";
 import productoRouter from './productoRouter/producto.routes';
 import usuarioRouter from "./usuarioRouter/usuario.routes";
+import aromaRouter from "./aromaRouter/aroma.routes";
+import tipoProductoRouter from "./tipoProductosRouter/tipoProductos.routes";
 
 export class AppRoutes{
 
@@ -9,6 +11,8 @@ export class AppRoutes{
 
         router.use('/api/producto', productoRouter)
         router.use('/api/usuario', usuarioRouter)
+        router.use('/api/aroma', aromaRouter)
+        router.use('/api/tipoProducto', tipoProductoRouter)
 
         return router;
     }

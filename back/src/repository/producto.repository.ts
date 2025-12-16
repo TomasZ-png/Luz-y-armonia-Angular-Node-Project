@@ -3,22 +3,6 @@ import { prisma } from "../prisma";
 
 export class ProductoRepository{
 
-    // async createNewProduct(data: any){
-    //     return await prisma.producto.create({
-    //         data: {
-    //             nombre: data.nombre,
-    //             precio: data.precio,
-    //             stock: data.stock,
-    //             idTamanio: data.idTamanio,
-    //             mililitros: data.mililitros,
-    //             premium: data.premium,
-    //             aroma: {
-    //                 connect: {id: data.idAroma}
-    //             }
-    //         }
-    //     })
-    // }
-
     async createNewProduct(data: Prisma.ProductoCreateInput){
         return await prisma.producto.create({data})
     }
@@ -40,7 +24,10 @@ export class ProductoRepository{
         return await prisma.producto.findUnique({
             where: {id},
 
-            include: {aroma: true}
+            include: {
+                aroma: true,
+                Tipo_de_productos: true
+            }
         })
     }
 

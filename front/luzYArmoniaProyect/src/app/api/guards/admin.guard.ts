@@ -1,20 +1,17 @@
 import { inject } from "@angular/core";
-import { CanActivate, Router } from "@angular/router";
+import { CanActivate, CanActivateFn, Router } from "@angular/router";
+import { LoginService } from "../services/loginService/loginService.service";
 
-export class AdminGuard implements CanActivate{
+export const AdminGuard: CanActivateFn = () =>{
 
-  private router = inject(Router);
+  const router = inject(Router);
+  const loginService = inject(LoginService);
 
-  canActivate():boolean{
-    const user = localStorage.getItem('USER');
+    const user = loginService.getUsuarioEnSession();
 
-    if(user){
-      const userData = JSON.parse(user);
-      if(userData.rol === 'ADMIN'){
-        return true;
-      }
+    if(user && user.rol === 'ADMIN'){
+      return true;
     }
-    this.router.navigate(['/home']);
-    return false;
+    return router.parseUrl('/home');
   }
-}
+

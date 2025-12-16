@@ -2,51 +2,112 @@
   {{modo === 'crear' ? 'Agregar Producto': 'Editar Producto'}}
 </h2>
 
-<form [formGroup]="formProduct" (ngSubmit)="sendProduct()">
+<form class="form-product" [formGroup]="formProduct" (ngSubmit)="sendProduct()">
+<div class="inputs-container">
 
-  <label for="tipo-producto">Tipo de producto:</label>
+  <label for="tipo-producto">Tipo de producto:
+    @if(isInvalid('idTipoProducto')){
+    <span class="error">*El tipo de producto es obligatorio</span>
+  }
+  </label>
   <select id="tipo-producto" formControlName="idTipoProducto">
-    <option value="" disabled>-- Seleccione un producto --</option>
+    <option [ngValue]="null" disabled >-- Seleccione un producto --</option>
     @for(tipo of tiposDeProductos; track tipo.id){
       <option [value]="tipo.id">{{tipo.tipo}}</option>
     }
   </select>
 
-  <label for="name">Nombre:</label>
-  <input type="text" id="name" formControlName="nombre" placeholder="Nombre del producto">
 
-  <label for="des">Descripcion:</label>
+
+  <div class="two-inputs">
+    <div class="labels-column">
+      <label for="name">Nombre:
+        @if(isInvalid('nombre')){
+            <span class="error">*El nombre es obligatorio</span>
+        }
+      </label>
+      <input type="text" id="name" formControlName="nombre" placeholder="Nombre del producto">
+    </div>
+
+    <div class="labels-column">
+      <label for="arom">Aroma:
+        @if(isInvalid('idAroma')){
+          <span class="error">*El aroma es obligatorio</span>
+        }
+      </label>
+      <select formControlName="idAroma" id="arom">
+        <option [ngValue]="null" disabled>-- Seleccione un aroma --</option>
+        @for(aroma of aromas; track aroma.id){
+          <option [ngValue]="aroma.id">{{aroma.aroma}}</option>
+        }
+      </select>
+    </div>
+  </div>
+
+
+  <label for="des">Descripción:
+    @if(isInvalid('descripcion')){
+      <span class="error">*La descripcion es obligatoria</span>
+    }
+  </label>
   <input type="text" id="des" formControlName="descripcion" placeholder="Descripcion del producto">
 
-  <label for="arom">Aroma:</label>
-  <select formControlName="idAroma" id="arom">
-    <option value="" disabled>-- Seleccione un aroma --</option>
-    @for(aroma of aromas; track aroma.id){
-      <option [ngValue]="aroma.id">{{aroma.aroma}}</option>
-    }
-  </select>
+  <div class="two-inputs">
+    <div class="labels-column">
+      <label for="price">Precio:
+        @if(isInvalid('precio')){
+            <span class="error">*El precio es obligatorio</span>
+        }
+      </label>
+      <input type="number" formControlName="precio" id="price" placeholder="Precio del producto por unidad">
+    </div>
 
-  <label for="price">Precio:</label>
-  <input type="number" formControlName="precio" id="price" placeholder="Precio del producto por unidad">
-
-  <label for="stck">Stock:</label>
-  <input type="number" formControlName="stock" id="stck" placeholder="Stock del producto">
+    <div class="labels-column">
+      <label for="stck">Stock:
+        @if(isInvalid('stock')){
+            <span class="error">*El stock es obligatorio</span>
+        }
+      </label>
+      <input type="number" formControlName="stock" id="stck" placeholder="Stock del producto">
+    </div>
+  </div>
 
   @if(mostrarTamanio){
-    <label for="size-h">Alto:</label>
-    <input type="number" formControlName="alto" id="size-h" placeholder="Alto del producto en cm">
+    <div class="two-inputs">
+      <div class="labels-column">
+        <label for="size-h">Alto:
+          @if(isInvalid('alto')){
+            <span class="error">*La altura es obligatoria</span>
+          }
+        </label>
+        <input type="number" formControlName="alto" id="size-h" placeholder="Alto del producto en cm">
+      </div>
 
-    <label for="size-w">Ancho:</label>
-    <input type="number" formControlName="ancho" id="size-w" placeholder="Ancho del producto en cm">
+      <div class="labels-column">
+        <label for="size-w">Ancho:
+          @if(isInvalid('ancho')){
+            <span class="error">*El ancho es obligatorio</span>
+          }
+        </label>
+        <input type="number" formControlName="ancho" id="size-w" placeholder="Ancho del producto en cm">
+      </div>
+    </div>
   } @else {
-    <label for="size-m">Mililitros:</label>
+    <label for="size-m">Mililitros:
+      @if(isInvalid('mililitros')){
+        <span class="error">*Los mililitros son obligatorios</span>
+      }
+    </label>
     <input type="number" formControlName="mililitros" id="size-m" placeholder="Cantidad de mililitros del producto">
   }
 
-  <label for="isPrem">Premium</label>
-  <input type="checkbox" formControlName="premium" id="isPrem">
+  <div>
+    <label for="isPrem">Premium</label>
+    <input type="checkbox" formControlName="premium" id="isPrem">
+  </div>
 
   <button type="submit">
     {{modo === 'crear' ? 'Agregar' : 'Actualizar'}}
   </button>
+</div>
 </form>

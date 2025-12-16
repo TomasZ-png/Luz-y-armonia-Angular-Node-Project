@@ -26,12 +26,12 @@ export class FormProductsComponent implements OnInit{
   mostrarTamanio:boolean = false;
 
   formProduct = this.fb.group({
-    idTipoProducto: [0, [Validators.required]],
+    idTipoProducto: [null as Number | null, [Validators.required]],
     nombre: ['', [Validators.required]],
     descripcion: ['', [Validators.required]],
-    idAroma: [0, [Validators.required]],
-    precio: [0, [Validators.required]],
-    stock: [0, [Validators.required]],
+    idAroma: [null as Number | null, [Validators.required]],
+    precio: [null as Number | null, [Validators.required]],
+    stock: [null as Number | null, [Validators.required]],
     alto: [null as Number | null],
     ancho: [null as Number | null],
     mililitros: [null as Number | null],
@@ -87,12 +87,20 @@ export class FormProductsComponent implements OnInit{
       return;
     }
 
-    const productForm: Producto = {
-      ...this.producto,
-      ...this.formProduct.value
+    const formValue = this.formProduct.value;
+
+    const product: Producto = {
+      ...formValue,
+      idTipoProducto: Number(formValue.idTipoProducto)
     } as Producto;
 
-    this.submitForm.emit(productForm);
+    this.submitForm.emit(product);
+
+    this.formProduct.reset({
+      premium:false
+    })
+
+    this.mostrarTamanio = false;
   }
 
   activarTamanio(){
@@ -120,6 +128,11 @@ export class FormProductsComponent implements OnInit{
     this.formProduct.get('alto')?.updateValueAndValidity();
     this.formProduct.get('ancho')?.updateValueAndValidity();
     this.formProduct.get('mililitros')?.updateValueAndValidity();
+  }
+
+  isInvalid(controlFormName:string){
+    const control = this.formProduct.get(controlFormName);
+    return !!(control && control?.touched && control.invalid);
   }
 
 }

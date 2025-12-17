@@ -19,7 +19,7 @@ export class ProductService{
     return this.http.get(`${this.url}`);
   }
 
-  createProduct(data:any): Observable<Producto>{
+  createProduct(data:FormData): Observable<Producto>{
     return this.http.post<Producto>(`${this.url}/agregar`, data);
   }
 

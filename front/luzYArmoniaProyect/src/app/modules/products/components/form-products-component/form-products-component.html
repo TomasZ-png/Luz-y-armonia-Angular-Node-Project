@@ -17,8 +17,6 @@
     }
   </select>
 
-
-
   <div class="two-inputs">
     <div class="labels-column">
       <label for="name">Nombre:
@@ -109,5 +107,9 @@
   <button type="submit">
     {{modo === 'crear' ? 'Agregar' : 'Actualizar'}}
   </button>
+</div>
+<div class="image-container">
+  <label for="img">Imagenes:</label>
+  <input type="file" id="img" multiple accept="image/*" (change)="onImagesSelected($event)">
 </div>
 </form>

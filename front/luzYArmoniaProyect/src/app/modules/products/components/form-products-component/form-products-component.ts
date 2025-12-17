@@ -16,7 +16,7 @@ export class FormProductsComponent implements OnInit{
   @Input() producto!: Producto;
   @Input() modo: 'crear' | 'editar' = 'crear';
 
-  @Output() submitForm = new EventEmitter<Producto>();
+  @Output() submitForm = new EventEmitter<FormData>();
 
   aromas: Aroma[] = [];
   tiposDeProductos: TipoProducto[] = [];
@@ -24,6 +24,7 @@ export class FormProductsComponent implements OnInit{
   private tipoProductoService = inject(TipoProductoService)
   private fb = inject(FormBuilder);
   mostrarTamanio:boolean = false;
+  imagenesSeleccionadas: File[] = [];
 
   formProduct = this.fb.group({
     idTipoProducto: [null as Number | null, [Validators.required]],
@@ -87,14 +88,25 @@ export class FormProductsComponent implements OnInit{
       return;
     }
 
+    const formData = new FormData();
     const formValue = this.formProduct.value;
 
-    const product: Producto = {
-      ...formValue,
-      idTipoProducto: Number(formValue.idTipoProducto)
-    } as Producto;
+    Object.entries(formValue).forEach(([key, value]) => {
+      if(value !== null && value !== undefined){
+        formData.append(key, value.toString());
+      }
+    });
 
-    this.submitForm.emit(product);
+    this.imagenesSeleccionadas.forEach(img => {
+      formData.append('imagenes', img);
+    })
+
+    // const product: Producto = {
+    //   ...formValue,
+    //   idTipoProducto: Number(formValue.idTipoProducto)
+    // } as Producto;
+
+    this.submitForm.emit(formData as any);
 
     this.formProduct.reset({
       premium:false
@@ -133,6 +145,14 @@ export class FormProductsComponent implements OnInit{
   isInvalid(controlFormName:string){
     const control = this.formProduct.get(controlFormName);
     return !!(control && control?.touched && control.invalid);
+  }
+
+  onImagesSelected(event: Event){
+    const input = event.target as HTMLInputElement;
+
+    if(!input.files) return;
+
+    this.imagenesSeleccionadas = Array.from(input.files);
   }
 
 }

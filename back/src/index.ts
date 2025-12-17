@@ -6,14 +6,10 @@ import cors from 'cors';
 const app = express();
 const PORT = 3000;
 
+app.use('/uploads', express.static('uploads'))
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cors());
-
-// // Healthcheck
-// app.get('/ping', (_req: Request, res: Response) => {
-//     res.status(200).send('pong');
-// });
 
 app.use(AppRoutes.routes);
 

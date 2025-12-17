@@ -26,6 +26,8 @@ CREATE TABLE "Aroma" (
     CONSTRAINT "Aroma_pkey" PRIMARY KEY ("id")
 );
 
+
+
 -- CreateTable
 CREATE TABLE "Producto" (
     "id" SERIAL NOT NULL,
@@ -44,7 +46,15 @@ CREATE TABLE "Producto" (
     FOREIGN KEY ("idTipoProducto") REFERENCES "Tipo_de_productos"("id")
 );
 
--- CreateTable
+CREATE TABLE "ImagenProducto"(
+    "id" SERIAL PRIMARY KEY,
+    "url" VARCHAR(255) NOT NULL,
+    "idProducto" INTEGER NOT NULL,
+    CONSTRAINT "fk_producto"
+        FOREIGN KEY ("idProducto")
+        REFERENCES "Producto"("id")
+        ON DELETE CASCADE
+);
 
 
 -- CreateIndex

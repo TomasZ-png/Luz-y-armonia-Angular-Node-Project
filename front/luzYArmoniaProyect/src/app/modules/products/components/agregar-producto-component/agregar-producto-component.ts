@@ -18,23 +18,24 @@ export class AgregarProductoComponent {
   private messageService = inject(MessageService);
   exito: boolean = false;
 
-  crearProducto(producto: Producto){
-  console.log('ENVÍO AL BACK:', producto);
+  crearProducto(formData: FormData){
+    console.log('ENVÍO AL BACK:', formData);
 
-  this.productoService.createProduct(producto).subscribe({
-    next: () => {
-      console.log('OK');
-      this.exito = true;
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Exito',
-        detail: 'Producto creado exitosamente'
-      })
-    },
-    error: err => {
-      console.error('ERROR BACK', err);
-      this.exito = false;
-    }
-  });  }
+    this.productoService.createProduct(formData).subscribe({
+      next: () => {
+        console.log('OK');
+        this.exito = true;
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Exito',
+          detail: 'Producto creado exitosamente'
+        })
+      },
+      error: err => {
+        console.error('ERROR BACK', err);
+        this.exito = false;
+      }
+    });
+  }
 
 }

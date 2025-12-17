@@ -1,10 +1,15 @@
 .form-product{
-  width: 40%;
-}
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
+  gap: 200px;
+  }
 
 .inputs-container{
   display: flex;
   flex-direction: column;
+  width: 500px;
 }
 
 .two-inputs{
@@ -17,9 +22,22 @@
   flex-direction: column;
 }
 
-/* .labels-column input, .labels-column select{
-  padding: 0 40px 0 40px;
-} */
+.image-container{
+  border: solid 1px black;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.img-array{
+  display: flex;
+  gap: 10px;
+}
+
+.img-array img{
+  width: 350px;
+}
 
 input, select{
   margin-bottom: 20px;

@@ -3,12 +3,15 @@ import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from "./public/header/header-component";
 import { LoginService } from './api/services/loginService/loginService.service';
 import { AdminGuard } from './api/guards/admin.guard';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderComponent],
+  imports: [RouterOutlet, HeaderComponent, ToastModule],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrls: ['./app.css'],
+  providers: [MessageService]
 })
 export class App {
   protected readonly title = signal('luzYArmoniaProyect');

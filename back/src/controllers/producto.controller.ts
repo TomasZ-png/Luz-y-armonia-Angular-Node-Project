@@ -10,10 +10,42 @@ export class ProductoController{
 
     async createProduct(req: Request, res: Response){
         try {
-            const product = await productoService.createProduct(req.body);
+            const files = req.files as Express.Multer.File[] | undefined;
+
+            const imagenes = files?.map(file => ({
+                url: `/uploads/productos/${file.filename}`
+            }));
+
+            const {
+                nombre, descripcion, precio, stock,
+                alto, ancho, mililitros,
+                premium, idAroma, idTipoProducto
+            } = req.body;
+
+            const productData = {
+                nombre, descripcion,
+                precio: Number(precio),
+                stock: Number(stock),
+                alto: alto ? Number(alto) : null,
+                ancho: ancho ? Number(ancho) : null,
+                mililitros: mililitros ? Number(mililitros) : null,
+                premium: premium === 'true',
+                idAroma: Number(idAroma),
+                idTipoProducto: Number(idTipoProducto),
+                ImagenProducto: {
+                    create: imagenes
+                }
+            }
+
+            const product = await productoService.createProduct(productData);
             res.status(201).json({ message: 'Producto creado correctamente', producto: product});
-        } catch (error) {
-            res.status(400).json({error: error})
+        } catch (error:any) {
+            console.error('PRISMA ERROR 👉', error.message);
+            console.error('PRISMA META 👉', error.meta);
+            res.status(400).json({
+                message: error.message,
+                meta: error.meta
+            });
         }
     }
 

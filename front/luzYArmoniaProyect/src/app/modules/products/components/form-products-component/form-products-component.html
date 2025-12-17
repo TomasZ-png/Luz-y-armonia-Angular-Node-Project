@@ -111,5 +111,13 @@
 <div class="image-container">
   <label for="img">Imagenes:</label>
   <input type="file" id="img" multiple accept="image/*" (change)="onImagesSelected($event)">
+
+  <div class="img-array">
+    @if(imagenesSeleccionadas.length > 0){
+      @for(img of imagenesParaMostrar; track $index; let i = $index ){
+        <img [src]="img" alt="imagen {{i}}">
+      }
+    }
+  </div>
 </div>
 </form>

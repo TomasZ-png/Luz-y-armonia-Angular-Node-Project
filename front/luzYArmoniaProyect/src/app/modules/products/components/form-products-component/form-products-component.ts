@@ -25,6 +25,7 @@ export class FormProductsComponent implements OnInit{
   private fb = inject(FormBuilder);
   mostrarTamanio:boolean = false;
   imagenesSeleccionadas: File[] = [];
+  imagenesParaMostrar: string[] = [];
 
   formProduct = this.fb.group({
     idTipoProducto: [null as Number | null, [Validators.required]],
@@ -153,6 +154,8 @@ export class FormProductsComponent implements OnInit{
     if(!input.files) return;
 
     this.imagenesSeleccionadas = Array.from(input.files);
+
+    this.imagenesParaMostrar = this.imagenesSeleccionadas.map(file=>URL.createObjectURL(file));
   }
 
 }

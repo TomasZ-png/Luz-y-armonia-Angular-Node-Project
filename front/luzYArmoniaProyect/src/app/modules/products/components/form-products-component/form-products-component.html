@@ -128,7 +128,7 @@
       @for(img of imagenesParaMostrar; track $index; let i = $index ){
         <div class="img-container">
           <p-button icon="pi pi-times" [rounded]="true" severity="secondary" (onClick)="eliminarImagen(i)"/>
-          <img [src]="img" alt="imagen {{i}}">
+          <img [src]="img.url" alt="imagen {{i}}" >
         </div>
       }
     }

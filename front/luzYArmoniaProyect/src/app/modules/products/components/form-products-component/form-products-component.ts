@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, inject } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
-import { Producto } from '../../interface/product.interface';
+import { ImagenProducto, Producto } from '../../interface/product.interface';
 import { Aroma } from '../../interface/aroma.interface';
 import { AromaService } from '../../../../api/services/aromaService/aroma.service';
 import { TipoProducto } from '../../interface/tipoProducto.interface';
@@ -27,8 +27,10 @@ export class FormProductsComponent implements OnInit, OnChanges{
   private tipoProductoService = inject(TipoProductoService)
   private fb = inject(FormBuilder);
   mostrarTamanio:boolean = false;
+  imagenesExistentes: ImagenProducto[] = [];
   imagenesSeleccionadas: File[] = [];
-  imagenesParaMostrar: string[] = [];
+  imagenesParaMostrar: {url:string; esNueva:boolean; id?:number, file?:File}[] = [];
+  imagenesEliminadas: number[] = [];
   private backImageUrl = `${environment.img_url}`;
 
   formProduct = this.fb.group({
@@ -87,8 +89,14 @@ export class FormProductsComponent implements OnInit, OnChanges{
           })
 
           if(this.producto.ImagenProducto){
+            this.imagenesExistentes = this.producto.ImagenProducto;
+
             this.imagenesParaMostrar = this.producto.ImagenProducto.map(
-              img => `${this.backImageUrl}${img.url}`
+              img => ({
+                id: img.id,
+                url: `${this.backImageUrl}${img.url}`,
+                esNueva: false
+              })
             );
           }
         }
@@ -117,8 +125,6 @@ export class FormProductsComponent implements OnInit, OnChanges{
       console.log(e);
     }
 
-    this.submitForm.emit(formData as any);
-
     if(this.modo === 'crear'){
       this.formProduct.reset({
         premium:false
@@ -126,6 +132,12 @@ export class FormProductsComponent implements OnInit, OnChanges{
     }
 
     this.mostrarTamanio = false;
+
+    this.imagenesEliminadas.forEach(id => {
+      formData.append('imagenesEliminadas[]', id.toString());
+    })
+
+    this.submitForm.emit(formData as any);
   }
 
   activarTamanio(){
@@ -166,18 +178,31 @@ export class FormProductsComponent implements OnInit, OnChanges{
 
     const nuevasImagenes = Array.from(input.files);
 
-    this.imagenesSeleccionadas.push(...nuevasImagenes)
-
-    const nuevasUrls = nuevasImagenes.map(file => URL.createObjectURL(file));
+    const nuevasUrls = nuevasImagenes.map(file => ({
+      url: URL.createObjectURL(file),
+      esNueva: true,
+      file
+    }));
 
     this.imagenesParaMostrar.push(...nuevasUrls);
+    this.imagenesSeleccionadas.push(...nuevasImagenes);
 
     input.value = '';
   }
 
   eliminarImagen(index:number){
-    this.imagenesSeleccionadas.splice(index, 1);
-    this.imagenesParaMostrar.splice(index, 1);
+    const img = this.imagenesParaMostrar[index];
 
+    if(!img.esNueva && img.id){
+      this.imagenesEliminadas.push(img.id);
+      // this.imagenesExistentes =
+      //   this.imagenesExistentes.filter(i => i.id !== img.id);
+    }
+
+    if(img.esNueva && img.file){
+      const idx = this.imagenesSeleccionadas.indexOf(img.file);
+      if (idx !== -1) this.imagenesSeleccionadas.splice(idx, 1);
+    }
+    this.imagenesParaMostrar.splice(index, 1);
   }
 }

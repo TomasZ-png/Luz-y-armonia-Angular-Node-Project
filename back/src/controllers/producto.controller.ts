@@ -1,6 +1,9 @@
 import { type Request, type Response } from "express"
 import { ProductoRepository } from "../repository/producto.repository";
 import { ProductoService } from "../services/producto.service";
+import { prisma } from "../prisma";
+import { promises as fs } from 'fs';
+import path from 'path';
 
 
 const productoRepository = new ProductoRepository();
@@ -98,6 +101,35 @@ export class ProductoController{
             //     }
             // })
             };
+
+            const imagenesEliminadas = req.body.imagenesEliminadas || req.body['imagenesEliminadas[]'] || req.body['imagenesEliminadas'];
+
+            if(imagenesEliminadas){
+                const ids = Array.isArray(imagenesEliminadas)
+                    ? imagenesEliminadas.map((v: any) => Number(v))
+                    : [Number(imagenesEliminadas)];
+
+                // obtener registros para borrar archivos fisicos
+                const imagenesRecords = await prisma.imagenProducto.findMany({
+                    where: { id: { in: ids } }
+                });
+
+                for(const imgRec of imagenesRecords){
+                    try{
+                        const fileName = path.basename(imgRec.url);
+                        const filePath = path.join(process.cwd(), 'uploads', 'productos', fileName);
+                        await fs.unlink(filePath).catch(() => {});
+                    } catch(err){
+                        console.error('Error al borrar archivo:', err);
+                    }
+                }
+
+                await prisma.imagenProducto.deleteMany({
+                    where: {
+                        id: { in: ids }
+                    }
+                })
+            }
 
             const productoModificado = await productoService.updateProduct(id, productData);
             res.status(200).json(productoModificado);

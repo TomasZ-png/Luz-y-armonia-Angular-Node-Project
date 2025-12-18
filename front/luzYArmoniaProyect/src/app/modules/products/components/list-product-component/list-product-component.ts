@@ -3,6 +3,7 @@ import { ProductService } from '../../../../api/services/productService/productS
 import { Producto } from '../../interface/product.interface';
 import { CommonModule } from '@angular/common';
 import { ButtonModule, Button } from 'primeng/button';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list-product-component',
@@ -14,6 +15,7 @@ import { ButtonModule, Button } from 'primeng/button';
 export class ListProductComponent implements OnInit{
   productos: Producto[] = [];
     admin = false;
+    router = inject(Router);
 
 
   ngOnInit(){
@@ -49,6 +51,10 @@ export class ListProductComponent implements OnInit{
         this.admin = true;
       }
     }
+  }
+
+  redirectToUpdate(id:number | null | undefined){
+    this.router.navigate([`producto/modificar/${id}`]);
   }
 
 

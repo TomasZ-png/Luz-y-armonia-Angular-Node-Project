@@ -11,10 +11,14 @@ productoRouter.post(
     productoController.createProduct.bind(productoController)
 );
 
+productoRouter.put(
+    "/modificar/:id",
+    upload.array('imagenes', 10),
+    productoController.updateProduct.bind(productoController));
+
 productoRouter.get("/", productoController.getAllProducts.bind(productoController));
 productoRouter.get("/buscar", productoController.getProductByName.bind(productoController));
 productoRouter.get("/:id", productoController.getProductById.bind(productoController));
 productoRouter.delete("/eliminar/:id", productoController.deleteProduct.bind(productoController));
-productoRouter.put("/modificar/:id", productoController.updateProduct.bind(productoController));
 
 export default productoRouter;

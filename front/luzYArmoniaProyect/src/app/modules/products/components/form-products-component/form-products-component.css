@@ -9,7 +9,7 @@
 .inputs-container{
   display: flex;
   flex-direction: column;
-  width: 500px;
+  min-width: 500px;
 }
 
 .two-inputs{
@@ -22,21 +22,36 @@
   flex-direction: column;
 }
 
-.image-container{
-  border: solid 1px black;
+.images-container{
+  border: 2px dashed #a8a8a8;
   height: 100%;
-  display: flex;
-  flex-direction: column;
   padding: 20px;
+  display: grid;
+  align-items: start;
+  justify-items: center;
 }
 
-.img-array{
+.imgs-array{
   display: flex;
   gap: 10px;
+  z-index: 2;
+  max-width: 720px;
 }
 
-.img-array img{
-  width: 350px;
+.imgs-array img{
+  width: 220px;
+}
+
+.img-container{
+  position: relative;
+  display: grid;
+  grid-template-columns: 2fr;
+}
+
+.img-container p-button{
+  position: absolute;
+  left: 1px;
+  top: 222;
 }
 
 input, select{
@@ -64,4 +79,48 @@ button:hover{
 .error{
   color: red;
   font-size: 14px;
+}
+
+.img-input{
+  position: relative;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+}
+
+.img-input input[type="file"]{
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+
+.file-name{
+  display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 15px;
+    border: 2px dashed #cbd5e0;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #4a5568;
+    font-size: 14px;
+    position: relative;
+    z-index: 1;
+}
+
+.file-name:hover{
+  border-color: #667eea;
+    background: #f7fafc;
+}
+
+.img-input:hover{
+  border-color: #667eea;
+    background: #f7fafc;
 }

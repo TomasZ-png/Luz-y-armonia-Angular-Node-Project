@@ -49,6 +49,63 @@ export class ProductoController{
         }
     }
 
+    async updateProduct(req:Request, res:Response){
+        try {
+            const id = Number(req.params.id);
+
+            console.log('BODY 👉', req.body);
+            console.log('FILES 👉', req.files);
+
+            if(isNaN(id)){
+                return res.status(400).json({message: 'El id debe ser numerico.'});
+            }
+
+            const product = await productoService.getProductoById(id);
+
+            if(!product){
+                return res.status(404).json({message: 'Producto no encontrado'})
+            }
+
+            const files = req.files as Express.Multer.File[] | undefined;
+
+            const imagenes = files?.map(file => ({
+                url: `/uploads/productos/${file.filename}`
+            }));
+
+            const {
+            nombre, descripcion, precio, stock,
+            alto, ancho, mililitros,
+            premium, idAroma, idTipoProducto
+            } = req.body;
+
+            const productData = {
+            nombre,
+            descripcion,
+            precio: Number(precio),
+            stock: Number(stock),
+            alto: alto ? Number(alto) : null,
+            ancho: ancho ? Number(ancho) : null,
+            mililitros: mililitros ? Number(mililitros) : null,
+            premium: premium === 'true',
+            idAroma: Number(idAroma),
+            idTipoProducto: Number(idTipoProducto),
+            ImagenProducto: {
+                    create: imagenes
+                }
+            // ...(imagenes && {
+            //     ImagenProducto: {
+            //     create: imagenes
+            //     }
+            // })
+            };
+
+            const productoModificado = await productoService.updateProduct(id, productData);
+            res.status(200).json(productoModificado);
+        } catch (error:any) {
+            res.status(400).json({error: error.message});
+        }
+    }
+
     async getAllProducts(req: Request, res:Response){
         try {
             const products = await productoService.getAllProducts();
@@ -113,24 +170,5 @@ export class ProductoController{
         }
     }
 
-    async updateProduct(req:Request, res:Response){
-        try {
-            const id = Number(req.params.id);
-
-            if(isNaN(id)){
-                return res.status(400).json({message: 'El id debe ser numerico.'});
-            }
-
-            const product = productoService.getProductoById(id);
-
-            if(!product){
-                return res.status(404).json({message: 'Producto no encontrado'})
-            }
-
-            const productoModificado = await productoService.updateProduct(id, req.body);
-            res.status(200).json({message: 'Producto actualizado correctamente.', producto: productoModificado});
-        } catch (error:any) {
-            res.status(400).json({error: error.message});
-        }
-    }
+    
 }

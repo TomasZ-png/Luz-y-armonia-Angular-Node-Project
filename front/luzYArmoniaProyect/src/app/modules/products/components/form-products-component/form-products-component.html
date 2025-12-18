@@ -21,7 +21,7 @@
     <div class="labels-column">
       <label for="name">Nombre:
         @if(isInvalid('nombre')){
-            <span class="error">*El nombre es obligatorio</span>
+          <span class="error">*El nombre es obligatorio</span>
         }
       </label>
       <input type="text" id="name" formControlName="nombre" placeholder="Nombre del producto">
@@ -108,14 +108,28 @@
     {{modo === 'crear' ? 'Agregar' : 'Actualizar'}}
   </button>
 </div>
-<div class="image-container">
-  <label for="img">Imagenes:</label>
-  <input type="file" id="img" multiple accept="image/*" (change)="onImagesSelected($event)">
+<div class="images-container">
+  <label for="img">Imagenes: {{imagenesParaMostrar.length}}/10</label>
+  <div class="img-input">
+    <span class="file-name">
+      <span class="material-symbols-outlined">add</span>
+      Agregar imagen
+    </span>
+    <input
+    class="custom-file-input"
+    type="file"
+    id="img"
+    multiple accept="image/*"
+    (change)="onImagesSelected($event)">
+  </div>
 
-  <div class="img-array">
-    @if(imagenesSeleccionadas.length > 0){
+  <div class="imgs-array">
+    @if(imagenesParaMostrar.length > 0){
       @for(img of imagenesParaMostrar; track $index; let i = $index ){
-        <img [src]="img" alt="imagen {{i}}">
+        <div class="img-container">
+          <p-button icon="pi pi-times" [rounded]="true" severity="secondary" (onClick)="eliminarImagen(i)"/>
+          <img [src]="img" alt="imagen {{i}}">
+        </div>
       }
     }
   </div>

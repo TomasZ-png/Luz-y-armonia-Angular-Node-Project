@@ -26,7 +26,8 @@ export class ProductoRepository{
 
             include: {
                 aroma: true,
-                Tipo_de_productos: true
+                Tipo_de_productos: true,
+                ImagenProducto: true
             }
         })
     }
@@ -40,13 +41,21 @@ export class ProductoRepository{
                 }
             },
 
-            include: {aroma: true}
+            include: {
+                aroma: true,
+                Tipo_de_productos: true,
+                ImagenProducto: true
+            }
         })
     }
 
     async getAll(){
         return await prisma.producto.findMany({
-            include: {aroma: true}
+            include: {
+                aroma: true,
+                Tipo_de_productos: true,
+                ImagenProducto: true
+            }
         });
     }
 }

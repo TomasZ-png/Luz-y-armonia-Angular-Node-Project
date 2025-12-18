@@ -15,4 +15,11 @@ export interface Producto {
   idTipoProducto: number,
   tipoProducto?: TipoProducto,
   aroma?: Aroma
+
+  ImagenProducto?: ImagenProducto[]
+}
+
+export interface ImagenProducto{
+  id: number,
+  url: string
 }

@@ -3,7 +3,7 @@
     <div class="product">
       <div class="admin-buttons">
         @if(admin){
-          <p-button icon="pi pi-pencil" severity="warn" />
+          <p-button (onClick)="redirectToUpdate(producto.id)" icon="pi pi-pencil" severity="warn" />
           <p-button icon="pi pi-trash" severity="danger" />
         }
       </div>

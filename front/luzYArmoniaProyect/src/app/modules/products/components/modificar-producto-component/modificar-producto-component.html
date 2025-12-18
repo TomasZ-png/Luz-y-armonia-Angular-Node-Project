@@ -1,1 +1,6 @@
-<p>modificar-producto-component works!</p>
+<p-toast position="top-right"></p-toast>
+<app-form-products-component
+  [producto] = "productoSeleccionado"
+  modo="editar"
+  (submitForm)="modificarProducto($event)">
+</app-form-products-component>

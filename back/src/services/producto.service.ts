@@ -1,3 +1,4 @@
+import { Prisma } from "@prisma/client";
 import { ProductoRepository } from "../repository/producto.repository";
 
 export class ProductoService {
@@ -15,7 +16,24 @@ export class ProductoService {
             throw new Error('El producto con el id solicitado no existe.');
         }
 
-        return await this.productoRepository.updateProduct(id, data);
+        const {
+            id: _idDescartado,
+            idAroma,
+            idTipoProducto,
+            ...rest
+        } = data;
+        
+        const dataSinId: Prisma.ProductoUpdateInput = {
+            ...rest,
+            aroma: {
+                connect: { id: Number(idAroma)}
+            },
+            Tipo_de_productos: {
+                connect: { id: Number(idTipoProducto)}
+            }
+        };
+
+        return await this.productoRepository.updateProduct(id, dataSinId);
     }
 
     async deleteProduct(id:number){

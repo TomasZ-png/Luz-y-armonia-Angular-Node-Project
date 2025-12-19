@@ -53,6 +53,8 @@ export class FormProductsComponent implements OnInit, OnChanges{
 
       this.tipoProductoService.getAll().subscribe((data: TipoProducto[]) => {
         this.tiposDeProductos = data;
+        // Aplicar tipo de producto si ya estamos en modo edición y hay un producto cargado
+        this.aplicarTipoProductoEnFormulario();
       })
 
       this.formProduct.get('idTipoProducto')?.valueChanges.subscribe(id => {
@@ -98,8 +100,28 @@ export class FormProductsComponent implements OnInit, OnChanges{
                 esNueva: false
               })
             );
+            // Asegurar que al cargar el producto en edición se ajusten los validators
+            this.aplicarTipoProductoEnFormulario();
           }
         }
+  }
+
+  aplicarTipoProductoEnFormulario(){
+    const idControl = this.formProduct.get('idTipoProducto')?.value ?? this.producto?.idTipoProducto;
+    if(!idControl) return;
+
+    const idNumber = Number(idControl);
+    const tipoProductoElegido = this.tiposDeProductos.find(tp => tp.id === idNumber)
+
+    if(!tipoProductoElegido) return;
+
+    if(tipoProductoElegido.tipo === 'VELA'){
+      this.activarTamanio();
+      this.mostrarTamanio = true;
+    } else {
+      this.activarMililitros();
+      this.mostrarTamanio = false;
+    }
   }
 
   sendProduct(){

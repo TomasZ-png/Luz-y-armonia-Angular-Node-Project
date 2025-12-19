@@ -4,18 +4,28 @@ import { Producto } from '../../interface/product.interface';
 import { CommonModule } from '@angular/common';
 import { ButtonModule, Button } from 'primeng/button';
 import { Router } from '@angular/router';
+import { environment } from '../../../../../environments/environment';
+import { ConfirmDialogModule, ConfirmDialog } from 'primeng/confirmdialog';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { Toast, ToastModule } from "primeng/toast";
 
 @Component({
   selector: 'app-list-product-component',
-  imports: [CommonModule, Button],
+  imports: [CommonModule, Button, ToastModule, ConfirmDialog],
   templateUrl: './list-product-component.html',
   styleUrl: './list-product-component.css',
+  providers: [ConfirmationService, MessageService],
   standalone: true
 })
+
 export class ListProductComponent implements OnInit{
-  productos: Producto[] = [];
+    productos: Producto[] = [];
     admin = false;
     router = inject(Router);
+    backImageUrl = environment.img_url
+    exito: boolean = false;
+    private confirmationService = inject(ConfirmationService);
+    private messageService = inject(MessageService);
 
 
   ngOnInit(){
@@ -27,7 +37,6 @@ export class ListProductComponent implements OnInit{
   private productService = inject(ProductService);
 
   listarProductos(){
-
     this.cargando = true;
 
     this.productService.getAll().subscribe({
@@ -57,5 +66,53 @@ export class ListProductComponent implements OnInit{
     this.router.navigate([`producto/modificar/${id}`]);
   }
 
+  getPrimerImagen(producto: Producto){
+    return producto.ImagenProducto?.length ?
+    this.backImageUrl + producto.ImagenProducto[0].url :
+    'assets/no-image.png';
+  }
+
+  activarMensajeAlertaDelete(producto:Producto){
+
+    this.confirmationService.confirm({
+      message: `¿Estas seguro de querer eliminar el producto: "<strong>${producto.nombre}</strong>"?`,
+      header: 'Confirmar eliminación',
+      icon: 'pi pi-exclamation-circle',
+      acceptLabel: 'Eliminar',
+      rejectLabel: 'Cancelar',
+      acceptButtonStyleClass:'p-button-danger',
+      rejectButtonStyleClass:'p-button-secondary',
+
+      accept: () => {
+        this.eliminarProducto(producto.id);
+      }
+    })
+
+  }
+
+  eliminarProducto(id:number | undefined){
+    if(!id) return;
+
+    this.productService.deleteProduct(id).subscribe({
+      next: () => {
+        this.listarProductos();
+
+        this.exito = true;
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Exito',
+          detail: 'Producto eliminado exitosamente'
+        })
+
+      },
+      error: () => {
+        this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'No se pudo eliminar el producto'
+      });
+      }
+    })
+  }
 
 }

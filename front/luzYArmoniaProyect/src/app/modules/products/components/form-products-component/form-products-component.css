@@ -29,13 +29,15 @@
   display: grid;
   align-items: start;
   justify-items: center;
+  width: 100%;
 }
 
 .imgs-array{
-  display: flex;
+  display: grid;
   gap: 10px;
   z-index: 2;
   max-width: 720px;
+  grid-template-columns: repeat(3, 1fr);
 }
 
 .imgs-array img{

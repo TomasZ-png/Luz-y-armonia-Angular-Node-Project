@@ -1,14 +1,18 @@
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
+
 <div class="products-container">
   @for(producto of productos; track producto.id){
     <div class="product">
       <div class="admin-buttons">
         @if(admin){
           <p-button (onClick)="redirectToUpdate(producto.id)" icon="pi pi-pencil" severity="warn" />
-          <p-button icon="pi pi-trash" severity="danger" />
+          <p-button (onClick)="activarMensajeAlertaDelete(producto)" icon="pi pi-trash" severity="danger" />
         }
       </div>
       <div class="img-container">
-        <img src="https://media.istockphoto.com/id/2092837677/es/vector/vela-arom%C3%A1tica-en-un-vaso-con-coraz%C3%B3n-ilustraci%C3%B3n-vectorial-plana-de-dibujos-animados.jpg?s=612x612&w=0&k=20&c=ZzbYUQZFGyBLVZMUD2r7wLUX3X4lQT_pRW2U9wUtE3g=" alt="">
+          <img [src]=" getPrimerImagen(producto)" alt="">
+
       </div>
       <div class="header-product-container">
         <p class="titles-main">{{producto.nombre}}</p>

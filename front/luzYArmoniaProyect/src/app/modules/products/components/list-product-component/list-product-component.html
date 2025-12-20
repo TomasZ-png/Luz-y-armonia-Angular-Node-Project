@@ -3,9 +3,8 @@
 
 <div class="products-container">
   @for(producto of productos; track producto.id){
-    <div class="product">
+    <div (click)="verProducto(producto.id)" class="product">
       <div class="admin-buttons">
-
         @if(admin){
           <p-button (onClick)="redirectToUpdate(producto.id)" icon="pi pi-pencil" severity="warn" />
           <p-button (onClick)="activarMensajeAlertaDelete(producto)" icon="pi pi-trash" severity="danger" />

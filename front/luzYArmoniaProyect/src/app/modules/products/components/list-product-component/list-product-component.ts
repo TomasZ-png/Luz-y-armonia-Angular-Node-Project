@@ -62,6 +62,10 @@ export class ListProductComponent implements OnInit{
     }
   }
 
+  verProducto(id:number | undefined){
+    this.router.navigate([`/producto/${id}`]);
+  }
+
   redirectToUpdate(id:number | null | undefined){
     this.router.navigate([`producto/modificar/${id}`]);
   }

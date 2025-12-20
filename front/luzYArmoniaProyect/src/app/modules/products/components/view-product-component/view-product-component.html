@@ -1,1 +1,8 @@
-<p>view-product-component works!</p>
+<h2>{{productoSeleccionado.nombre}}</h2>
+<p>{{productoSeleccionado.aroma?.aroma}}</p>
+<p>{{productoSeleccionado.descripcion}}</p>
+<p>{{productoSeleccionado.precio}}</p>
+
+@for (img of imagenesProducto; track $index) {
+  <img [src]="img_url + img.url" alt="">
+}

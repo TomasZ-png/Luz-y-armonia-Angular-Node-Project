@@ -5,24 +5,33 @@
   @for(producto of productos; track producto.id){
     <div class="product">
       <div class="admin-buttons">
+
         @if(admin){
           <p-button (onClick)="redirectToUpdate(producto.id)" icon="pi pi-pencil" severity="warn" />
           <p-button (onClick)="activarMensajeAlertaDelete(producto)" icon="pi pi-trash" severity="danger" />
+        } @else{
+          <span class="material-symbols-outlined">
+            add_shopping_cart
+            </span>
+          <span class="material-symbols-outlined">
+            favorite
+          </span>
         }
       </div>
       <div class="img-container">
           <img [src]=" getPrimerImagen(producto)" alt="">
 
       </div>
+      <div class="products-flags">
+        @if(producto.premium){
+          <span class="flag premium">Premium</span>
+        }
+        <span class="flag product-aroma">{{producto.aroma?.aroma}}</span>
+      </div>
       <div class="header-product-container">
         <p class="titles-main">{{producto.nombre}}</p>
         <p class="product-price">${{producto.precio}}</p>
       </div>
-      <p>{{producto.tipoProducto}}</p>
-      <p class="product-aroma">Aroma: {{producto.aroma?.aroma}}</p>
-      @if(producto.premium){
-        <span>Premium</span>
-      }
     </div>
     }
 </div>

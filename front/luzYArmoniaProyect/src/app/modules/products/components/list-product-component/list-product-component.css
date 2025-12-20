@@ -7,8 +7,8 @@
   display: flex;
   justify-content: flex-end;
   gap: 5px;
+  margin-bottom: 10px;
 }
-
 
 .product{
   display: flex;
@@ -17,6 +17,7 @@
   padding: 10px;
   border-radius: 5px;
   transition: 0.2s ease-in-out;
+  width: 20rem;
 }
 
 .product:hover{
@@ -33,11 +34,23 @@
   width: 250px;
 }
 
-.header-product-container{
+.products-flags{
   display: flex;
-  justify-content: space-around;
   align-items: center;
-  gap: 40px;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.flag{
+  border-radius: 10px;
+  color: rgb(0, 0, 0);
+  width: 100px;
+  text-align: center;
+  background-color: rgb(221, 221, 221);
+}
+
+.header-product-container{
+  text-align: center;
 }
 
 .header-product-container .titles-main{
@@ -46,6 +59,15 @@
 }
 
 .header-product-container .product-price{
-  font-size: 1.2rem;
+  font-size: 1.8rem;
   font-weight: bold;
+}
+
+.premium{
+  background-color: rgb(250, 204, 0);
+  border-radius: 10px;
+  color: rgb(255, 255, 255);
+  width: 100px;
+  text-align: center;
+
 }

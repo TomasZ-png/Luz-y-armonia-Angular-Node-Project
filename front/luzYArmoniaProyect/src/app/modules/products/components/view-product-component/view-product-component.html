@@ -1,0 +1,79 @@
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
+
+<div class="total-container">
+  <div class="product-view-container">
+    <div class="imagenes-container">
+      <div class="card-imagenes">
+        @for (img of imagenesProducto; track img.id) {
+          <img [src]="img_url + img.url" alt="imagen" (mouseover)="mostrarImagenSeleccionada(img.id)">
+        }
+      </div>
+      <div class="image-preview">
+        <img class="imagen-seleccionada" [src]="img_url + imagenSeleccionada?.url" [alt]="'imagen ' + imagenSeleccionada?.id">
+      </div>
+    </div>
+    <div class="product-data">
+      <div>
+        <div class="title-section">
+          <div class="title-premium">
+            <h2 class="titles-main">{{productoSeleccionado.nombre}}</h2>
+            @if (productoSeleccionado.premium) {
+              <p class="premium"><span class="material-symbols-outlined">
+                crown</span>
+                Premium
+              </p>
+            }
+          </div>
+          @if (!isAdmin()) {
+            <span class="favorite material-symbols-outlined">
+              favorite
+            </span>
+          }
+        </div>
+        <p class="price">${{productoSeleccionado.precio}}</p>
+        <p>{{productoSeleccionado.aroma?.aroma}}</p>
+
+        <p>Stock: {{productoSeleccionado.stock}} u.</p>
+      </div>
+      <div>
+        @if(!isAdmin()){
+          <div class="quantity-section">
+            <label for="quantity">Cantidad:</label>
+            <input id="quantity" type="number" min="1" [max]="productoSeleccionado.stock">
+          </div>
+          <div class="buttons-section">
+            <button class="buy-button">Comprar ahora</button>
+            <button class="cart-button">
+              <span class="material-symbols-outlined">add_shopping_cart</span>
+              Agregar al carrito
+            </button>
+          </div>
+        } @else {
+          <div class="admin-section">
+            <p-button (onClick)="redirectToUpdate(productoSeleccionado.id)" icon="pi pi-pencil" severity="warn" />
+            <p-button (onClick)="activarMensajeAlertaDelete(productoSeleccionado)" icon="pi pi-trash" severity="danger" />
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+<hr>
+  <div class="about-container">
+    <h2>Acerca del producto</h2>
+    <div>
+      <h4>Descripción:</h4>
+      <p class="descripcion">{{productoSeleccionado.descripcion}}</p>
+      @if (productoSeleccionado.mililitros!=null) {
+        <h4>Contenido neto:</h4>
+        <p>Mililitros: {{productoSeleccionado.mililitros}}</p>
+        }
+        @if (productoSeleccionado.alto != null && productoSeleccionado.ancho != null) {
+          <h4>Tamaño:</h4>
+          <p>Alto: {{productoSeleccionado.alto}}cm</p>
+          <p>Ancho: {{productoSeleccionado.ancho}}cm</p>
+        }
+    </div>
+  </div>
+
+  </div>

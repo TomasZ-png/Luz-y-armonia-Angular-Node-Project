@@ -26,8 +26,6 @@ CREATE TABLE "Aroma" (
     CONSTRAINT "Aroma_pkey" PRIMARY KEY ("id")
 );
 
-
-
 -- CreateTable
 CREATE TABLE "Producto" (
     "id" SERIAL NOT NULL,
@@ -56,6 +54,23 @@ CREATE TABLE "ImagenProducto"(
         ON DELETE CASCADE
 );
 
+CREATE TABLE "Mi_Carrito" (
+    "id" SERIAL NOT NULL,
+    "idUsuario" INTEGER NOT NULL,
+    CONSTRAINT "mi_carrito_pkey" PRIMARY KEY ("id"),
+    CONSTRAINT fk_mi_carrito_usuario
+    FOREIGN KEY ("idUsuario") REFERENCES "Usuario"("id"),
+    CONSTRAINT uq_mi_carrito_usuario UNIQUE ("idUsuario")
+);
+
+CREATE TABLE "Mi_Carrito_Producto"(
+    "id" SERIAL PRIMARY KEY,
+    "idCarrito" INTEGER NOT NULL,
+    "idProducto" INTEGER NOT NULL,
+    "cantidad" INTEGER NOT NULL DEFAULT 1, 
+    FOREIGN KEY ("idCarrito") REFERENCES "Mi_Carrito"("id") ON DELETE CASCADE,
+    FOREIGN KEY ("idProducto") REFERENCES "Producto"("id")
+);
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Usuario_correo_key" ON "Usuario"("correo");
@@ -65,7 +80,6 @@ CREATE UNIQUE INDEX "Aroma_aroma_key" ON "Aroma"("aroma");
 
 -- AddForeignKey
 ALTER TABLE "Producto" ADD CONSTRAINT "fk_producto_aroma" FOREIGN KEY ("idAroma") REFERENCES "Aroma"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
 
 INSERT INTO "Aroma" (aroma) VALUES ('Vainilla');
 -- 12345678

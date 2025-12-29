@@ -1,5 +1,8 @@
 import { Prisma } from "@prisma/client";
+import { prisma } from "../prisma";
 import { ProductoRepository } from "../repository/producto.repository";
+import fs from 'fs';
+import path from 'path';
 
 export class ProductoService {
 
@@ -42,6 +45,18 @@ export class ProductoService {
         if(!product){
             throw new Error('El producto con el id solicitado no existe.');
         }
+
+        product.ImagenProducto.forEach(img => {
+            const imagePath = path.join(process.cwd(), 'uploads', img.url);
+
+            if (fs.existsSync(imagePath)) {
+                fs.unlinkSync(imagePath);
+            }
+        });
+
+        await prisma.imagenProducto.deleteMany({
+            where: { id: product.id }
+        });
 
         return await this.productoRepository.deleteProduct(id);
     }

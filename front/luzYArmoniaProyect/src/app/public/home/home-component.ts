@@ -15,9 +15,6 @@ export class HomeComponent {
   private router = inject(Router);
 
 
-  logout(){
-    localStorage.removeItem('USER');
-    this.router.navigate(['/login']);
-  }
+
 
 }

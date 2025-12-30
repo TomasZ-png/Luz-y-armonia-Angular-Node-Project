@@ -6,7 +6,7 @@
     <div (click)="verProducto(producto.id)" class="product">
       <div class="admin-buttons">
         @if(admin){
-          <p-button (onClick)="redirectToUpdate(producto.id)" icon="pi pi-pencil" severity="warn" />
+          <p-button (onClick)="redirectToUpdate(producto.id)"  icon="pi pi-pencil" severity="warn"/>
           <p-button (onClick)="activarMensajeAlertaDelete(producto)" icon="pi pi-trash" severity="danger" />
         } @else{
           <span class="material-symbols-outlined">
@@ -18,12 +18,15 @@
         }
       </div>
       <div class="img-container">
-          <img [src]=" getPrimerImagen(producto)" alt="">
+          <img [src]="getPrimerImagen(producto)" alt="">
 
       </div>
       <div class="products-flags">
         @if(producto.premium){
-          <span class="flag premium">Premium</span>
+          <span class="premium">
+            <span class="material-symbols-outlined">
+                crown</span>
+            </span>
         }
         <span class="flag product-aroma">{{producto.aroma?.aroma}}</span>
       </div>

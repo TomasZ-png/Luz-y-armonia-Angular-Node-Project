@@ -49,4 +49,9 @@ export class HeaderComponent implements OnInit{
     this.router.navigate(['producto/agregar'])
   }
 
+  logout(){
+    localStorage.removeItem('USER');
+    this.router.navigate(['/login']);
+  }
+
 }

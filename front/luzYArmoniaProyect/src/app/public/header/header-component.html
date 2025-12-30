@@ -34,14 +34,42 @@
             </a>
           </li>
         }
-        <li class="item-nav">
-            <a href="" class="nav-list">
+        <li class="item-nav dropdown-container">
+            <a class="nav-list dropdown-trigger" href="#">
               <span class="material-symbols-outlined">account_circle</span>
-              {{usuario}}
-              <span class="material-symbols-outlined">
+              Thomas
+              <span class="material-symbols-outlined arrow">
                 keyboard_arrow_down
               </span>
             </a>
+            <div class="dropdown-menu">
+              <ul>
+                <li class="dropdown-item">
+                  <a href="#">
+                    <span class="material-symbols-outlined">person</span>
+                    Mi perfil
+                  </a>
+                </li>
+                <li class="dropdown-item">
+                  <a href="#">
+                    <span class="material-symbols-outlined">settings</span>
+                    Configuración
+                  </a>
+                </li>
+                <li class="dropdown-item">
+                  <a href="#">
+                    <span class="material-symbols-outlined">notifications</span>
+                    Notificaciones
+                  </a>
+                </li>
+                <li (click)="logout()" class="dropdown-item">
+                  <a >
+                    <span class="material-symbols-outlined">logout</span>
+                    Cerrar sesión
+                  </a>
+                </li>
+              </ul>
+            </div>
           </li>
         </ul>
       </div>

@@ -1,58 +1,63 @@
-<div class="form-container">
-  <form [formGroup]="formSignUp" (ngSubmit)="signUp()">
-    <div class="group-2">
-      <div class="block">
-        <label for="name">Nombre:</label>
-        <input id="name" type="text" formControlName="nombre" placeholder="Nombre">
-        @if(isInvalid('nombre')){
-          <div>
-            <p class="error">*El nombre es obligatorio</p>
-          </div>
-        }
+<div class="full-body">
+
+  <div class="title-container">
+    <h1 class="titles-main">Luz y Armonía</h1>
+    <p>El placer de potenciar al máximo de tus sentidos, es con nuestras fragancias...</p>
+  </div>
+
+  <div class="form-container">
+    <h2>Bienvenido!</h2>
+    <form [formGroup]="formSignUp" (ngSubmit)="signUp()">
+      <div class="group-2">
+        <div class="block">
+          <label for="name">Nombre:</label>
+          <input id="name" type="text" formControlName="nombre" placeholder="Nombre">
+          @if(isInvalid('nombre')){
+            <div>
+              <p class="error">*El nombre es obligatorio</p>
+            </div>
+          }
+        </div>
+
+        <div class="block">
+          <label for="lastName">Apellido:</label>
+          <input id="lastName" type="text" formControlName="apellido" placeholder="Apellido">
+          @if(isInvalid('apellido')){
+            <div>
+              <p class="error">*El apellido es obligatorio</p>
+            </div>
+          }
+        </div>
       </div>
 
-      <div class="block">
-        <label for="lastName">Apellido:</label>
-        <input id="lastName" type="text" formControlName="apellido" placeholder="Apellido">
-        @if(isInvalid('apellido')){
-          <div>
-            <p class="error">*El apellido es obligatorio</p>
-          </div>
+      <label for="email">Correo:
+        @if(formSignUp.get('correo')?.touched && formSignUp.get('correo')?.invalid ){
+        @if(formSignUp.get('correo')?.errors?.['required']){
+            <span class="error">*El correo es obligatorio</span>
         }
-      </div>
-    </div>
+        @if(formSignUp.get('correo')?.errors?.['email']){
+            <span class="error">*El formato del correo es invalido</span>
+        }
+      }
+      </label>
+      <input id="email" type="email" formControlName="correo" placeholder="Correo electrónico">
 
-    <label for="email">Correo:</label>
-    <input id="email" type="email" formControlName="correo" placeholder="Correo electrónico">
-    @if(formSignUp.get('correo')?.touched && formSignUp.get('correo')?.invalid ){
-      @if(formSignUp.get('correo')?.errors?.['required']){
-        <div>
-          <p class="error">*El correo es obligatorio</p>
-        </div>
-      }
-      @if(formSignUp.get('correo')?.errors?.['email']){
-        <div>
-          <p class="error">*El formato del correo es invalido</p>
-        </div>
-      }
-    }
 
-    <label for="contrasenia">Contraseña:</label>
-    <input id="contrasenia" type="password" formControlName="password" placeholder="Mínimo 8 caracteres, una mayuscula y un número">
-    @if (formSignUp.get('password')?.touched && formSignUp.get('password')?.invalid) {
-      @if(formSignUp.get('password')?.errors?.['required']){
-        <div>
-          <p class="error">*La contraseña es obligatoria</p>
-        </div>
+      <label for="contrasenia">Contraseña:
+        @if (formSignUp.get('password')?.touched && formSignUp.get('password')?.invalid) {
+        @if(formSignUp.get('password')?.errors?.['required']){
+            <span class="error">*La contraseña es obligatoria</span>
+        }
+        @if(formSignUp.get('password')?.errors?.['minLength']){
+            <span class="error">*La contraseña debe tener mínimo 8 caracteres, una mayuscula y un número</span>
+        }
       }
-      @if(formSignUp.get('password')?.errors?.['minLength']){
-        <div>
-          <p class="error">*La contraseña debe tener mínimo 8 caracteres, una mayuscula y un número</p>
-        </div>
-      }
-    }
+      </label>
+      <input id="contrasenia" type="password" formControlName="password" placeholder="Mínimo 8 caracteres, una mayuscula y un número">
 
-    <button type="submit" [disabled]="formSignUp.invalid">Registrarse</button>
-    <p>¿Ya tenés una cuenta? <a [routerLink]="['/login']">Iniciar sesión</a></p>
-  </form>
+      <button type="submit" [disabled]="formSignUp.invalid">Registrarse</button>
+      <p>¿Ya tenés una cuenta? <a class="register-link" [routerLink]="['/login']">Iniciar sesión</a></p>
+    </form>
+  </div>
+
 </div>

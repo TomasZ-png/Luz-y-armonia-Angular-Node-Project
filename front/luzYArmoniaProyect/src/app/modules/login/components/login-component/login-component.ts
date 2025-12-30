@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from "@angular/router";
 import { LoginService } from '../../../../api/services/loginService/loginService.service';
@@ -9,7 +9,7 @@ import { LoginService } from '../../../../api/services/loginService/loginService
   templateUrl: './login-component.html',
   styleUrl: './login-component.css',
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit, OnDestroy{
 
   private fb = inject(FormBuilder);
   private loginService = inject(LoginService);
@@ -20,6 +20,14 @@ export class LoginComponent {
     correo: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(8)]]
   })
+
+  ngOnInit(): void {
+    document.body.classList.add('login-page');
+  }
+
+  ngOnDestroy(): void{
+    document.body.classList.remove('login-page');
+  }
 
   login(){
 

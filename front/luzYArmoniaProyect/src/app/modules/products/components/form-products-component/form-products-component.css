@@ -36,12 +36,16 @@
   display: grid;
   gap: 10px;
   z-index: 2;
-  max-width: 720px;
+  width: 700px;
+  max-height: 400px;
   grid-template-columns: repeat(3, 1fr);
+  overflow-y: scroll;
 }
 
 .imgs-array img{
   width: 220px;
+  max-height: 300px;
+  object-fit: contain;
 }
 
 .img-container{

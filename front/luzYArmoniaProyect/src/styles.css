@@ -1,5 +1,11 @@
 @import "primeicons/primeicons.css";
 /* You can add global styles to this file, and also import other style files */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 html, body {
   margin: 0;
   padding: 0;
@@ -14,4 +20,7 @@ body{
   font-family: 'Playfair Display', serif;
 }
 
-
+body.login-page{
+  background-color: palevioletred;
+  overflow: hidden;
+}

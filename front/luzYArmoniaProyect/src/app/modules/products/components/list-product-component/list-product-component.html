@@ -6,8 +6,8 @@
     <div (click)="verProducto(producto.id)" class="product">
       <div class="admin-buttons">
         @if(admin){
-          <p-button (onClick)="redirectToUpdate(producto.id)"  icon="pi pi-pencil" severity="warn"/>
-          <p-button (onClick)="activarMensajeAlertaDelete(producto)" icon="pi pi-trash" severity="danger" />
+          <p-button (onClick)="redirectToUpdate(producto.id); $event.stopPropagation()"  icon="pi pi-pencil" severity="warn"/>
+          <p-button (onClick)="activarMensajeAlertaDelete(producto); $event.stopPropagation()" icon="pi pi-trash" severity="danger" />
         } @else{
           <span class="material-symbols-outlined">
             add_shopping_cart

@@ -1,5 +1,5 @@
 nav{
-  background-color: pink;
+  background-color: palevioletred;
   width: 100%;
 }
 
@@ -16,12 +16,20 @@ nav{
 
 .brand-container a {
   text-decoration: none;
-  color: black;
+  color: white;
 }
 
 .items-nav{
   display: flex;
   gap: 15px;
+
+}
+.items-nav li a{
+  text-decoration: none;
+}
+
+.header{
+  color: white;
 }
 
 .items-nav li{
@@ -35,10 +43,6 @@ nav{
   background: rgba(255, 255, 255, 0.2);
 }
 
-.items-nav li a{
-  text-decoration: none;
-  color: black;
-}
 
 .item-nav a{
   display: flex;
@@ -68,6 +72,7 @@ nav{
   transform: translateY(-10px);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
+  z-index: 9999;
 }
 
 .dropdown-container:hover .dropdown-menu {
@@ -146,3 +151,5 @@ nav{
     transform: translateX(-50%) translateY(0);
   }
 }
+
+

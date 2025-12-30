@@ -1,41 +1,45 @@
-<div class="form-container">
-  <form [formGroup]="formLogin" (ngSubmit)="login()">
+<div class="full-body">
 
-    <label for="email">Correo:</label>
-    <input id="email" type="email" formControlName="correo" placeholder="Correo electrónico">
-    @if(formLogin.get('correo')?.touched && formLogin.get('correo')?.invalid ){
-      @if(formLogin.get('correo')?.errors?.['required']){
-        <div>
-          <p class="error">*El correo es obligatorio</p>
-        </div>
-      }
-      @if(formLogin.get('correo')?.errors?.['email']){
-        <div>
-          <p class="error">*El formato del correo es invalido</p>
-        </div>
-      }
-    }
+  <div class="title-container">
+    <h1 class="titles-main">Luz y Armonía</h1>
+    <p>El placer de potenciar al máximo de tus sentidos, es con nuestras fragancias...</p>
+  </div>
 
-    <label for="contrasenia">Contraseña:</label>
-    <input id="contrasenia" type="password" formControlName="password" placeholder="Contraseña">
-    @if (formLogin.get('password')?.touched && formLogin.get('password')?.invalid) {
-      @if(formLogin.get('password')?.errors?.['required']){
-        <div>
-          <p class="error">*La contraseña es obligatoria</p>
-        </div>
+  <div class="form-container">
+    <h2>Bienvenido de nuevo!</h2>
+    <form [formGroup]="formLogin" (ngSubmit)="login()">
+      <label for="email">Correo:
+        @if(formLogin.get('correo')?.touched && formLogin.get('correo')?.invalid ){
+        @if(formLogin.get('correo')?.errors?.['required']){
+            <span class="error">*El correo es obligatorio</span>
+        }
+        @if(formLogin.get('correo')?.errors?.['email']){
+            <span class="error">*El formato del correo es invalido</span>
+        }
       }
-      @if(formLogin.get('password')?.errors?.['minLength']){
-        <div>
-          <p class="error">*La contraseña debe tener mínimo 8 caracteres, una mayuscula y un número</p>
-        </div>
+      </label>
+      <input id="email" type="email" formControlName="correo" placeholder="Correo electrónico">
+
+
+      <label for="contrasenia">Contraseña:
+        @if (formLogin.get('password')?.touched && formLogin.get('password')?.invalid) {
+        @if(formLogin.get('password')?.errors?.['required']){
+            <span class="error">*La contraseña es obligatoria</span>
+        }
+        @if(formLogin.get('password')?.errors?.['minLength']){
+            <span class="error">*La contraseña debe tener mínimo 8 caracteres, una mayuscula y un número</span>
+        }
       }
-    }
+      </label>
+      <input id="contrasenia" type="password" formControlName="password" placeholder="Contraseña">
 
-    @if(error){
-      <p class="error">*Correo o contraseña invalidos</p>
-    }
 
-    <button type="submit" [disabled]="formLogin.invalid">Iniciar sesión</button>
-    <p>¿No tenés una cuenta aun? <a [routerLink]="['/login/registrarse']">Registrate</a></p>
-  </form>
+      @if(error){
+        <p class="error">*Correo o contraseña invalidos</p>
+      }
+
+      <button type="submit" [disabled]="formLogin.invalid">Iniciar sesión</button>
+      <p>¿No tenés una cuenta todavía? <a class="login-link" [routerLink]="['/login/registrarse']">Registrate</a></p>
+    </form>
+  </div>
 </div>

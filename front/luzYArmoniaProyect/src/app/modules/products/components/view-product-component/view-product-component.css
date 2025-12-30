@@ -85,6 +85,7 @@
 .product-data .price{
   font-size: 35px;
   font-weight: 500;
+  margin: -5px 0
 }
 
 .premium{
@@ -124,8 +125,6 @@
   gap: 10px;
   margin-top: 20px;
 }
-
-
 
 .buttons-section button{
   padding: 10px;

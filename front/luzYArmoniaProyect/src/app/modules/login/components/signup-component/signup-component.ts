@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LoginService } from '../../../../api/services/loginService/loginService.service';
 import { Router, RouterLink } from '@angular/router';
@@ -9,7 +9,7 @@ import { Router, RouterLink } from '@angular/router';
   templateUrl: './signup-component.html',
   styleUrl: './signup-component.css',
 })
-export class SignupComponent {
+export class SignupComponent implements OnInit, OnDestroy {
 
   private fb = inject(FormBuilder);
   private loginService = inject(LoginService);
@@ -21,6 +21,15 @@ export class SignupComponent {
     correo: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(8)]]
   })
+
+  ngOnInit(): void {
+    document.body.classList.add('login-page');
+  }
+
+  ngOnDestroy(): void {
+    document.body.classList.remove('login-page');
+  }
+
 
   signUp(){
     if(this.formSignUp.invalid){

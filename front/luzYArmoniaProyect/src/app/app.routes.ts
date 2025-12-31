@@ -21,6 +21,10 @@ export const routes: Routes = [
     loadChildren: () => import('./modules/products/components/product.routes').then(p=>p.productRoutes)
   },
   {
+    path: 'aroma',
+    loadChildren: () => import('./modules/products/components/aroma.routes').then(a=>a.aromaRoutes)
+  },
+  {
     path: '**',
     redirectTo: 'home'
   }

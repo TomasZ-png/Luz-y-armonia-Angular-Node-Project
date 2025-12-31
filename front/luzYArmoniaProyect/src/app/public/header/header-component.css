@@ -22,7 +22,7 @@ nav{
 .items-nav{
   display: flex;
   gap: 15px;
-
+  cursor: pointer;
 }
 .items-nav li a{
   text-decoration: none;

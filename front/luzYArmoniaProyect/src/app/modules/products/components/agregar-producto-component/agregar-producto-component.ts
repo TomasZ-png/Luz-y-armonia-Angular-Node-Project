@@ -33,6 +33,11 @@ export class AgregarProductoComponent {
       },
       error: err => {
         console.error('ERROR BACK', err);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'No se pudo agregar el producto'
+        })
         this.exito = false;
       }
     });

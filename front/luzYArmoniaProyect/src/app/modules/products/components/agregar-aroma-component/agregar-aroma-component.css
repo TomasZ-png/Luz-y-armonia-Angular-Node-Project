@@ -1,0 +1,31 @@
+.total-container{
+  display: flex;
+  flex-direction: column;
+  width: 25%;
+}
+
+.form-container form{
+  display: flex;
+  flex-direction: column;
+}
+
+.form-container form input{
+  padding: 7px;
+  border-radius: 5px;
+  border: solid 1px #ccc;
+  margin-bottom: 20px;
+}
+
+.form-container form button{
+  padding: 10px;
+  border: none;
+  background-color: palevioletred;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.error{
+  color: red;
+  font-size: 14px;
+}

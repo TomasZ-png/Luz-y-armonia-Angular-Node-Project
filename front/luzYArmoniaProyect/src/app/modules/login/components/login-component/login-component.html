@@ -23,16 +23,15 @@
 
       <label for="contrasenia">Contraseña:
         @if (formLogin.get('password')?.touched && formLogin.get('password')?.invalid) {
-        @if(formLogin.get('password')?.errors?.['required']){
-            <span class="error">*La contraseña es obligatoria</span>
+          @if(formLogin.get('password')?.errors?.['required']){
+              <span class="error">*La contraseña es obligatoria</span>
+          }
+          @if(formLogin.get('password')?.errors?.['minLength']){
+              <span class="error">*La contraseña debe tener mínimo 8 caracteres, una mayuscula y un número</span>
+          }
         }
-        @if(formLogin.get('password')?.errors?.['minLength']){
-            <span class="error">*La contraseña debe tener mínimo 8 caracteres, una mayuscula y un número</span>
-        }
-      }
       </label>
       <input id="contrasenia" type="password" formControlName="password" placeholder="Contraseña">
-
 
       @if(error){
         <p class="error">*Correo o contraseña invalidos</p>

@@ -1,0 +1,19 @@
+<p-toast position="top-right"></p-toast>
+
+<div class="total-container">
+  <div>
+    <h2>Agregar Aroma</h2>
+  </div>
+  <div class="form-container">
+    <form [formGroup]="formAroma" (ngSubmit)="agregarAroma()">
+      <label for="name">Nombre:
+        @if(formAroma.get('aroma')?.errors?.['required']){
+            <span class="error">*El nombre del aroma es obligatorio</span>
+        }
+      </label>
+      <input id="name" type="text" formControlName="aroma" placeholder="Nombre del aroma">
+
+      <button type="submit">Agregar</button>
+    </form>
+  </div>
+</div>

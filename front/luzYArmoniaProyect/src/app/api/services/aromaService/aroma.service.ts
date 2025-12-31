@@ -16,4 +16,12 @@ export class AromaService{
   getAll(): Observable<Aroma[]>{
     return this.http.get<Aroma[]>(`${this.url}`);
   }
+
+  create(aroma:string): Observable<any>{
+    return this.http.post(`${this.url}/agregar`, { aroma });
+  }
+
+  delete(id:number): Observable<Aroma>{
+    return this.http.delete<Aroma>(`${this.url}/eliminar/${id}`);
+  }
 }

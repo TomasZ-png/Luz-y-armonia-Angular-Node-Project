@@ -16,4 +16,28 @@ export class AromaController{
         }
     }
 
+    async create(req:Request, res:Response){
+        try {
+            const aroma = await aromaService.create(req.body.aroma);
+            console.log(aroma);
+            res.status(200).json({message: 'Aroma agregado correctamente', aroma: aroma});
+        } catch (error:any) {
+            res.status(400).json({message: 'Hubo un error en el controllador', error: error.message})
+        }
+    }
+
+    async delete(req:Request, res:Response){
+        try {
+            const id = Number(req.params.id);
+
+            if(isNaN(id)){
+                return res.status(400).json({message: 'El id debe ser un numero valido'});
+            }
+
+            await aromaService.delete(id);
+            res.status(200).json({message: 'Aroma eliminado correctamente'})
+        } catch (error:any) {
+            res.status(400).json({message:'Error al eliminar el aroma', error: error.message})
+        }
+    }
 }

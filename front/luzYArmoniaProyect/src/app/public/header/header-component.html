@@ -9,35 +9,67 @@
       <ul class="items-nav">
         @if (!admin) {
           <li class="item-nav">
-            <a href="" class="nav-list header">
+            <a class="nav-list header">
               <span class="material-symbols-outlined">shopping_cart</span>
               Mi carrito
             </a>
           </li>
           <li class="item-nav ">
-            <a href="" class="nav-list header">
+            <a class="nav-list header">
               <span class="material-symbols-outlined">favorite</span>
               Mis favoritos
             </a>
           </li>
           <li class="item-nav ">
-            <a href="" class="nav-list header">
+            <a class="nav-list header">
               <span class="material-symbols-outlined">inventory</span>
               Mis compras
             </a>
           </li>
         } @else {
+          <!--
           <li class="item-nav " routerLink="/producto/agregar">
             <a class="nav-list header" >
               <span class="material-symbols-outlined">add</span>
               Agregar producto
             </a>
+          </li>-->
+          <li class="item-nav dropdown-container ">
+            <a class="nav-list dropdown-trigger header">
+              <span class="material-symbols-outlined">add</span>
+              Agregar
+              <span class="material-symbols-outlined arrow">
+                keyboard_arrow_down
+              </span>
+            </a>
+            <div class="dropdown-menu">
+              <ul>
+                <li routerLink="/aroma/agregar" class="dropdown-item">
+                  <a>
+                    <span class="material-symbols-outlined">spa</span>
+                    Aroma
+                  </a>
+                </li>
+                <li class="dropdown-item">
+                  <a>
+                    <span class="material-symbols-outlined">air_freshener</span>
+                    Tipo de producto
+                  </a>
+                </li>
+                <li (onClick)="$event.stopPropagation();" routerLink="/producto/agregar" class="dropdown-item">
+                  <a>
+                    <span class="material-symbols-outlined">candle</span>
+                    Producto
+                  </a>
+                </li>
+              </ul>
+            </div>
           </li>
         }
         <li class="item-nav dropdown-container ">
-            <a class="nav-list dropdown-trigger header" href="#">
+            <a class="nav-list dropdown-trigger header">
               <span class="material-symbols-outlined">account_circle</span>
-              Thomas
+              {{usuario}}
               <span class="material-symbols-outlined arrow">
                 keyboard_arrow_down
               </span>
@@ -45,19 +77,19 @@
             <div class="dropdown-menu">
               <ul>
                 <li class="dropdown-item">
-                  <a href="#">
+                  <a >
                     <span class="material-symbols-outlined">person</span>
                     Mi perfil
                   </a>
                 </li>
                 <li class="dropdown-item">
-                  <a href="#">
+                  <a >
                     <span class="material-symbols-outlined">settings</span>
                     Configuración
                   </a>
                 </li>
                 <li class="dropdown-item">
-                  <a href="#">
+                  <a >
                     <span class="material-symbols-outlined">notifications</span>
                     Notificaciones
                   </a>

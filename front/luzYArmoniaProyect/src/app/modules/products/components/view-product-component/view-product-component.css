@@ -139,11 +139,12 @@
 }
 
 .buttons-section .buy-button{
-  background-color: pink;
+  background-color: palevioletred;
+  color: white;
 }
 
 .buttons-section .buy-button:hover{
-  background-color: palevioletred;
+  background-color: rgb(243, 109, 154);
   color: white;
 }
 

@@ -9,7 +9,7 @@
           <p-button (onClick)="redirectToUpdate(producto.id); $event.stopPropagation()"  icon="pi pi-pencil" severity="warn"/>
           <p-button (onClick)="activarMensajeAlertaDelete(producto); $event.stopPropagation()" icon="pi pi-trash" severity="danger" />
         } @else{
-          <span class="material-symbols-outlined">
+          <span (click)="agregarProductoAlCarrito(producto.id); $event.stopPropagation()" class="material-symbols-outlined">
             add_shopping_cart
             </span>
           <span class="material-symbols-outlined">
@@ -19,7 +19,6 @@
       </div>
       <div class="img-container">
           <img [src]="getPrimerImagen(producto)" alt="">
-
       </div>
       <div class="products-flags">
         @if(producto.premium){

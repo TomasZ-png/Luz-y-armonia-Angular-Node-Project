@@ -1,6 +1,7 @@
 import { type Request, type Response} from 'express';
 import { UsuarioRepository } from "../repository/usuario.repository";
 import { UsuarioService } from "../services/usuario.service";
+import jwt from 'jsonwebtoken';
 
 const usuarioRepository = new UsuarioRepository;
 const usuarioService = new UsuarioService(usuarioRepository);
@@ -20,6 +21,20 @@ export class UsuarioController {
         try {
             const { correo, password } = req.body;
             const usuarioLogueado = await usuarioService.signIn(correo, password);
+
+            // Emitir JWT en cookie httpOnly
+            const token = jwt.sign(
+              { sub: usuarioLogueado.id },
+              process.env.JWT_SECRET || 'secret-key',
+              { expiresIn: '7d' }
+            );
+
+            res.cookie('token', token, {
+              httpOnly: true,
+              secure: process.env.NODE_ENV === 'production',
+              sameSite: 'lax',
+              maxAge: 7 * 24 * 60 * 60 * 1000 // 7 días en ms
+            });
 
             res.status(200).json({message: 'Usuario logueado correctamente.', usuario: usuarioLogueado})
         } catch (error:any) {

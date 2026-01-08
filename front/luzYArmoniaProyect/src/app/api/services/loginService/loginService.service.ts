@@ -19,11 +19,12 @@ export class LoginService{
   private isBrowser = isPlatformBrowser(this.platformId);
 
   registrarse(data: any): Observable<any>{
-    return this.http.post(`${this.url}/registrarse`, data);
+    return this.http.post(`${this.url}/registrarse`, data, { withCredentials: true });
   }
 
   login(data: {correo:string, password:string}): Observable<any>{
-    return this.http.post(`${this.url}/login`, data)
+    // withCredentials: true permite que el navegador guarde la cookie
+    return this.http.post(`${this.url}/login`, data, { withCredentials: true });
   }
 
   guardarUsuarioEnSession(usuario:any){

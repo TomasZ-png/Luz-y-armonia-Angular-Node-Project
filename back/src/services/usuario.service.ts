@@ -1,3 +1,4 @@
+import { MiCarritoRepository } from "../repository/miCarrito.repository";
 import { UsuarioRepository } from "../repository/usuario.repository";
 import bcrypt from "bcrypt";
 
@@ -16,7 +17,7 @@ export class UsuarioService{
         
         const passHashed = await bcrypt.hash(data.password, 10);
         data.password = passHashed;
-
+        
         return await this.usuarioRepository.createUser(data);
     }
 

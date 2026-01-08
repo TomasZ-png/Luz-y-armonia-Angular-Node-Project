@@ -78,6 +78,11 @@ CREATE UNIQUE INDEX "Usuario_correo_key" ON "Usuario"("correo");
 -- CreateIndex
 CREATE UNIQUE INDEX "Aroma_aroma_key" ON "Aroma"("aroma");
 
+ALTER TABLE "Mi_Carrito_Producto"
+ADD CONSTRAINT mi_carrito_producto_unique
+UNIQUE ("idCarrito", "idProducto");
+
+
 -- AddForeignKey
 ALTER TABLE "Producto" ADD CONSTRAINT "fk_producto_aroma" FOREIGN KEY ("idAroma") REFERENCES "Aroma"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 

@@ -1,0 +1,31 @@
+<div>
+  <h2>Mi carrito</h2>
+  <div class="containers">
+    <div class="productos-container">
+      @if (productos && productos.length > 0) {
+        @for (item of productos; track item.idProducto) {
+          <div class="producto-container">
+            <div class="product-section">
+              <img [src]="getPrimerImagen(item)" alt="imagen">
+              <div class="data-container">
+                <h3 class="titles-main">{{item.Producto.nombre}}</h3>
+                <p class="cantidad">Cantidad: {{item.cantidad}}</p>
+                <p class="precio-unitario">${{item.Producto.precio}}</p>
+              </div>
+            </div>
+            <span class="material-symbols-outlined eliminar-product" (click)="eliminarProducto(item.idProducto)">
+              close_small
+            </span>
+          </div>
+        }
+      } @else {
+        <p>No hay productos en tu carrito todavia. Descubre excelentes productos que te pueden interesar y agregalos a tu carrito!</p>
+      }
+    </div>
+    <div class="price-quantity-container">
+      <p class="precio-total">Precio total: ${{precioTotal}}</p>
+      <p>Productos: {{productos.length || 0}}</p>
+      <button class="buy-button">Comprar ahora</button>
+    </div>
+  </div>
+</div>

@@ -3,6 +3,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { LoginService } from '../../api/services/loginService/loginService.service';
 import { Usuario } from '../../modules/products/interface/usuario.interface';
 import { Router, RouterLink } from '@angular/router';
+import { CarritoService } from '../../api/services/carritoService/carritoService.service';
 
 
 @Component({
@@ -14,14 +15,26 @@ import { Router, RouterLink } from '@angular/router';
 export class HeaderComponent implements OnInit{
 
   private loginService = inject(LoginService);
+  private carritoService = inject(CarritoService);
   usuario = null;
   admin = false;
+  cantidadProductoCarrito = 0;
 
   private router = inject(Router);
 
   ngOnInit(): void {
     this.usuario = this.getUserSession();
     this.isAdmin();
+    this.calcularCantidadDeProductoDelCarrito();
+  }
+
+  calcularCantidadDeProductoDelCarrito(){
+    this.carritoService.obtenerCarritoPorUsuario().subscribe({
+      next: (data) => {
+        this.cantidadProductoCarrito = data.Mi_Carrito_Producto.length || 0;
+        console.log('cantidad: ' + this.cantidadProductoCarrito);
+      }
+    })
   }
 
   goToHome(){

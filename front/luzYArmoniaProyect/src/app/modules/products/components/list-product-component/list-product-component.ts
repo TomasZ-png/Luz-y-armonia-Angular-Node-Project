@@ -8,6 +8,7 @@ import { environment } from '../../../../../environments/environment';
 import { ConfirmDialogModule, ConfirmDialog } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Toast, ToastModule } from "primeng/toast";
+import { CarritoService } from '../../../../api/services/carritoService/carritoService.service';
 
 @Component({
   selector: 'app-list-product-component',
@@ -26,6 +27,7 @@ export class ListProductComponent implements OnInit{
     exito: boolean = false;
     private confirmationService = inject(ConfirmationService);
     private messageService = inject(MessageService);
+    private carritoService = inject(CarritoService);
 
 
   ngOnInit(){
@@ -115,6 +117,17 @@ export class ListProductComponent implements OnInit{
         summary: 'Error',
         detail: 'No se pudo eliminar el producto'
       });
+      }
+    })
+  }
+
+  agregarProductoAlCarrito(id:number | null | undefined){
+    this.carritoService.agregarProductoAlCarrito(id!, { cantidad: 1 }).subscribe({
+      next: (data) => {
+        console.log('Producto agregado al carrito: ', data);
+      },
+      error: (error) => {
+        console.error('Error al agregar producto al carrito: ', error);
       }
     })
   }

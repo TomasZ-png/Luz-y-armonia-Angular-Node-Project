@@ -4,7 +4,13 @@ import { prisma } from '../prisma';
 export class UsuarioRepository {
 
     async createUser(data: Prisma.UsuarioCreateInput){
-        return await prisma.usuario.create({ data });
+        return await prisma.usuario.create({
+            data: { 
+                ...data,
+                Mi_Carrito: {
+                    create: {}
+            }}
+        });
     }
 
     async getUserById(id: number){
@@ -19,5 +25,4 @@ export class UsuarioRepository {
             where: {correo}
         })
     }
-
 }

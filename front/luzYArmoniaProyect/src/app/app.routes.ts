@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './public/home/home-component';
 import { AuthGuard } from './api/guards/autentication.guard';
 import { NoAuthGuard } from './api/guards/noAutentication.guard';
+import { MiCarritoComponent } from './modules/carrito/components/mi-carrito-component/mi-carrito-component';
 
 
 export const routes: Routes = [
@@ -15,6 +16,11 @@ export const routes: Routes = [
     path: 'login',
     canActivate: [NoAuthGuard],
     loadChildren: () => import('./modules/login/components/login.routes').then(e=>e.loginRoutes)
+  },
+  {
+    path: 'carrito',
+    canActivate: [AuthGuard],
+    component: MiCarritoComponent
   },
   {
     path: 'producto',

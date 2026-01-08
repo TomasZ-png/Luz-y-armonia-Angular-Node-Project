@@ -8,10 +8,22 @@
     <div class="function-container">
       <ul class="items-nav">
         @if (!admin) {
-          <li class="item-nav">
+          <li routerLink="/carrito" class="item-nav">
             <a class="nav-list header">
               <span class="material-symbols-outlined">shopping_cart</span>
               Mi carrito
+              @if(cantidadProductoCarrito > 0){
+                <span class="material-symbols-outlined">
+                  counter_{{cantidadProductoCarrito}}
+                </span>
+
+                @if(cantidadProductoCarrito > 9){
+                  <span>+</span>
+                  <span class="material-symbols-outlined">
+                    counter_9
+                  </span>
+                }
+              }
             </a>
           </li>
           <li class="item-nav ">

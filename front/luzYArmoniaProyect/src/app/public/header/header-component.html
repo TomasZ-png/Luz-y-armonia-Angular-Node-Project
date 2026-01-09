@@ -13,15 +13,10 @@
               <span class="material-symbols-outlined">shopping_cart</span>
               Mi carrito
               @if(cantidadProductoCarrito > 0){
-                <span class="material-symbols-outlined">
-                  counter_{{cantidadProductoCarrito}}
-                </span>
+                <span class="contador-carrito">{{cantidadProductoCarrito}}</span>
 
                 @if(cantidadProductoCarrito > 9){
-                  <span>+</span>
-                  <span class="material-symbols-outlined">
-                    counter_9
-                  </span>
+                  <span class="contador-carrito">+9</span>
                 }
               }
             </a>

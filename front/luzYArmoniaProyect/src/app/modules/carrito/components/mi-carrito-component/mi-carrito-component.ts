@@ -86,4 +86,9 @@ export class MiCarritoComponent implements OnInit{
       }
     })
   }
+
+  verProducto(id:number | undefined){
+    this.router.navigate([`/producto/${id}`]);
+  }
+
 }

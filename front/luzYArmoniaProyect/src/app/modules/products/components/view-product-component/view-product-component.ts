@@ -8,6 +8,7 @@ import { Button } from "primeng/button";
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Toast } from "primeng/toast";
 import { ConfirmDialog } from "primeng/confirmdialog";
+import { CarritoService } from '../../../../api/services/carritoService/carritoService.service';
 
 @Component({
   selector: 'app-view-product-component',
@@ -30,6 +31,7 @@ private loginService = inject(LoginService);
 exito:boolean = false;
 private confirmationService = inject(ConfirmationService);
 private messageService = inject(MessageService);
+private carritoService = inject(CarritoService);
 
 ngOnInit(): void {
   const id = Number(this.router.snapshot.paramMap.get('id'));
@@ -95,5 +97,42 @@ activarMensajeAlertaDelete(producto:Producto){
       }
     })
   }
+
+  agregarProductoAlCarrito(id:number){
+    this.productoService.getProduct(id).subscribe({
+      next: (data) => {
+        this.carritoService.obtenerCarritoPorUsuario().subscribe({
+          next: (carritoData) => {
+            const productos = carritoData.Mi_Carrito_Producto || [];
+            const cantidadEnElCarrito: number = productos.find((p: { idProducto: number;}) => p.idProducto === id)?.cantidad ?? 0;
+            console.log('Cantidad en el carrito:', cantidadEnElCarrito);
+            console.log('productos:', productos);
+            if(cantidadEnElCarrito! < data.stock){
+              this.carritoService.agregarProductoAlCarrito(id, { cantidad: 1 }).subscribe({
+                next: (data) => {
+                  console.log('Producto agregado al carrito: ', data);
+                  this.messageService.add({
+                    severity: 'success',
+                    summary: 'Exito',
+                    detail: 'Se agrego al carrito exitosamente'
+                  })
+                },
+                error: (error) => {
+                  console.error('Error al agregar producto al carrito: ', error);
+                }
+              })
+            } else {
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Error',
+                detail: 'Alcanzaste el stock maximo del producto en el carrito'
+              });
+            }
+          }
+        });
+      }
+    });
+  }
+
 
 }

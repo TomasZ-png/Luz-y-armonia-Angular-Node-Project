@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { CarritoService } from '../../../../api/services/carritoService/carritoService.service';
 import { ProductoCarrito } from '../../../products/interface/productoCarrito.interface';
 import { environment } from '../../../../../environments/environment';
+import { ProductService } from '../../../../api/services/productService/productService.service';
 
 @Component({
   selector: 'app-mi-carrito-component',
@@ -15,6 +16,7 @@ export class MiCarritoComponent implements OnInit{
 
   private router = inject(Router);
   private carritoService = inject(CarritoService);
+  private productoService = inject(ProductService);
   private imageUrl = environment.img_url;
   productos: ProductoCarrito[] = [];
   precioTotal: number = 0;
@@ -38,15 +40,23 @@ export class MiCarritoComponent implements OnInit{
   }
 
   agregarProductoAlCarrito(id:number){
-    this.carritoService.agregarProductoAlCarrito(id, { cantidad: 1 }).subscribe({
+    this.productoService.getProduct(id).subscribe({
       next: (data) => {
-        console.log('Producto agregado al carrito: ', data);
-        this.cargarCarrito();
-      },
-      error: (error) => {
-        console.error('Error al agregar producto al carrito: ', error);
+        const cantidadEnElCarrito = this.productos.find(p => p.idProducto === id)?.cantidad;
+        console.log('Cantidad en el carrito:', cantidadEnElCarrito);
+        if(cantidadEnElCarrito! < data.stock){
+          this.carritoService.agregarProductoAlCarrito(id, { cantidad: 1 }).subscribe({
+            next: (data) => {
+              console.log('Producto agregado al carrito: ', data);
+              this.cargarCarrito();
+            },
+            error: (error) => {
+              console.error('Error al agregar producto al carrito: ', error);
+            }
+          })
+        }
       }
-    })
+    });
   }
 
   calcularTotalCarrito(){

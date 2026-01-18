@@ -9,6 +9,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { Toast } from "primeng/toast";
 import { ConfirmDialog } from "primeng/confirmdialog";
 import { CarritoService } from '../../../../api/services/carritoService/carritoService.service';
+import { FavoritoService } from '../../../../api/services/favoritoService/favoritoService.service';
 
 @Component({
   selector: 'app-view-product-component',
@@ -29,9 +30,11 @@ img_url = environment.img_url;
 imagenSeleccionada: ImagenProducto | null = null;
 private loginService = inject(LoginService);
 exito:boolean = false;
+exitoFavorito:boolean = false;
 private confirmationService = inject(ConfirmationService);
 private messageService = inject(MessageService);
 private carritoService = inject(CarritoService);
+private favoritoService = inject(FavoritoService);
 
 ngOnInit(): void {
   const id = Number(this.router.snapshot.paramMap.get('id'));
@@ -132,6 +135,27 @@ activarMensajeAlertaDelete(producto:Producto){
         });
       }
     });
+  }
+
+  agregarAFavoritos(id:number){
+    this.favoritoService.agregarAFavoritos(id).subscribe({
+      next: () => {
+        this.exitoFavorito = true;
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Exito',
+          detail: 'Producto agregado a favoritos exitosamente'
+        })
+      },
+      error: (error) => {
+        this.messageService.add({
+                severity: 'error',
+                summary: 'Error',
+                detail: 'No se pudo agregar a favoritos'
+              });
+              console.log('error: ', error);
+      }
+    })
   }
 
 

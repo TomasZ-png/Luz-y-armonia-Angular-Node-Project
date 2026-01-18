@@ -4,17 +4,19 @@ import usuarioRouter from "./usuarioRouter/usuario.routes";
 import aromaRouter from "./aromaRouter/aroma.routes";
 import tipoProductoRouter from "./tipoProductosRouter/tipoProductos.routes";
 import carritoRouter from "./carrito/carrito.routes";
+import favoritoRouter from "./favorito/favorito.routes";
 
 export class AppRoutes{
 
     static get routes(): Router {
         const router = Router();
 
-        router.use('/api/producto', productoRouter)
-        router.use('/api/usuario', usuarioRouter)
-        router.use('/api/aroma', aromaRouter)
-        router.use('/api/tipoProducto', tipoProductoRouter)
-        router.use('/api/carrito', carritoRouter)
+        router.use('/producto', productoRouter)
+        router.use('/usuario', usuarioRouter)
+        router.use('/aroma', aromaRouter)
+        router.use('/tipoProducto', tipoProductoRouter)
+        router.use('/carrito', carritoRouter)
+        router.use('/favoritos', favoritoRouter)
 
         return router;
     }

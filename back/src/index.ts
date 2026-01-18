@@ -20,12 +20,7 @@ app.use(jwtMiddleware);
 
 app.use('/uploads', express.static('uploads'))
 
-
-app.use(AppRoutes.routes);
-
 app.use('/api', AppRoutes.routes)
-
-
 
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);

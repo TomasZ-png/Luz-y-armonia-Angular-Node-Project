@@ -1,0 +1,26 @@
+<div>
+  <h2>Mis favoritos</h2>
+  <div class="containers">
+    <div class="productos-container">
+      @if (favoritos && favoritos.length > 0) {
+        @for (favorito of favoritos; track favorito.id) {
+          <div class="producto-container">
+            <div class="product-section" (click)="verProducto(favorito.id)">
+              <img [src]="getPrimerImagen(favorito)" alt="imagen">
+              <div class="data-container">
+                <h3 class="titles-main">{{favorito.nombre}}</h3>
+
+                <p class="precio-unitario">${{favorito.precio}}</p>
+              </div>
+            </div>
+            <span class="material-symbols-outlined eliminar-product" (click)="eliminarProducto(favorito.id!)">
+              close_small
+            </span>
+          </div>
+        }
+      } @else {
+        <p>No hay productos en tus favoritos todavia. Descubre excelentes productos que te pueden interesar y agregalos a tus favoritos!</p>
+      }
+    </div>
+  </div>
+</div>

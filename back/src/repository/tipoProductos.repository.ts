@@ -23,7 +23,7 @@ export class TipoProductoRepository{
     }
 
     async buscarPorNombre(tipo:string){
-        return await prisma.tipo_de_productos.findUnique({
+        return await prisma.tipo_de_productos.findFirst({
             where: {tipo}
         })
     }

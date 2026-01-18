@@ -1,6 +1,7 @@
 <p-toast></p-toast>
 <p-confirmDialog></p-confirmDialog>
 
+@if (productoSeleccionado) {
 <div class="total-container">
   <div class="product-view-container">
     <div class="imagenes-container">
@@ -17,6 +18,7 @@
       <div>
         <div class="title-section">
           <div class="title-premium">
+
             <h2 class="titles-main">{{productoSeleccionado.nombre}}</h2>
             @if (productoSeleccionado.premium) {
               <p class="premium"><span class="material-symbols-outlined">
@@ -26,7 +28,7 @@
             }
           </div>
           @if (!isAdmin()) {
-            <span class="favorite material-symbols-outlined">
+            <span (click)="agregarAFavoritos(productoSeleccionado.id!)" class="favorite material-symbols-outlined">
               favorite
             </span>
           }
@@ -75,5 +77,7 @@
         }
     </div>
   </div>
-
-  </div>
+</div>
+} @else {
+  <p>El producto no existe</p>
+}

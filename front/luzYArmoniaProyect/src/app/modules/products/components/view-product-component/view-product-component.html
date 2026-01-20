@@ -28,10 +28,16 @@
             }
           </div>
           @if (!isAdmin()) {
-            <span (click)="agregarAFavoritos(productoSeleccionado.id!)" class="favorite material-symbols-outlined">
+
+            <span
+            (click)="agregarAFavoritos(productoSeleccionado.id!)"
+            class="favorite material-symbols-outlined"
+            [class.filled]="favorito"
+            >
               favorite
             </span>
           }
+
         </div>
         <p class="price">${{productoSeleccionado.precio}}</p>
         <p>{{productoSeleccionado.aroma?.aroma}}</p>

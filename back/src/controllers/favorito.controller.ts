@@ -59,4 +59,19 @@ export class FavoritoController{
         }
     }
 
+    async productoEnFav(req:Request, res:Response){
+        try {
+            const idProducto = Number(req.params.id);
+            const idUsuario = Number(req.user?.id);
+
+            if(!idUsuario){
+                return res.status(401).json({ error: 'No autenticado' });
+            }
+
+            const resultado = await favoritoService.productoEnFav(idUsuario, idProducto);
+            res.status(200).json(resultado);
+        } catch (error:any) {
+            res.status(400).json({error: error.message});
+        }
+    }
 }

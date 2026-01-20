@@ -35,6 +35,7 @@ private confirmationService = inject(ConfirmationService);
 private messageService = inject(MessageService);
 private carritoService = inject(CarritoService);
 private favoritoService = inject(FavoritoService);
+favorito: boolean = false;
 
 ngOnInit(): void {
   const id = Number(this.router.snapshot.paramMap.get('id'));
@@ -44,6 +45,13 @@ ngOnInit(): void {
     this.productoSeleccionado = producto;
     this.imagenesProducto = producto.ImagenProducto;
     this.imagenSeleccionada = this.imagenesProducto?.[0] || null;
+
+    this.favoritoService.productoEnFavoritos(this.productoSeleccionado.id!).subscribe({
+      next: (res) => {
+        this.favorito = Boolean(res);
+        console.log(this.favorito);
+      }
+    });
   });
 }
 
@@ -141,6 +149,7 @@ activarMensajeAlertaDelete(producto:Producto){
     this.favoritoService.agregarAFavoritos(id).subscribe({
       next: () => {
         this.exitoFavorito = true;
+        this.favorito = !this.favorito;
         this.messageService.add({
           severity: 'success',
           summary: 'Exito',

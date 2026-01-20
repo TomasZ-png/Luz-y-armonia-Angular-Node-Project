@@ -27,4 +27,8 @@ export class FavoritoService {
     return this.http.delete(`${this.url}/eliminar/${idProducto}`, {withCredentials: true});
   }
 
+  productoEnFavoritos(idProducto: number){
+    return this.http.get(`${this.url}/prodEnFav/${idProducto}`, {withCredentials:true});
+  }
+
 }

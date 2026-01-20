@@ -27,4 +27,9 @@ export class FavoritoService {
         );
     }
 
+    async productoEnFav(idUsuario:number, idProducto:number){
+        const productoEnFav = await this.favoritoRepository.buscarProducto(idUsuario, idProducto);
+
+        return productoEnFav !== null; 
+    }
 }

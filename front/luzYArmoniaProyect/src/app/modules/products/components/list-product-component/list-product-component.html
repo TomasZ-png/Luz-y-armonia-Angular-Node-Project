@@ -8,11 +8,6 @@
         @if(admin){
           <p-button (onClick)="redirectToUpdate(producto.id); $event.stopPropagation()"  icon="pi pi-pencil" severity="warn"/>
           <p-button (onClick)="activarMensajeAlertaDelete(producto); $event.stopPropagation()" icon="pi pi-trash" severity="danger" />
-        } @else{
-
-          <span class="material-symbols-outlined">
-            favorite
-          </span>
         }
       </div>
       <div class="img-container">

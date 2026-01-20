@@ -125,6 +125,19 @@ nav{
   border-bottom: 1px solid #f0f0f0;
 }
 
+.contador-carrito{
+  background-color: white;
+  color: palevioletred;
+  padding: 5px;
+  border-radius: 50px;
+  font-size: 14px;
+  object-fit: fill;
+  height: 19px;
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+}
+
 @media (max-width: 768px) {
   .nav-container {
     flex-direction: column;

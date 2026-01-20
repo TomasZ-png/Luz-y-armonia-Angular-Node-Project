@@ -72,6 +72,14 @@ CREATE TABLE "Mi_Carrito_Producto"(
     FOREIGN KEY ("idProducto") REFERENCES "Producto"("id")
 );
 
+CREATE TABLE "favorito"(
+    "id" SERIAL PRIMARY KEY,
+    "idUsuario" INTEGER NOT NULL,
+    "idProducto" INTEGER NOT NULL,
+    FOREIGN KEY ("idUsuario") REFERENCES "Usuario"("id"),
+    FOREIGN KEY ("idProducto") REFERENCES "Producto"("id") ON DELETE CASCADE
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "Usuario_correo_key" ON "Usuario"("correo");
 

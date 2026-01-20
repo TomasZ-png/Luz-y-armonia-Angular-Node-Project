@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnChanges, OnInit } from '@angular/core';
 import { LoginService } from '../../api/services/loginService/loginService.service';
 import { Usuario } from '../../modules/products/interface/usuario.interface';
 import { Router, RouterLink } from '@angular/router';
@@ -12,7 +12,7 @@ import { CarritoService } from '../../api/services/carritoService/carritoService
   templateUrl: './header-component.html',
   styleUrl: './header-component.css',
 })
-export class HeaderComponent implements OnInit{
+export class HeaderComponent implements OnInit, OnChanges{
 
   private loginService = inject(LoginService);
   private carritoService = inject(CarritoService);
@@ -25,6 +25,10 @@ export class HeaderComponent implements OnInit{
   ngOnInit(): void {
     this.usuario = this.getUserSession();
     this.isAdmin();
+    this.calcularCantidadDeProductoDelCarrito();
+  }
+
+  ngOnChanges(){
     this.calcularCantidadDeProductoDelCarrito();
   }
 

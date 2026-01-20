@@ -3,6 +3,7 @@ import { HomeComponent } from './public/home/home-component';
 import { AuthGuard } from './api/guards/autentication.guard';
 import { NoAuthGuard } from './api/guards/noAutentication.guard';
 import { MiCarritoComponent } from './modules/carrito/components/mi-carrito-component/mi-carrito-component';
+import { FavoritoComponent } from './modules/favoritos/components/favorito-component/favorito-component';
 
 
 export const routes: Routes = [
@@ -21,6 +22,11 @@ export const routes: Routes = [
     path: 'carrito',
     canActivate: [AuthGuard],
     component: MiCarritoComponent
+  },
+  {
+    path: 'favoritos',
+    canActivate: [AuthGuard],
+    component: FavoritoComponent
   },
   {
     path: 'producto',

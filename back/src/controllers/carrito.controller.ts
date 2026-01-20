@@ -13,8 +13,11 @@ export class CarritoController{
             const idUsuario = req.user?.id;
             
             if (!idUsuario) {
-              return res.status(401).json({ error: 'No autenticado' });
+                return res.status(401).json({ error: 'No autenticado' });
             }
+
+            console.log('USER EN REQUEST:', req.user);
+
             
             const carrito = await carritoService.getCarritoByUserId(idUsuario);
             res.status(200).json(carrito);

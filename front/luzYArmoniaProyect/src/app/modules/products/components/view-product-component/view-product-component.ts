@@ -149,12 +149,20 @@ activarMensajeAlertaDelete(producto:Producto){
     this.favoritoService.agregarAFavoritos(id).subscribe({
       next: () => {
         this.exitoFavorito = true;
-        this.favorito = !this.favorito;
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Exito',
-          detail: 'Producto agregado a favoritos exitosamente'
-        })
+        if(!this.favorito){
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Agregado',
+            detail: 'Producto agregado a favoritos'
+          })
+        } else {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Eliminado',
+            detail: 'Producto eliminado de favoritos'
+          })
+        }
+      this.favorito = !this.favorito;
       },
       error: (error) => {
         this.messageService.add({

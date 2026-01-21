@@ -34,7 +34,11 @@
             class="favorite material-symbols-outlined"
             [class.filled]="favorito"
             >
-              favorite
+              @if (favorito) {
+                heart_check
+              } @else {
+                favorite
+              }
             </span>
           }
 

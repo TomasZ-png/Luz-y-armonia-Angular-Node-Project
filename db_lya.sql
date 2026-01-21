@@ -80,6 +80,8 @@ CREATE TABLE "favorito"(
     FOREIGN KEY ("idProducto") REFERENCES "Producto"("id") ON DELETE CASCADE
 );
 
+
+
 -- CreateIndex
 CREATE UNIQUE INDEX "Usuario_correo_key" ON "Usuario"("correo");
 

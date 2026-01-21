@@ -30,16 +30,14 @@
   color: rgba(148, 148, 148, 0.808);
   cursor: pointer;
   transition: 0.1s ease-in-out;
-  font-variation-settings: 'FILL' 0;
 }
 
 .favorite:hover{
-  color: rgba(36, 36, 36, 0.808);
+  color: rgb(255, 83, 140);
 }
 
 .favorite.filled{
   color: rgb(255, 83, 140);
-  font-variation-settings: 'FILL' 1;
 }
 
 .card-imagenes{
@@ -174,4 +172,3 @@
 .descripcion{
   font-style: italic;
 }
-

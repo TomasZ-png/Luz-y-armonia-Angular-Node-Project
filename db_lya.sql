@@ -11,7 +11,6 @@ CREATE TABLE "Usuario" (
     CONSTRAINT "Usuario_pkey" PRIMARY KEY ("id")
 );
 
-
 CREATE TABLE "Tipo_de_productos" (
     "id" SERIAL PRIMARY KEY,
     "tipo" VARCHAR(100) NOT NULL
@@ -81,6 +80,22 @@ CREATE TABLE "favorito"(
 );
 
 
+CREATE TABLE "Compra"(
+    "id" SERIAL PRIMARY KEY,
+    "idUsuario" INTEGER NOT NULL,
+    "total" DOUBLE PRECISION NOT NULL DEFAULT 0,
+    "fecha" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY ("idUsuario") REFERENCES "Usuario"("id")
+);
+
+CREATE TABLE "Producto_Compra" (
+    "id" SERIAL PRIMARY KEY,
+    "idProducto" INTEGER NOT NULL,
+    "cantidad" INTEGER NOT NULL DEFAULT 1,
+    "idCompra" INTEGER NOT NULL,
+    FOREIGN KEY ("idProducto") REFERENCES "Producto"("id"),
+    FOREIGN KEY ("idCompra") REFERENCES "Compra"("id")
+);
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Usuario_correo_key" ON "Usuario"("correo");
@@ -91,7 +106,6 @@ CREATE UNIQUE INDEX "Aroma_aroma_key" ON "Aroma"("aroma");
 ALTER TABLE "Mi_Carrito_Producto"
 ADD CONSTRAINT mi_carrito_producto_unique
 UNIQUE ("idCarrito", "idProducto");
-
 
 -- AddForeignKey
 ALTER TABLE "Producto" ADD CONSTRAINT "fk_producto_aroma" FOREIGN KEY ("idAroma") REFERENCES "Aroma"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

@@ -17,6 +17,7 @@ export class AppRoutes{
         router.use('/tipoProducto', tipoProductoRouter)
         router.use('/carrito', carritoRouter)
         router.use('/favoritos', favoritoRouter)
+        router.use('/compra', favoritoRouter)
 
         return router;
     }

@@ -56,4 +56,10 @@ export class MiCarritoRepository{
             }
         })
     }
+
+    async vaciarCarrito(idUsuario: number){
+        return await prisma.mi_Carrito.deleteMany({
+            where: {idUsuario}
+        })
+    }
 }

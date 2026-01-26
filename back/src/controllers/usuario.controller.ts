@@ -1,5 +1,6 @@
 import { type Request, type Response} from 'express';
 import { UsuarioRepository } from "../repository/usuario.repository";
+import { MiCarritoRepository } from "../repository/miCarrito.repository";
 import { UsuarioService } from "../services/usuario.service";
 import jwt from 'jsonwebtoken';
 
@@ -24,15 +25,15 @@ export class UsuarioController {
 
             // Emitir JWT en cookie httpOnly
             const token = jwt.sign(
-              { sub: usuarioLogueado.id },
-              process.env.JWT_SECRET || 'secret-key',
-              { expiresIn: '7d' }
+                { sub: usuarioLogueado.id },
+                process.env.JWT_SECRET || 'secret-key',
+                { expiresIn: '7d' }
             );
 
             res.cookie('token', token, {
-              httpOnly: true,
-              secure: process.env.NODE_ENV === 'production',
-              sameSite: 'lax',
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                sameSite: 'lax',
               maxAge: 7 * 24 * 60 * 60 * 1000 // 7 días en ms
             });
 

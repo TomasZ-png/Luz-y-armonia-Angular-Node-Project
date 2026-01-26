@@ -7,3 +7,10 @@ export interface CompraProducto{
   cantidad: number,
   producto?: Producto
 }
+
+export interface Compra{
+  id: number,
+  fecha: Date,
+  total: number,
+  productos?: CompraProducto[]
+}

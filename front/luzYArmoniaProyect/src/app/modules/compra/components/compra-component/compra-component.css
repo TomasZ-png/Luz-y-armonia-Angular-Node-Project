@@ -1,0 +1,31 @@
+
+
+.compra-container{
+  border: 1px solid rgba(182, 182, 182, 0.5);
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.compra-section{
+  display: flex;
+  gap: 40px;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.product-section{
+  display: flex;
+  gap: 10px;
+}
+
+.producto-container img{
+  width: 100px;
+  object-fit: contain;
+}
+
+.compras-container{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+}

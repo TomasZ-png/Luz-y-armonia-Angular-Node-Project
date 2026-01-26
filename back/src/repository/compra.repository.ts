@@ -1,5 +1,6 @@
 import { Prisma } from "@prisma/client";
 import { prisma } from "../prisma";
+import productoRouter from "../routes/productoRouter/producto.routes";
 
 
 export class CompraRepository {
@@ -11,9 +12,33 @@ export class CompraRepository {
     }
 
     async getAllByUser(idUsuario:number){
-        return await prisma.compra.findMany({
-            where: {idUsuario}
+        const compras = await prisma.compra.findMany({
+            where: {idUsuario},
+            include: {
+                Producto_Compra: {
+                    include: {
+                        Producto: {
+                            include: {
+                                ImagenProducto: true,
+                                aroma: true,
+                                Tipo_de_productos: true
+                            }
+                        }
+                    }
+                }
+            }
         })
+
+        return compras.map(compra => ({
+            id: compra.id,
+            fecha: compra.fecha,
+            total: compra.total,
+            productos: compra.Producto_Compra.map(pc => ({
+                id: pc.id,
+                cantidad: pc.cantidad,
+                producto: pc.Producto
+            }))
+        }))
     }
 
     async crearProductoCompra(idProducto:number, cantidad:number, idCompra:number){

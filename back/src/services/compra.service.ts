@@ -11,7 +11,6 @@ export class CompraService {
     ){}
 
     async comprarUnidad (idUsuario: number, idProducto: number, cantidad: number){
-
         const producto = await this.productoRepository.getProductById(idProducto);
         
         if(producto!.stock < cantidad){
@@ -19,13 +18,11 @@ export class CompraService {
         }
 
         const compra = await this.compraRepository.createCompra(idUsuario);
-
         await this.compraRepository.crearProductoCompra(
             idProducto, cantidad, compra.id
         );
 
         const total = producto!.precio * cantidad;
-
         await this.compraRepository.actualizarTotal(compra.id, total);
 
         return compra;
@@ -33,6 +30,11 @@ export class CompraService {
 
     async comprarCarrito(idUsuario:number){
         const carritoUser = await this.carritoRepository.getCarritoByUserId(idUsuario);
+
+        if((carritoUser!.Mi_Carrito_Producto).length === 0){
+            throw new Error('El carrito esta vacio');
+        }
+
         const compra = await this.compraRepository.createCompra(idUsuario);
 
         let total = 0;
@@ -47,8 +49,9 @@ export class CompraService {
             total += item.Producto.precio * item.cantidad;
         }
 
-        await this.compraRepository.actualizarTotal(compra.id, total);
+        
 
+        await this.compraRepository.actualizarTotal(compra.id, total);
         await this.carritoRepository.vaciarCarrito(carritoUser!.id);
 
         return compra;

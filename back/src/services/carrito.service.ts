@@ -3,11 +3,13 @@ import { MiCarritoRepository } from "../repository/miCarrito.repository";
 export class CarritoService {
     constructor(private carritoRepository: MiCarritoRepository){}
 
-    async getCarritoByUserId(id:number){
-        const carrito = await this.carritoRepository.getCarritoByUserId(id);
+    async getCarritoByUserId(idUsuario:number){
+        let carrito = await this.carritoRepository.getCarritoByUserId(idUsuario);
 
         if(!carrito){
-            throw new Error('El carrito con el id solicitado no existe.');
+            await this.carritoRepository.createCarrito(idUsuario);
+            carrito = await this.carritoRepository.getCarritoByUserId(idUsuario);
+            // throw new Error('El carrito con el id solicitado no existe.');
         }
 
         return carrito;

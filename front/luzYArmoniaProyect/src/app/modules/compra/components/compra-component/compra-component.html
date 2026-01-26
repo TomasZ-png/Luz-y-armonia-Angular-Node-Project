@@ -1,1 +1,33 @@
-<p>compra-component works!</p>
+<div>
+  <h2>Mis compras</h2>
+  <div class="containers">
+    <div class="compras-container">
+      @if (misCompras && misCompras.length > 0) {
+        @for (compra of misCompras; track compra.id) {
+          <div class="compra-container">
+            <div class="compra-section">
+              <p>Id: #{{compra.id}}</p>
+              <p>Fecha: {{formatearFecha(compra.fecha) }}</p>
+              <p>Productos: {{compra.productos?.length}}</p>
+              <p>Total: ${{compra.total}}</p>
+            </div>
+            @for(producto of compra.productos; track producto.id){
+              <div class="producto-container">
+                <div class="product-section">
+                  <img [src]="getPrimerImagen(producto.producto!)" alt="imagen">
+                  <div class="data-container">
+                    <h3 class="titles-main">{{producto.producto?.nombre}}</h3>
+                    <p class="precio-unitario">${{producto.producto?.precio}}</p>
+                    <p>Cantidad: {{producto.cantidad}}</p>
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+          }
+      } @else {
+        <p style="text-align: center;">No hay compras registradas. Descubre productos que te pueden encantar!</p>
+      }
+    </div>
+  </div>
+</div>

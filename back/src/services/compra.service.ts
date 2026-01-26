@@ -11,7 +11,6 @@ export class CompraService {
     ){}
 
     async comprarUnidad (idUsuario: number, idProducto: number, cantidad: number){
-
         const producto = await this.productoRepository.getProductById(idProducto);
         
         if(producto!.stock < cantidad){
@@ -19,13 +18,11 @@ export class CompraService {
         }
 
         const compra = await this.compraRepository.createCompra(idUsuario);
-
         await this.compraRepository.crearProductoCompra(
             idProducto, cantidad, compra.id
         );
 
         const total = producto!.precio * cantidad;
-
         await this.compraRepository.actualizarTotal(compra.id, total);
 
         return compra;
@@ -48,7 +45,6 @@ export class CompraService {
         }
 
         await this.compraRepository.actualizarTotal(compra.id, total);
-
         await this.carritoRepository.vaciarCarrito(carritoUser!.id);
 
         return compra;

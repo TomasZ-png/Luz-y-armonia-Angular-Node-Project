@@ -5,6 +5,7 @@ import aromaRouter from "./aromaRouter/aroma.routes";
 import tipoProductoRouter from "./tipoProductosRouter/tipoProductos.routes";
 import carritoRouter from "./carrito/carrito.routes";
 import favoritoRouter from "./favorito/favorito.routes";
+import compraRouter from "./compra/compra.routes";
 
 export class AppRoutes{
 
@@ -17,7 +18,7 @@ export class AppRoutes{
         router.use('/tipoProducto', tipoProductoRouter)
         router.use('/carrito', carritoRouter)
         router.use('/favoritos', favoritoRouter)
-        router.use('/compra', favoritoRouter)
+        router.use('/compra', compraRouter)
 
         return router;
     }

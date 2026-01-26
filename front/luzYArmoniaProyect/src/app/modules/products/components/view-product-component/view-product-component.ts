@@ -10,6 +10,7 @@ import { Toast } from "primeng/toast";
 import { ConfirmDialog } from "primeng/confirmdialog";
 import { CarritoService } from '../../../../api/services/carritoService/carritoService.service';
 import { FavoritoService } from '../../../../api/services/favoritoService/favoritoService.service';
+import { CompraService } from '../../../../api/services/compraService/compra.service';
 
 @Component({
   selector: 'app-view-product-component',
@@ -35,7 +36,9 @@ private confirmationService = inject(ConfirmationService);
 private messageService = inject(MessageService);
 private carritoService = inject(CarritoService);
 private favoritoService = inject(FavoritoService);
+private compraService = inject(CompraService);
 favorito: boolean = false;
+compraExito: boolean = false;
 
 ngOnInit(): void {
   const id = Number(this.router.snapshot.paramMap.get('id'));
@@ -175,5 +178,25 @@ activarMensajeAlertaDelete(producto:Producto){
     })
   }
 
+  comprarProducto(idProducto:number){
+    this.compraService.comprarProducto(idProducto, 2).subscribe({
+      next: () => {
+        this.compraExito = true;
+        this.messageService.add({
+            severity: 'success',
+            summary: 'Comprado',
+            detail: 'Producto comprado exitosamente'
+        })
+      },
+      error: (error) => {
+        console.log('Error al comprar', error)
+        this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Error al comprar el producto'
+        })
+      }
+    })
+  }
 
 }

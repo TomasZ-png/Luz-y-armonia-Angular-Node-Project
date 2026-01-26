@@ -103,6 +103,7 @@ export class MiCarritoComponent implements OnInit{
     this.compraService.comprarCarrito().subscribe({
       next: () => {
         this.compraExito = true;
+        this.cargarCarrito();
         this.messageService.add({
             severity: 'success',
             summary: 'Comprado',
@@ -110,12 +111,21 @@ export class MiCarritoComponent implements OnInit{
         })
       },
       error: (error) => {
-        console.log('Error al comprar', error)
-        this.messageService.add({
+        if(this.productos.length === 0){
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'El carrito esta vacio.'
+        });
+        } else {
+
+          console.log('Error al comprar', error)
+          this.messageService.add({
             severity: 'error',
             summary: 'Error',
             detail: 'Error al comprar el carrito'
-        })
+          })
+        }
       }
     })
   }

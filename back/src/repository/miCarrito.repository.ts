@@ -57,9 +57,9 @@ export class MiCarritoRepository{
         })
     }
 
-    async vaciarCarrito(idUsuario: number){
-        return await prisma.mi_Carrito.deleteMany({
-            where: {idUsuario}
-        })
+    async vaciarCarrito(idCarrito: number){
+        return await prisma.mi_Carrito_Producto.deleteMany({
+            where:{idCarrito}
+            })   
     }
 }

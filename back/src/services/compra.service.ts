@@ -18,12 +18,16 @@ export class CompraService {
         }
 
         const compra = await this.compraRepository.createCompra(idUsuario);
+        
         await this.compraRepository.crearProductoCompra(
             idProducto, cantidad, compra.id
         );
 
         const total = producto!.precio * cantidad;
         await this.compraRepository.actualizarTotal(compra.id, total);
+
+        const nuevoStock = producto!.stock - cantidad;
+        await this.productoRepository.actualizarStock(idProducto, nuevoStock);
 
         return compra;
     }
@@ -45,6 +49,10 @@ export class CompraService {
                 item.cantidad,
                 compra.id
             );
+
+            const nuevoStock = item.Producto.stock - item.cantidad;
+
+            await this.productoRepository.actualizarStock(item.Producto.id, nuevoStock);
 
             total += item.Producto.precio * item.cantidad;
         }

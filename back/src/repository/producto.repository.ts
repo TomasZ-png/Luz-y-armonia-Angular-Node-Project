@@ -14,6 +14,13 @@ export class ProductoRepository{
         })
     }
 
+    async actualizarStock(id:number, nuevoStock:number){
+        return await prisma.producto.update({
+            where: {id},
+            data: {stock: nuevoStock}
+        })
+    }
+
     async deleteProduct(id:number){
         return await prisma.producto.delete({
             where: {id}

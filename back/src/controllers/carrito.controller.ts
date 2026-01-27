@@ -1,9 +1,11 @@
 import { type Request, type Response } from "express"
 import { MiCarritoRepository } from "../repository/miCarrito.repository";
 import { CarritoService } from "../services/carrito.service";
+import { ProductoRepository } from "../repository/producto.repository";
 
 const carritoRepository = new MiCarritoRepository();
-const carritoService = new CarritoService(carritoRepository);
+const productoRepository = new ProductoRepository();
+const carritoService = new CarritoService(carritoRepository, productoRepository);
 
 export class CarritoController{
 
@@ -16,7 +18,6 @@ export class CarritoController{
             }
 
             console.log('USER EN REQUEST:', req.user);
-
             
             const carrito = await carritoService.getCarritoByUserId(idUsuario);
             res.status(200).json(carrito);

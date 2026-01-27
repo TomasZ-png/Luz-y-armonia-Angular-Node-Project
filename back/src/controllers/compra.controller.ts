@@ -31,7 +31,16 @@ export class CompraController {
                 return res.status(401).json({ error: 'Datos invalidos, cantidad no valida' });
             }
 
+            // const producto = await productoRepository.getProductById(idProducto);
+            
+            // if(producto!.stock < cantidad){
+            //     return res.status(400).json({error: 'La cantidad es mayor al stock disponible'});
+            // }
+            
             const compra = await compraService.comprarUnidad(idUsuario, idProducto, cantidad);
+            // const stockActualizado = producto!.stock - cantidad;
+
+            // await productoRepository.actualizarStock(idProducto, stockActualizado)
             res.status(200).json(compra);
         } catch (error:any) {
             res.status(400).json({message: error.message});            

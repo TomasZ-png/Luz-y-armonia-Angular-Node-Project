@@ -1,7 +1,8 @@
 import { MiCarritoRepository } from "../repository/miCarrito.repository";
+import { ProductoRepository } from '../repository/producto.repository';
 
 export class CarritoService {
-    constructor(private carritoRepository: MiCarritoRepository){}
+    constructor(private carritoRepository: MiCarritoRepository, private productoRepository:ProductoRepository ){}
 
     async getCarritoByUserId(idUsuario:number){
         let carrito = await this.carritoRepository.getCarritoByUserId(idUsuario);
@@ -9,29 +10,40 @@ export class CarritoService {
         if(!carrito){
             await this.carritoRepository.createCarrito(idUsuario);
             carrito = await this.carritoRepository.getCarritoByUserId(idUsuario);
-            // throw new Error('El carrito con el id solicitado no existe.');
         }
 
         return carrito;
     }
 
     async agregarProductoAlCarrito(userId: number, productoId:number, cantidad:number){
-        const carrito = await this.carritoRepository.getCarritoByUserId(userId);
+        let carrito = await this.carritoRepository.getCarritoByUserId(userId);
 
         if(!carrito){
-            throw new Error('El carrito con el id solicitado no existe.');
+            await this.carritoRepository.createCarrito(userId);
+            carrito = await this.carritoRepository.getCarritoByUserId(userId);
         }
 
-        return await this.carritoRepository.agregarProductoAlCarrito(carrito.id, productoId, cantidad);
+        const producto = await this.productoRepository.getProductById(productoId);
+
+        if(!producto) {
+            throw new Error('El producto no existe');
+        }
+
+        if(producto.stock < cantidad){
+            throw new Error('La cantidad supera al stock');
+        }
+
+        return await this.carritoRepository.agregarProductoAlCarrito(carrito!.id, productoId, cantidad);
     }
 
     async eliminarProductoDelCarrito(userId:number, productoId:number){
-        const carrito = await this.carritoRepository.getCarritoByUserId(userId);
+        let carrito = await this.carritoRepository.getCarritoByUserId(userId);
 
         if(!carrito){
-            throw new Error('El carrito con el id solicitado no existe.');
+            await this.carritoRepository.createCarrito(userId);
+            carrito = await this.carritoRepository.getCarritoByUserId(userId);
         }
 
-        return await this.carritoRepository.eliminarProductoDelCarrito(carrito.id, productoId);
+        return await this.carritoRepository.eliminarProductoDelCarrito(carrito!.id, productoId);
     }
 }

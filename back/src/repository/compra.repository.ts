@@ -3,6 +3,8 @@ import { prisma } from "../prisma";
 import productoRouter from "../routes/productoRouter/producto.routes";
 
 
+
+
 export class CompraRepository {
 
     async createCompra(idUsuario:number) {

@@ -83,6 +83,8 @@ CREATE TABLE "favorito"(
 CREATE TABLE "Compra"(
     "id" SERIAL PRIMARY KEY,
     "idUsuario" INTEGER NOT NULL,
+    "estado" VARCHAR(30) NOT NULL,
+    "paymentId" VARCHAR(100),
     "total" DOUBLE PRECISION NOT NULL DEFAULT 0,
     "fecha" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY ("idUsuario") REFERENCES "Usuario"("id")

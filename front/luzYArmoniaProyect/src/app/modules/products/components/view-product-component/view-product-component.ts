@@ -11,6 +11,7 @@ import { ConfirmDialog } from "primeng/confirmdialog";
 import { CarritoService } from '../../../../api/services/carritoService/carritoService.service';
 import { FavoritoService } from '../../../../api/services/favoritoService/favoritoService.service';
 import { CompraService } from '../../../../api/services/compraService/compra.service';
+import { CompraProducto, Compra } from '../../interface/compra.interface';
 
 @Component({
   selector: 'app-view-product-component',
@@ -37,6 +38,7 @@ private messageService = inject(MessageService);
 private carritoService = inject(CarritoService);
 private favoritoService = inject(FavoritoService);
 private compraService = inject(CompraService);
+idCompra: number = 0;
 favorito: boolean = false;
 compraExito: boolean = false;
 
@@ -180,13 +182,16 @@ activarMensajeAlertaDelete(producto:Producto){
 
   comprarProducto(idProducto:number){
     this.compraService.comprarProducto(idProducto, 2).subscribe({
-      next: () => {
+      next: (res: Compra) => {
+        this.idCompra = res.id;
+        console.log('idCompra:' + this.idCompra)
         this.compraExito = true;
         this.messageService.add({
             severity: 'success',
             summary: 'Comprado',
             detail: 'Producto comprado exitosamente'
         })
+        this.redirectToVistaCompra(this.idCompra);
       },
       error: (error) => {
         console.log('Error al comprar', error)
@@ -197,6 +202,10 @@ activarMensajeAlertaDelete(producto:Producto){
         })
       }
     })
+  }
+
+  redirectToVistaCompra(idCompra:number){
+    return this.routes.navigate([`compra/procesar-comprar/${idCompra}`]);
   }
 
 }

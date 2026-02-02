@@ -7,6 +7,7 @@ import carritoRouter from "./carrito/carrito.routes";
 import favoritoRouter from "./favorito/favorito.routes";
 import compraRouter from "./compra/compra.routes";
 import mercadoPagoRouter from "./pagoRouter/pago.routes";
+import webhookRouter from "./webhookRouter/webhook.routes";
 
 export class AppRoutes{
 
@@ -21,6 +22,7 @@ export class AppRoutes{
         router.use('/favoritos', favoritoRouter)
         router.use('/compra', compraRouter)
         router.use('/pagos', mercadoPagoRouter)
+        router.use('/webhook', webhookRouter)
 
         return router;
     }

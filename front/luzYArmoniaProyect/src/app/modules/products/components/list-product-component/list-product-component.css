@@ -45,7 +45,7 @@
 .img-container img{
   width: 260px;
   height: 230px;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .products-flags{

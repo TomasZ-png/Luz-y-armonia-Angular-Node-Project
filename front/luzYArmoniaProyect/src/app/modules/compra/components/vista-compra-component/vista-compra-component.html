@@ -16,10 +16,15 @@
     </div>
   </div>
   <div class="payment-container">
-    <h3 class="title-pay">Pagar con Mercado Pago</h3>
-    <!-- <img src="front\luzYArmoniaProyect\src\app\shared\images\MP_RGB_HANDSHAKE_color_horizontal.png" alt="mercado pago"> -->
-    <hr>
-    <p class="total">Total a pagar: ${{compra.total}}</p>
-    <button (click)="pagar()">Pagar</button>
+    @if(pagoPendiente){
+
+      <h3 class="title-pay">Pagar con Mercado Pago</h3>
+      <!-- <img src="front\luzYArmoniaProyect\src\app\shared\images\MP_RGB_HANDSHAKE_color_horizontal.png" alt="mercado pago"> -->
+      <hr>
+      <p class="total">Total a pagar: ${{compra.total}}</p>
+      <button (click)="pagar()">Pagar</button>
+    } @else {
+      <h2>Pago realizado</h2>
+    }
   </div>
 </div>

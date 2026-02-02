@@ -3,6 +3,7 @@ import { Producto } from '../../../products/interface/product.interface';
 import { Compra, CompraProducto } from '../../../products/interface/compra.interface';
 import { environment } from '../../../../../environments/environment';
 import { CompraService } from '../../../../api/services/compraService/compra.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-compra-component',
@@ -15,6 +16,7 @@ export class CompraComponent implements OnInit {
   misCompras: Compra[] = [];
   private imageUrl = environment.img_url;
   private compraService = inject(CompraService);
+  private routes = inject(Router);
 
   ngOnInit(): void {
     this.cargarMisCompras();
@@ -40,6 +42,10 @@ export class CompraComponent implements OnInit {
 
   formatearFecha(fecha: Date) {
     return new Date(fecha).toLocaleDateString('es-AR');
+  }
+
+  redirectToVistaCompra(idCompra:number){
+    return this.routes.navigate([`compra/procesar-comprar/${idCompra}`]);
   }
 
 }

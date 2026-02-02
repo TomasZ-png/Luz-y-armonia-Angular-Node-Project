@@ -17,6 +17,7 @@ export class VistaCompraComponent implements OnInit{
   private compraService = inject(CompraService);
   private idCompra = Number(this.router.snapshot.paramMap.get('id'));
   backImageUrl = environment.img_url;
+  pagoPendiente: boolean = false;
   compra!: Compra;
 
   ngOnInit(){
@@ -27,6 +28,10 @@ export class VistaCompraComponent implements OnInit{
     this.compraService.obtenerCompra(idCompra).subscribe({
       next: (res: Compra) => {
         this.compra = res;
+        if(this.compra.estado === 'PENDIENTE_PAGO' || this.compra.estado === 'CREADA'){
+          this.pagoPendiente = true;
+        }
+        console.log(this.pagoPendiente)
       },
       error: (error: any) => {
         console.log(error.message)

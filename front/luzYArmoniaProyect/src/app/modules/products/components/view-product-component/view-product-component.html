@@ -52,14 +52,26 @@
         @if(!isAdmin()){
           <div class="quantity-section">
             <label for="quantity">Cantidad:</label>
-            <input id="quantity" type="number" min="1" [max]="productoSeleccionado.stock">
+            <input
+              id="quantity"
+              type="number"
+              min="1"
+              [max]="productoSeleccionado.stock"
+              [(ngModel)]="cantidadSeleccionada"
+            />
           </div>
           <div class="buttons-section">
-            <button (click)="comprarProducto(productoSeleccionado.id!)" class="buy-button">Comprar ahora</button>
-            <button (click)="agregarProductoAlCarrito(productoSeleccionado.id!)" class="cart-button">
-              <span class="material-symbols-outlined">add_shopping_cart</span>
-              Agregar al carrito
-            </button>
+            @if(!sinStock){
+              <button (click)="comprarProducto(productoSeleccionado.id!)" class="buy-button">Comprar ahora</button>
+              <button (click)="agregarProductoAlCarrito(productoSeleccionado.id!)" class="cart-button">
+                <span class="material-symbols-outlined">add_shopping_cart</span>
+                Agregar al carrito
+              </button>
+            } @else {
+              <p class="sinStock"> <span class="material-symbols-outlined">
+                info
+              </span>El producto actualmente no cuenta con stock disponible.</p>
+            }
           </div>
         } @else {
           <div class="admin-section">

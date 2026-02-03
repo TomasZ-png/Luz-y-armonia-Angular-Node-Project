@@ -172,3 +172,14 @@
 .descripcion{
   font-style: italic;
 }
+
+.sinStock{
+  text-align: center;
+  border: solid 1px rgb(180, 180, 180);
+  border-radius: 5px;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+  color: rgb(70, 70, 70);
+}

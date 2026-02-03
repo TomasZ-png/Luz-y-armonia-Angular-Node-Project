@@ -13,15 +13,19 @@ import { FavoritoService } from '../../../../api/services/favoritoService/favori
 import { CompraService } from '../../../../api/services/compraService/compra.service';
 import { CompraProducto, Compra } from '../../interface/compra.interface';
 import { FormsModule } from '@angular/forms';
+import { ImageModule } from 'primeng/image';
 
 @Component({
   selector: 'app-view-product-component',
-  imports: [Button, Toast, ConfirmDialog, FormsModule],
+  imports: [Button, Toast, ConfirmDialog, FormsModule, ImageModule],
   templateUrl: './view-product-component.html',
   styleUrl: './view-product-component.css',
+  standalone: true,
   providers: [ConfirmationService, MessageService],
 
 })
+
+
 export class ViewProductComponent implements OnInit{
 
 private router = inject(ActivatedRoute);

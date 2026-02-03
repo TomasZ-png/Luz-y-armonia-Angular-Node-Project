@@ -11,7 +11,15 @@
         }
       </div>
       <div class="image-preview">
-        <img class="imagen-seleccionada" [src]="img_url + imagenSeleccionada?.url" [alt]="'imagen ' + imagenSeleccionada?.id">
+          <p-image
+          class="imagen-seleccionada"
+          [src]="img_url + imagenSeleccionada?.url"
+          [alt]="'imagen ' + imagenSeleccionada?.id"
+          [preview]="true"
+          width="450"
+          objectFit="contain"
+          >
+        </p-image>
       </div>
     </div>
     <div class="product-data">

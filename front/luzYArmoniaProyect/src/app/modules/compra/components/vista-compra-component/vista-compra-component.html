@@ -2,8 +2,40 @@
 
 <div class="total-container">
   <div class="compra-details">
-    <h3>Id de compra: #{{compra.id}}</h3>
-    <p>Fecha: {{formatearFecha(compra.fecha)}}</p>
+    <div class="compra-info">
+      <div style="display: flex; align-items: center; gap: 20px;">
+        <h3>Id de compra: #{{compra.id}}</h3>
+        <p>Fecha: {{formatearFecha(compra.fecha)}}</p>
+      </div>
+      <div class="status-container">
+        @if(compra.estado === 'PAGADA'){
+          <P class="status" style="color: green;">
+            <span class="material-symbols-outlined">
+              check_circle
+            </span>
+            Pagado
+          </P>
+        } @else if (compra.estado === 'PENDIENTE_PAGO') {
+          <P class="status" style="color: rgb(255, 174, 0);">
+            <span class="material-symbols-outlined">
+              history_toggle_off
+            </span>
+            Pago pendiente
+          </P>
+        } @else if (compra.estado === 'CANCELADA') {
+          <P class="status" style="color: red;">
+            <span class="material-symbols-outlined">
+              cancel
+            </span>
+            Cancelada
+          </P>
+        } @else {
+          <P class="status" style="color: rgb(150, 150, 150);">
+
+            Creada
+        }
+      </div>
+      </div>
     <div class="producto-container">
       @for(item of compra.productos; track item.idProducto){
         <img class="img-producto" [src]="getPrimerImagen(item.producto!)" alt="">
@@ -14,17 +46,15 @@
         </div>
       }
     </div>
-  </div>
-  <div class="payment-container">
-    @if(pagoPendiente){
 
+  </div>
+  @if(pagoPendiente){
+    <div class="payment-container">
       <h3 class="title-pay">Pagar con Mercado Pago</h3>
       <!-- <img src="front\luzYArmoniaProyect\src\app\shared\images\MP_RGB_HANDSHAKE_color_horizontal.png" alt="mercado pago"> -->
       <hr>
       <p class="total">Total a pagar: ${{compra.total}}</p>
       <button (click)="pagar()">Pagar</button>
-    } @else {
-      <h2>Pago realizado</h2>
-    }
-  </div>
+    </div>
+  }
 </div>

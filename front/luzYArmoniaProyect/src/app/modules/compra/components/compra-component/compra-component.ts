@@ -17,6 +17,7 @@ export class CompraComponent implements OnInit {
   private imageUrl = environment.img_url;
   private compraService = inject(CompraService);
   private routes = inject(Router);
+  comprasOrdenadas: Compra[] = [];
 
   ngOnInit(): void {
     this.cargarMisCompras();
@@ -27,6 +28,10 @@ export class CompraComponent implements OnInit {
     this.compraService.obtenerCompras().subscribe({
       next: (data: Compra[]) => {
         this.misCompras = data;
+        this.comprasOrdenadas = [...this.misCompras].sort(
+          (a, b) =>
+            new Date(b.fecha).getTime() - new Date(a.fecha).getTime()
+        );
       },
       error: (error) => {
         console.log('No se pudo cargar las compras', error);

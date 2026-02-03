@@ -66,6 +66,8 @@ export class CompraRepository {
             id: compra.id,
             fecha: compra.fecha,
             total: compra.total,
+            estado: compra.estado,
+            paymentId: compra.paymentId,
             productos: compra.Producto_Compra.map(pc => ({
                 id: pc.id,
                 cantidad: pc.cantidad,

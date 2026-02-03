@@ -76,6 +76,23 @@
             return await this.compraRepository.getAllByUser(idUsuario);
         }
 
+        async expirarCompra(idCompra:number){
+            const compra = await this.compraRepository.getCompraById(idCompra);
+
+            if(!compra){
+                throw new Error('La compra no existe');
+            }
+
+            if(['PENDIENTE_PAGO', 'CREADA'].includes(compra.estado)){
+                const currentDate = new Date();
+                const compraDate = compra.fecha;
+                
+                if(compraDate - currentDate < 0){
+                    await this.compraRepository.actualizarEstadoCompra(idCompra, 'EXPIRADA');
+                }
+            }
+        }
+
         async marcarCompraComoPagada(compraId:number){
             const compra = await this.compraRepository.getCompraById(compraId);
 
@@ -84,7 +101,7 @@
                 throw new Error('La compra no existe');
             }
 
-            if(!['PENDIENTE_PAGO', 'CREADA'].includes(compra.estado)){
+            if(!['PENDIENTE_PAGO'].includes(compra.estado)){
                 console.log('El estado de la compra no es pendiente de pago, no se puede marcar como pagada');
                 return;
             }

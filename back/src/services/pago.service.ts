@@ -17,7 +17,7 @@ export class MercadoPagoService {
       throw new Error('La compra no existe');
     }
 
-    if(compra.estado !== 'CREADA'){
+    if(!['CREADA', 'PENDIENTE_PAGO'].includes(compra.estado)){
       throw new Error('El estado de la compra ya no es "Creada" para pagar.');
     }
 
@@ -60,34 +60,5 @@ export class MercadoPagoService {
       preferenceId: response.data.id,
       initPoint: response.data.init_point
     }
-
-    // console.log('📦 PREFERENCE BODY:', JSON.stringify(preference, null, 2));
-    // console.log('🔑 TOKEN:', MP_ACCESS_TOKEN?.substring(0, 30) + '...');
-    // console.log('🌐 URL:', MP_API_URL);
-
-    // try {
-    //   const response = await axios.post(MP_API_URL, preference, {
-    //     headers: {
-    //       'Authorization': `Bearer ${MP_ACCESS_TOKEN}`,
-    //       'Content-Type': 'application/json',
-    //     },
-    //     timeout: 10000,
-    //   });
-
-    //   console.log('✅ RESPUESTA COMPLETA:', response.status, response.data.id);
-
-    //   return {
-    //     preferenceId: response.data.id,
-    //     initPoint: response.data.init_point,
-    //     sandboxInitPoint: response.data.sandbox_init_point,
-    //   };
-    // } catch (error: any) {
-    //   console.error('🔥 ERROR COMPLETO:', {
-    //     status: error.response?.status,
-    //     data: error.response?.data,
-    //     message: error.message,
-    //   });
-    //   throw error;
-    // }
   }
 }

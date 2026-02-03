@@ -8,7 +8,16 @@
         <p>Fecha: {{formatearFecha(compra.fecha)}}</p>
       </div>
       <div class="status-container">
-        @if(compra.estado === 'PAGADA'){
+        @if(compra.estado !== 'CREADA'){
+
+          <P class="status" [style.color]="color">
+            <span class="material-symbols-outlined">
+              {{icono}}
+            </span>
+            {{texto}}
+          </P>
+        }
+        <!-- @if(compra.estado === 'PAGADA'){
           <P class="status" style="color: green;">
             <span class="material-symbols-outlined">
               check_circle
@@ -30,10 +39,13 @@
             Cancelada
           </P>
         } @else {
-          <P class="status" style="color: rgb(150, 150, 150);">
-
-            Creada
-        }
+          <P class="status" style="color: rgb(114, 114, 114);">
+            <span class="material-symbols-outlined">
+              hourglass_disabled
+            </span>
+            Expirada
+          </P>
+        } -->
       </div>
       </div>
     <div class="producto-container">

@@ -73,7 +73,13 @@
         }
 
         async getCompras(idUsuario:number){
-            return await this.compraRepository.getAllByUser(idUsuario);
+            const compras = await this.compraRepository.getAllByUser(idUsuario);
+
+            for(const compra of compras){
+                await this.expirarCompra(compra.id);
+            }
+
+            return compras;
         }
 
         async expirarCompra(idCompra:number){
@@ -84,10 +90,12 @@
             }
 
             if(['PENDIENTE_PAGO', 'CREADA'].includes(compra.estado)){
-                const currentDate = new Date();
-                const compraDate = compra.fecha;
+                const now = Date.now();
+                const compraDate = new Date(compra.fecha).getTime();
                 
-                if(compraDate - currentDate < 0){
+                const horas24 = 1000 * 60 * 60 * 24;
+
+                if(now - compraDate > horas24){
                     await this.compraRepository.actualizarEstadoCompra(idCompra, 'EXPIRADA');
                 }
             }

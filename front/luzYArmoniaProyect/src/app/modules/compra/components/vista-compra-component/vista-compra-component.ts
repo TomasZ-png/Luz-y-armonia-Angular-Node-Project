@@ -19,6 +19,9 @@ export class VistaCompraComponent implements OnInit{
   backImageUrl = environment.img_url;
   pagoPendiente: boolean = false;
   compra!: Compra;
+  icono: string = '';
+  color: string = '';
+  texto: string = '';
 
   ngOnInit(){
     this.cargarCompra(this.idCompra);
@@ -31,6 +34,7 @@ export class VistaCompraComponent implements OnInit{
         if(this.compra.estado === 'PENDIENTE_PAGO' || this.compra.estado === 'CREADA'){
           this.pagoPendiente = true;
         }
+        this.establecerEstadoCompra();
         console.log(this.pagoPendiente)
       },
       error: (error: any) => {
@@ -58,6 +62,26 @@ export class VistaCompraComponent implements OnInit{
         console.error('Error al iniciar pago', err);
       }
     })
+  }
+
+  establecerEstadoCompra(){
+    if(this.compra.estado === 'PENDIENTE_PAGO'){
+      this.color = 'rgb(255, 174, 0)';
+      this.icono = 'history_toggle_off';
+      this.texto = 'Pago pendiente';
+    } else if(this.compra.estado === 'CANCELADA'){
+      this.color = 'red';
+      this.icono = 'cancel';
+      this.texto = 'Cancelada';
+    } else if(this.compra.estado === 'EXPIRADA'){
+      this.color = 'rgb(114, 114, 114)';
+      this.icono = 'hourglass_disabled';
+      this.texto = 'Expirada';
+    } else {
+      this.color = 'green';
+      this.icono = 'check_circle';
+      this.texto = 'Pagado';
+    }
   }
 
 }

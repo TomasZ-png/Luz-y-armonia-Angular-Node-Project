@@ -12,5 +12,7 @@ export interface Compra{
   id: number,
   fecha: Date,
   total: number,
+  estado: string,
+  paymentId?: string,
   productos?: CompraProducto[]
 }

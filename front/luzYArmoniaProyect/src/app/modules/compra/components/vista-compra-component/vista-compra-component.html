@@ -1,0 +1,72 @@
+<h2>Pagar Compra</h2>
+
+<div class="total-container">
+  <div class="compra-details">
+    <div class="compra-info">
+      <div style="display: flex; align-items: center; gap: 20px;">
+        <h3>Id de compra: #{{compra.id}}</h3>
+        <p>Fecha: {{formatearFecha(compra.fecha)}}</p>
+      </div>
+      <div class="status-container">
+        @if(compra.estado !== 'CREADA'){
+
+          <P class="status" [style.color]="color">
+            <span class="material-symbols-outlined">
+              {{icono}}
+            </span>
+            {{texto}}
+          </P>
+        }
+        <!-- @if(compra.estado === 'PAGADA'){
+          <P class="status" style="color: green;">
+            <span class="material-symbols-outlined">
+              check_circle
+            </span>
+            Pagado
+          </P>
+        } @else if (compra.estado === 'PENDIENTE_PAGO') {
+          <P class="status" style="color: rgb(255, 174, 0);">
+            <span class="material-symbols-outlined">
+              history_toggle_off
+            </span>
+            Pago pendiente
+          </P>
+        } @else if (compra.estado === 'CANCELADA') {
+          <P class="status" style="color: red;">
+            <span class="material-symbols-outlined">
+              cancel
+            </span>
+            Cancelada
+          </P>
+        } @else {
+          <P class="status" style="color: rgb(114, 114, 114);">
+            <span class="material-symbols-outlined">
+              hourglass_disabled
+            </span>
+            Expirada
+          </P>
+        } -->
+      </div>
+      </div>
+    <div class="producto-container">
+      @for(item of compra.productos; track item.idProducto){
+        <img class="img-producto" [src]="getPrimerImagen(item.producto!)" alt="">
+        <div class="product-details">
+          <p class="titles-main">{{item.producto?.nombre}}</p>
+          <p>Precio: ${{item.producto?.precio}}</p>
+          <p>Cantidad: {{item.cantidad}}</p>
+        </div>
+      }
+    </div>
+
+  </div>
+  @if(pagoPendiente){
+    <div class="payment-container">
+      <h3 class="title-pay">Pagar con Mercado Pago</h3>
+      <!-- <img src="front\luzYArmoniaProyect\src\app\shared\images\MP_RGB_HANDSHAKE_color_horizontal.png" alt="mercado pago"> -->
+      <hr>
+      <p class="total">Total a pagar: ${{compra.total}}</p>
+      <button (click)="pagar()">Pagar</button>
+    </div>
+  }
+</div>

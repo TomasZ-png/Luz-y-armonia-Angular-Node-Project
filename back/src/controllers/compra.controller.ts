@@ -13,6 +13,22 @@ const compraService = new CompraService(compraRepository, productoRepository, ca
 
 export class CompraController {
 
+    async getCompraById(req: Request, res: Response){
+        try {
+            const idCompra = Number(req.params.id);
+
+            if(!idCompra){
+                return res.status(404).json({error: 'El id no es valido o no existe.'});
+            }
+
+            const compra = await compraService.getCompraById(idCompra);
+            res.status(200).json(compra);
+        } catch (error) {
+            
+        }
+    }
+
+
     async comprarPorUnidad(req:Request, res:Response){
         try {
             const idUsuario = req.user?.id;

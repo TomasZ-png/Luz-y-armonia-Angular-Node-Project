@@ -90,6 +90,8 @@ model favorito {
 model Compra {
   id              Int               @id @default(autoincrement())
   idUsuario       Int
+  estado          String            @default("CREADA") @db.VarChar(30)
+  paymentId       String?           @db.VarChar(100)
   total           Float             @default(0)
   fecha           DateTime          @default(now()) @db.Timestamp(6)
   Usuario         Usuario           @relation(fields: [idUsuario], references: [id], onDelete: NoAction, onUpdate: NoAction)

@@ -32,7 +32,7 @@ export const routes: Routes = [
   {
     path: 'compra',
     canActivate: [AuthGuard],
-    component: CompraComponent
+    loadChildren: () => import('./modules/compra/components/compra.routes').then(c=>c.compraRoutes)
   },
   {
     path: 'producto',

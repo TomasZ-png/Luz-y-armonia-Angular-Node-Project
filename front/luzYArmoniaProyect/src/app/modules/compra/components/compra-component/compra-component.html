@@ -3,8 +3,8 @@
   <div class="containers">
     <div class="compras-container">
       @if (misCompras && misCompras.length > 0) {
-        @for (compra of misCompras; track compra.id) {
-          <div class="compra-container">
+        @for (compra of comprasOrdenadas; track compra.id) {
+          <div (click)="redirectToVistaCompra(compra.id)" class="compra-container">
             <div class="compra-section">
               <p>Id: #{{compra.id}}</p>
               <p>Fecha: {{formatearFecha(compra.fecha) }}</p>

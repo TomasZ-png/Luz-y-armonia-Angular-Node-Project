@@ -5,6 +5,8 @@ import { NoAuthGuard } from './api/guards/noAutentication.guard';
 import { MiCarritoComponent } from './modules/carrito/components/mi-carrito-component/mi-carrito-component';
 import { FavoritoComponent } from './modules/favoritos/components/favorito-component/favorito-component';
 import { CompraComponent } from './modules/compra/components/compra-component/compra-component';
+import { BuscarComponent } from './modules/buscar-producto/components/buscar-component';
+import { ProductoBuscadoComponent } from './modules/buscar-producto/components/producto-buscado/producto-buscado-component/producto-buscado-component';
 
 
 export const routes: Routes = [
@@ -41,6 +43,10 @@ export const routes: Routes = [
   {
     path: 'aroma',
     loadChildren: () => import('./modules/products/components/aroma.routes').then(a=>a.aromaRoutes)
+  },
+  {
+    path: 'buscar/:value',
+    component: ProductoBuscadoComponent
   },
   {
     path: '**',

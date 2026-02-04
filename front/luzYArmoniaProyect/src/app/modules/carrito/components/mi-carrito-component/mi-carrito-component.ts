@@ -8,6 +8,7 @@ import { ProductService } from '../../../../api/services/productService/productS
 import { CompraService } from '../../../../api/services/compraService/compra.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Toast } from "primeng/toast";
+import { Compra } from '../../../products/interface/compra.interface';
 
 @Component({
   selector: 'app-mi-carrito-component',
@@ -15,7 +16,6 @@ import { Toast } from "primeng/toast";
   templateUrl: './mi-carrito-component.html',
   styleUrl: './mi-carrito-component.css',
   providers: [ConfirmationService, MessageService],
-
 })
 export class MiCarritoComponent implements OnInit{
 
@@ -28,6 +28,7 @@ export class MiCarritoComponent implements OnInit{
   private compraExito = false;
   productos: ProductoCarrito[] = [];
   precioTotal: number = 0;
+  idCompra!: number;
 
   ngOnInit(): void {
     this.cargarCarrito();
@@ -101,7 +102,8 @@ export class MiCarritoComponent implements OnInit{
 
   comprarCarrito(){
     this.compraService.comprarCarrito().subscribe({
-      next: () => {
+      next: (res:Compra) => {
+        this.idCompra = res.id
         this.compraExito = true;
         this.cargarCarrito();
         this.messageService.add({
@@ -109,6 +111,7 @@ export class MiCarritoComponent implements OnInit{
             summary: 'Comprado',
             detail: 'Carrito comprado exitosamente'
         })
+        this.redirectToVistaCompra(this.idCompra);
       },
       error: (error) => {
         if(this.productos.length === 0){
@@ -130,4 +133,7 @@ export class MiCarritoComponent implements OnInit{
     })
   }
 
+  redirectToVistaCompra(idCompra:number){
+    return this.router.navigate([`compra/procesar-comprar/${idCompra}`]);
+  }
 }

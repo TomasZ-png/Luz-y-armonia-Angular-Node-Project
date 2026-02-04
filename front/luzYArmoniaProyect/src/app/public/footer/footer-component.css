@@ -1,0 +1,42 @@
+footer {
+  display: flex;
+  justify-content: space-around;
+  position: sticky;
+  padding: 20px;
+  width: 100%;
+  background-color: palevioletred;
+  bottom: 0;
+  color: white;
+  margin-top: 200px;
+}
+
+
+.brand-section .descripcion{
+  width: 60%;
+  font-style: italic;
+}
+
+.titulo-container{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.titulo-container img{
+  width: 85px;
+}
+
+.title{
+  border-bottom: white 2px solid;
+  padding-bottom: 5px;
+}
+
+.social-media-section{
+  display: flex;
+  gap: 10px;
+}
+
+.social-media-section i{
+  cursor: pointer;
+  font-size: 24px;
+}

@@ -12,15 +12,20 @@ import { CarritoService } from '../../../../api/services/carritoService/carritoS
 import { FavoritoService } from '../../../../api/services/favoritoService/favoritoService.service';
 import { CompraService } from '../../../../api/services/compraService/compra.service';
 import { CompraProducto, Compra } from '../../interface/compra.interface';
+import { FormsModule } from '@angular/forms';
+import { ImageModule } from 'primeng/image';
 
 @Component({
   selector: 'app-view-product-component',
-  imports: [Button, Toast, ConfirmDialog],
+  imports: [Button, Toast, ConfirmDialog, FormsModule, ImageModule],
   templateUrl: './view-product-component.html',
   styleUrl: './view-product-component.css',
+  standalone: true,
   providers: [ConfirmationService, MessageService],
 
 })
+
+
 export class ViewProductComponent implements OnInit{
 
 private router = inject(ActivatedRoute);
@@ -41,6 +46,8 @@ private compraService = inject(CompraService);
 idCompra: number = 0;
 favorito: boolean = false;
 compraExito: boolean = false;
+cantidadSeleccionada: number = 1;
+sinStock: boolean = false;
 
 ngOnInit(): void {
   const id = Number(this.router.snapshot.paramMap.get('id'));
@@ -50,6 +57,8 @@ ngOnInit(): void {
     this.productoSeleccionado = producto;
     this.imagenesProducto = producto.ImagenProducto;
     this.imagenSeleccionada = this.imagenesProducto?.[0] || null;
+
+    this.productoSinStockDisponible();
 
     this.favoritoService.productoEnFavoritos(this.productoSeleccionado.id!).subscribe({
       next: (res) => {
@@ -124,7 +133,7 @@ activarMensajeAlertaDelete(producto:Producto){
             console.log('Cantidad en el carrito:', cantidadEnElCarrito);
             console.log('productos:', productos);
             if(cantidadEnElCarrito! < data.stock){
-              this.carritoService.agregarProductoAlCarrito(id, { cantidad: 1 }).subscribe({
+              this.carritoService.agregarProductoAlCarrito(id, { cantidad: this.cantidadSeleccionada }).subscribe({
                 next: (data) => {
                   console.log('Producto agregado al carrito: ', data);
                   this.messageService.add({
@@ -180,8 +189,22 @@ activarMensajeAlertaDelete(producto:Producto){
     })
   }
 
+  productoSinStockDisponible(){
+    if(this.productoSeleccionado.stock === 0){
+      this.sinStock = true;
+    }
+  }
+
   comprarProducto(idProducto:number){
-    this.compraService.comprarProducto(idProducto, 2).subscribe({
+    if(this.cantidadSeleccionada < 1 || this.cantidadSeleccionada > this.productoSeleccionado.stock){
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'La cantidad seleccionada excede el stock actual del producto'
+      })
+      return
+    }
+    this.compraService.comprarProducto(idProducto, this.cantidadSeleccionada).subscribe({
       next: (res: Compra) => {
         this.idCompra = res.id;
         console.log('idCompra:' + this.idCompra)

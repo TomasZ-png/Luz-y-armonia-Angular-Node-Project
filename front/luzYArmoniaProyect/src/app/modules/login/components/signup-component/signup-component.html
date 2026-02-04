@@ -52,8 +52,13 @@
             <span class="error">*La contraseña debe tener mínimo 8 caracteres, una mayuscula y un número</span>
         }
       }
-      </label>
-      <input id="contrasenia" type="password" formControlName="password" placeholder="Mínimo 8 caracteres, una mayuscula y un número">
+      <!-- <input id="contrasenia" type="password" formControlName="password" placeholder="Mínimo 8 caracteres, una mayuscula y un número"> -->
+
+    </label>
+      <div class="card flex justify-center password" >
+        <p-password placeholder="Ingrese una contraseña" [(ngModel)]="password" formControlName="password" [toggleMask]="true" autocomplete="off" />
+      </div>
+
 
       <button type="submit" [disabled]="formSignUp.invalid">Registrarse</button>
       <p>¿Ya tenés una cuenta? <a class="register-link" [routerLink]="['/login']">Iniciar sesión</a></p>

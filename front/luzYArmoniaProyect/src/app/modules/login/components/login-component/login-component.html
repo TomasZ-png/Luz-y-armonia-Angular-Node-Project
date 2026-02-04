@@ -20,7 +20,6 @@
       </label>
       <input id="email" type="email" formControlName="correo" placeholder="Correo electrónico">
 
-
       <label for="contrasenia">Contraseña:
         @if (formLogin.get('password')?.touched && formLogin.get('password')?.invalid) {
           @if(formLogin.get('password')?.errors?.['required']){
@@ -31,7 +30,10 @@
           }
         }
       </label>
-      <input id="contrasenia" type="password" formControlName="password" placeholder="Contraseña">
+      <!-- <input id="contrasenia" type="password" formControlName="password" placeholder="Contraseña"> -->
+      <div class="card flex justify-center password">
+        <p-password placeholder="Ingrese su contraseña" [(ngModel)]="password" formControlName="password" [toggleMask]="true" autocomplete="off" />
+      </div>
 
       @if(error){
         <p class="error">*Correo o contraseña invalidos</p>

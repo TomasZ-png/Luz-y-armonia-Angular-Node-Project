@@ -1,5 +1,12 @@
-.main-container{
-  max-width: 1400px;
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-container {
+  max-width: 1600px;
   margin: 0 auto;
   padding: 16px;
+  flex: 1;
 }

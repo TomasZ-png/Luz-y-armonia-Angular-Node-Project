@@ -71,11 +71,11 @@ export class ProductoService {
         return product;
     }
 
-    async getProductoByName(nombre:string){
-        const product = await this.productoRepository.getProductByName(nombre);
+    async getProductByNameOrAromaOrProduct(valor:string){
+        const product = await this.productoRepository.getProductByNameOrAromaOrProduct(valor);
 
         if(!product){
-            throw new Error('No se han encontrado productos con el nombre ingresado.');
+            throw new Error('No se han encontrado productos con el valor ingresado.');
         }
 
         return product;

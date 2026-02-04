@@ -147,15 +147,15 @@ export class ProductoController{
         }
     }
 
-    async getProductByName(req:Request, res:Response){
+    async getProductByNameOrAromaOrProduct(req:Request, res:Response){
         try {
-            const { nombre } = req.query; 
+            const { valor } = req.query; 
 
-            if (!nombre || typeof nombre !== 'string' || nombre.trim() === '') {
-                return res.status(400).json({ message: "El parámetro nombre no puede estar vacio" });
+            if (!valor || typeof valor !== 'string' || valor.trim() === '') {
+                return res.status(400).json({ message: "El parámetro valor no puede estar vacio" });
             }
 
-            const products = await productoService.getProductoByName(nombre)
+            const products = await productoService.getProductByNameOrAromaOrProduct(valor)
             res.status(200).json(products)
         } catch (error) {
             res.status(400).json({error:error});

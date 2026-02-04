@@ -39,13 +39,33 @@ export class ProductoRepository{
         })
     }
 
-    async getProductByName(nombre:string){
+    async getProductByNameOrAromaOrProduct(valor:string){
         return await prisma.producto.findMany({
             where: {
-                nombre: {
-                    contains: nombre,
-                    mode: 'insensitive'
-                }
+                OR: [
+                    {
+                        nombre: {
+                            contains: valor,
+                            mode: 'insensitive'
+                        }
+                    },
+                    {
+                        aroma: {
+                            aroma: {
+                                contains: valor,
+                                mode: 'insensitive'
+                            }
+                        }
+                    },
+                    {
+                        Tipo_de_productos: {
+                            tipo: {
+                                contains: valor,
+                                mode: 'insensitive'
+                            }
+                        }
+                    }
+                ]
             },
 
             include: {

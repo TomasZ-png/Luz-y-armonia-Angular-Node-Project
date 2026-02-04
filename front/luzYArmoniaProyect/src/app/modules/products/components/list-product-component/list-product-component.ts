@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { ProductService } from '../../../../api/services/productService/productService.service';
 import { Producto } from '../../interface/product.interface';
 import { CommonModule } from '@angular/common';
@@ -20,15 +20,13 @@ import { CarritoService } from '../../../../api/services/carritoService/carritoS
 })
 
 export class ListProductComponent implements OnInit{
-    productos: Producto[] = [];
+    @Input() productos!: Producto[];
     admin = false;
     router = inject(Router);
     backImageUrl = environment.img_url
     exito: boolean = false;
     private confirmationService = inject(ConfirmationService);
     private messageService = inject(MessageService);
-    private carritoService = inject(CarritoService);
-
 
   ngOnInit(){
     this.listarProductos();
@@ -53,7 +51,7 @@ export class ListProductComponent implements OnInit{
     })
   }
 
-    isAdmin(){
+  isAdmin(){
     const user = localStorage.getItem('USER');
 
     if(user){
@@ -121,15 +119,15 @@ export class ListProductComponent implements OnInit{
     })
   }
 
-  agregarProductoAlCarrito(id:number | null | undefined){
-    this.carritoService.agregarProductoAlCarrito(id!, { cantidad: 1 }).subscribe({
-      next: (data) => {
-        console.log('Producto agregado al carrito: ', data);
-      },
-      error: (error) => {
-        console.error('Error al agregar producto al carrito: ', error);
-      }
-    })
-  }
+  // agregarProductoAlCarrito(id:number | null | undefined){
+  //   this.carritoService.agregarProductoAlCarrito(id!, { cantidad: 1 }).subscribe({
+  //     next: (data) => {
+  //       console.log('Producto agregado al carrito: ', data);
+  //     },
+  //     error: (error) => {
+  //       console.error('Error al agregar producto al carrito: ', error);
+  //     }
+  //   })
+  // }
 
 }

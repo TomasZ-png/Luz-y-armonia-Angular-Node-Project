@@ -1,0 +1,18 @@
+<div class="card flex justify-center">
+  <p-autocomplete
+
+    placeholder='Ej: "Vainilla"'
+    [(ngModel)]="valor"
+    [suggestions]="items"
+    (completeMethod)="search($event)"
+    (keydown.enter)="onBuscar()"
+  />
+
+  <button
+    style="background-color: palevioletred; border: none;"
+    pButton
+    icon="pi pi-search"
+    (click)="onBuscar()"
+  >
+  </button>
+</div>

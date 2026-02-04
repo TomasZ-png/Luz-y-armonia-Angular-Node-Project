@@ -17,7 +17,7 @@ productoRouter.put(
     productoController.updateProduct.bind(productoController));
 
 productoRouter.get("/", productoController.getAllProducts.bind(productoController));
-productoRouter.get("/buscar", productoController.getProductByName.bind(productoController));
+productoRouter.get("/buscar", productoController.getProductByNameOrAromaOrProduct.bind(productoController));
 productoRouter.get("/:id", productoController.getProductById.bind(productoController));
 productoRouter.delete("/eliminar/:id", productoController.deleteProduct.bind(productoController));
 

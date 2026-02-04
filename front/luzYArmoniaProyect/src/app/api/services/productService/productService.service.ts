@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 import { environment } from "../../../../environments/environment";
 import { Router } from "@angular/router";
@@ -33,5 +33,10 @@ export class ProductService{
 
   getProduct(id:number | undefined): Observable<Producto>{
     return this.http.get<Producto>(`${this.url}/${id}`);
+  }
+
+  searchProduct(value: string): Observable<Producto[]>{
+    const params = new HttpParams().set('valor', value);
+    return this.http.get<Producto[]>(`${this.url}/buscar`, { params })
   }
 }

@@ -12,21 +12,21 @@
       </div>
       <div class="image-preview">
           <p-image
-          class="imagen-seleccionada"
-          [src]="img_url + imagenSeleccionada?.url"
-          [alt]="'imagen ' + imagenSeleccionada?.id"
-          [preview]="true"
-          width="450"
-          objectFit="contain"
+            class="imagen-seleccionada"
+            [src]="img_url + imagenSeleccionada?.url"
+            [alt]="'imagen ' + imagenSeleccionada?.id"
+            [preview]="true"
+            width="450"
+            objectFit="contain"
           >
         </p-image>
       </div>
     </div>
     <div class="product-data">
+      <p class="date">{{formatearFecha(productoSeleccionado.fechaCreacion)}}</p>
       <div>
         <div class="title-section">
           <div class="title-premium">
-
             <h2 class="titles-main">{{productoSeleccionado.nombre}}</h2>
             @if (productoSeleccionado.premium) {
               <p class="premium"><span class="material-symbols-outlined">

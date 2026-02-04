@@ -88,6 +88,14 @@ export class ProductoService {
             throw new Error('No se encontraron ningun producto.');
         }
 
+        for(const product of products){
+            if(product.stock === 0){
+                await this.productoRepository.updateProductState(product.id, 'AGOTADO');
+            } else {
+                await this.productoRepository.updateProductState(product.id, 'DISPONIBLE');
+            }
+        }
+
         return products;
     }
 

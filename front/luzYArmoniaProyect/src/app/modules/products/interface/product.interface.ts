@@ -11,7 +11,9 @@ export interface Producto {
   alto: number | null,
   ancho: number | null,
   mililitros: number | null,
-  premium: boolean | null
+  fechaCreacion: Date,
+  estadoProducto: string,
+  premium: boolean | null,
   idTipoProducto: number,
   tipoProducto?: TipoProducto,
   aroma?: Aroma

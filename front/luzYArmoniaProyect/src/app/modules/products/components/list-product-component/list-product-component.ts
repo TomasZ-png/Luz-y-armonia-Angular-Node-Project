@@ -42,7 +42,11 @@ export class ListProductComponent implements OnInit{
     this.productService.getAll().subscribe({
       next: (res: Producto[]) => {
         console.log('Respuesta del backend:', res);
-        this.productos = res;
+        if(!this.admin){
+          this.productos = res.filter(p => p.estadoProducto === 'DISPONIBLE');
+        } else {
+          this.productos = res;
+        }
         this.cargando = false;
       },
       error: (err) => {

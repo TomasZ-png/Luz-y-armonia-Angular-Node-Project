@@ -85,4 +85,11 @@ export class ProductoRepository{
             }
         });
     }
+
+    async updateProductState(idProducto: number, estado:string){
+        return await prisma.producto.update({
+            where: {id: idProducto},
+            data: {estadoProducto: estado}
+        })
+    }
 }

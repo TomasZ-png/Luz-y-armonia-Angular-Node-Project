@@ -24,17 +24,19 @@
 
 .product{
   display: flex;
+  background-color: #ffd1da;
   flex-direction: column;
   padding: 5px 30px;
-  border: 1px solid rgb(199, 199, 199);
+  border: 1px solid rgba(165, 42, 42, 0.377);
   border-radius: 5px;
   transition: 0.2s ease-in-out;
   cursor: pointer;
   width: 300px;
+  color: #6b3515;
 }
 
 .product:hover{
-  border: 1px solid rgb(189, 189, 189);
+  border: 1px solid rgba(165, 42, 42, 0.781);
 }
 
 .product .product-price{
@@ -65,10 +67,11 @@
 
 .flag{
   border-radius: 10px;
-  color: rgb(0, 0, 0);
+  color: #6b3515;
   width: 100px;
   text-align: center;
-  background-color: rgb(221, 221, 221);
+  background-color: #e6beae;
+  border: 1px solid #6b3515;
   padding: 4px;
 }
 
@@ -98,4 +101,27 @@
 .carrousel-recent-products{
   margin-bottom: 30px;
 
+}
+
+.titulo-section{
+  color: #6b3515;
+}
+
+@media (max-width: 1200px) {
+  .products-container{
+    grid-template-columns: repeat(3, 1fr);
+    justify-items: center;
+  }
+}
+@media (max-width: 700px) {
+  .products-container{
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
+  }
+}
+@media (max-width: 330px) {
+  .products-container{
+    grid-template-columns: repeat(1, 1fr);
+    justify-items: center;
+  }
 }

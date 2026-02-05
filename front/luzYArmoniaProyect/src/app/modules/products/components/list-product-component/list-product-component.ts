@@ -22,23 +22,20 @@ import { TagModule } from 'primeng/tag';
 })
 
 export class ListProductComponent implements OnInit{
-    productos!: Producto[];
-    productosRecientes!: Producto[];
-    velas!: Producto[];
-    difusores!: Producto[];
-    admin = false;
     router = inject(Router);
     backImageUrl = environment.img_url
     exito: boolean = false;
     private confirmationService = inject(ConfirmationService);
     private messageService = inject(MessageService);
+    private productService = inject(ProductService);
     responsiveOptions: any[] | undefined;
 
+    @Input() titulo: string = '';
+    @Input() productos: Producto[] = [];
+    @Input() tipo: 'carousel' | 'grid' = 'grid';
+    @Input() admin: boolean = false;
 
   ngOnInit(){
-    this.listarProductos();
-    this.isAdmin();
-
     this.responsiveOptions = [
             {
                 breakpoint: '1400px',
@@ -63,49 +60,6 @@ export class ListProductComponent implements OnInit{
         ];
   }
 
-  cargando = false;
-  private productService = inject(ProductService);
-
-  listarProductos(){
-    this.cargando = true;
-
-    this.productService.getAll().subscribe({
-      next: (res: Producto[]) => {
-        console.log('Respuesta del backend:', res);
-        if(!this.admin){
-          this.productos = res.filter(p => p.estadoProducto === 'DISPONIBLE');
-        } else {
-          this.productos = res;
-        }
-        this.productosRecientes = res.filter(p => p.estadoProducto === 'DISPONIBLE' && this.esReciente(p));
-        this.velas = res.filter(p => p.estadoProducto === 'DISPONIBLE' && p.Tipo_de_productos?.tipo === 'VELA');
-        this.difusores = res.filter(p => p.estadoProducto === 'DISPONIBLE' && p.Tipo_de_productos?.tipo === 'DIFUSOR');
-        this.cargando = false;
-      },
-      error: (err) => {
-        console.log('Error al cargar productos', err);
-      }
-    })
-  }
-
-  esReciente(producto: Producto){
-    const fechaProducto = new Date(producto.fechaCreacion);
-    const hoy = Date.now();
-
-    return (hoy - fechaProducto.getTime()) <= 7 * 24 * 60 * 60 * 1000;
-  }
-
-  isAdmin(){
-    const user = localStorage.getItem('USER');
-
-    if(user){
-      const userData = JSON.parse(user);
-      if(userData.rol === 'ADMIN'){
-        this.admin = true;
-      }
-    }
-  }
-
   verProducto(id:number | undefined){
     this.router.navigate([`/producto/${id}`]);
   }
@@ -121,7 +75,6 @@ export class ListProductComponent implements OnInit{
   }
 
   activarMensajeAlertaDelete(producto:Producto){
-
     this.confirmationService.confirm({
       message: `¿Estas seguro de querer eliminar el producto: "<strong>${producto.nombre}</strong>"?`,
       header: 'Confirmar eliminación',
@@ -135,7 +88,6 @@ export class ListProductComponent implements OnInit{
         this.eliminarProducto(producto.id);
       }
     })
-
   }
 
   eliminarProducto(id:number | undefined){
@@ -143,7 +95,6 @@ export class ListProductComponent implements OnInit{
 
     this.productService.deleteProduct(id).subscribe({
       next: () => {
-        this.listarProductos();
 
         this.exito = true;
         this.messageService.add({
@@ -162,21 +113,6 @@ export class ListProductComponent implements OnInit{
       }
     })
   }
-
-
-  // getSeverity(status: string) {
-  //       switch (status) {
-  //           case 'INSTOCK':
-  //               return 'success';
-  //           case 'LOWSTOCK':
-  //               return 'warn';
-  //           case 'OUTOFSTOCK':
-  //               return 'danger';
-  //           default : 'hola';
-
-  //       }
-  //   }
-
 }
 
 

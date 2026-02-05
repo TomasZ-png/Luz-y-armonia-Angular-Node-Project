@@ -3,6 +3,7 @@ import { ListProductComponent } from "../../modules/products/components/list-pro
 import { BuscarComponent } from "../../modules/buscar-producto/components/buscar-component";
 import { Producto } from '../../modules/products/interface/product.interface';
 import { ProductService } from '../../api/services/productService/productService.service';
+import { TipoProducto } from '../../modules/products/interface/tipoProducto.interface';
 
 @Component({
   selector: 'app-home-component',
@@ -10,40 +11,51 @@ import { ProductService } from '../../api/services/productService/productService
   templateUrl: './home-component.html',
   styleUrl: './home-component.css',
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
 
   private productoService = inject(ProductService);
 
   productos: Producto[] = [];
-  productosFiltrados: Producto[] = [];
+  velas: Producto[] = [];
+  difusores: Producto[] = [];
+  recientes: Producto[] = [];
+  admin: boolean = false;
+  secciones: any[] = [];
 
-  @Output() items = new EventEmitter<string>;
+  ngOnInit(): void {
+    this.productoService.getAll().subscribe({
+      next: (res: Producto[]) => {
+        this.productos = res;
+        this.velas = res.filter(x => x.Tipo_de_productos?.tipo === 'VELA' && x.estadoProducto === 'DISPONIBLE');
+        this.difusores = res.filter(x => x.Tipo_de_productos?.tipo === 'DIFUSOR' && x.estadoProducto === 'DISPONIBLE');
+        this.recientes = res.filter(x => this.esReciente(x) && x.estadoProducto === 'DISPONIBLE');
 
-  // ngOnInit(): void {
-  //   this.productoService.getAll().subscribe({
-  //     next: (res) => {
-  //       this.productos = res;
-  //     },
-  //     error: (error) => {
-  //       console.log(error);
-  //     }
-  //   })
-  // }
+        this.secciones = [
+          {titulo: 'Producto recientes', productos: this.recientes, tipo:'carousel'},
+          {titulo: 'Velas', productos: this.velas, tipo:'carousel'},
+          {titulo: 'Difusores', productos: this.difusores, tipo:'carousel'},
+          {titulo: 'Todo', productos: this.productos, tipo:'grid'},
+        ]
+      }
+    })
+  }
 
-  // onBuscar(texto: string){
-  //   const query = texto.trim().toLowerCase();
+  esReciente(producto: Producto){
+    const fechaProducto = new Date(producto.fechaCreacion);
+    const hoy = Date.now();
 
-  //   if(!query){
-  //     this.productosFiltrados = [...this.productos];
-  //     return
-  //   }
+    return (hoy - fechaProducto.getTime()) <= 7 * 24 * 60 * 60 * 1000;
+  }
 
-  //   this.productosFiltrados = this.productos.filter(p =>
-  //     p.nombre.toLowerCase().includes(query) ||
-  //     p.aroma?.aroma.toLowerCase().includes(query) ||
-  //     p.tipoProducto?.tipo.toLowerCase().includes(query)
-  //   )
+  isAdmin(){
+    const user = localStorage.getItem('USER');
 
+    if(user){
+      const userData = JSON.parse(user);
+      if(userData.rol === 'ADMIN'){
+        this.admin = true;
+      }
+    }
+  }
 
-  // }
 }

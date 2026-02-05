@@ -3,7 +3,7 @@
 <div style="display: flex; justify-content: center;">
   <app-buscar-component></app-buscar-component>
 </div>
-<p>Coincidencias encontradas de "{{valueSearch}}": {{productosBuscados.length}}</p>
+<p>Coincidencias encontradas de <strong>"{{valueSearch}}"</strong>: {{productosBuscados.length}}</p>
 
 <div class="products-container">
   @for(producto of productosBuscados; track producto.id){

@@ -37,6 +37,7 @@ CREATE TABLE "Producto" (
     "ancho" DOUBLE PRECISION,
     "mililitros" DOUBLE PRECISION,
     "fechaCreacion" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "estadoProducto" VARCHAR(100) NOT NULL DEFAULT 'DISPONIBLE',
     "premium" BOOLEAN DEFAULT false,
     "idTipoProducto" INTEGER NOT NULL,
     CONSTRAINT "Producto_pkey" PRIMARY KEY ("id"),

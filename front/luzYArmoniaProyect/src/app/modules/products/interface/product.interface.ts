@@ -1,3 +1,4 @@
+import { Tipo_de_productos } from './../../../../../../../back/node_modules/.prisma/client/index.d';
 import { Aroma } from "./aroma.interface"
 import { TipoProducto } from "./tipoProducto.interface"
 
@@ -11,9 +12,11 @@ export interface Producto {
   alto: number | null,
   ancho: number | null,
   mililitros: number | null,
-  premium: boolean | null
+  fechaCreacion: Date,
+  estadoProducto: string,
+  premium: boolean | null,
   idTipoProducto: number,
-  tipoProducto?: TipoProducto,
+  Tipo_de_productos?: TipoProducto,
   aroma?: Aroma
 
   ImagenProducto?: ImagenProducto[]

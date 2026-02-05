@@ -1,4 +1,4 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit, signal } from '@angular/core';
 import { ProductService } from '../../../../api/services/productService/productService.service';
 import { Producto } from '../../interface/product.interface';
 import { CommonModule } from '@angular/common';
@@ -9,10 +9,12 @@ import { ConfirmDialogModule, ConfirmDialog } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Toast, ToastModule } from "primeng/toast";
 import { CarritoService } from '../../../../api/services/carritoService/carritoService.service';
+import { CarouselModule } from 'primeng/carousel';
+import { TagModule } from 'primeng/tag';
 
 @Component({
   selector: 'app-list-product-component',
-  imports: [CommonModule, Button, ToastModule, ConfirmDialog],
+  imports: [CommonModule, Button, ToastModule, ConfirmDialog, CarouselModule, TagModule, ButtonModule],
   templateUrl: './list-product-component.html',
   styleUrl: './list-product-component.css',
   providers: [ConfirmationService, MessageService],
@@ -20,46 +22,42 @@ import { CarritoService } from '../../../../api/services/carritoService/carritoS
 })
 
 export class ListProductComponent implements OnInit{
-    @Input() productos!: Producto[];
-    admin = false;
     router = inject(Router);
     backImageUrl = environment.img_url
     exito: boolean = false;
     private confirmationService = inject(ConfirmationService);
     private messageService = inject(MessageService);
+    private productService = inject(ProductService);
+    responsiveOptions: any[] | undefined;
+
+    @Input() titulo: string = '';
+    @Input() productos: Producto[] = [];
+    @Input() tipo: 'carousel' | 'grid' = 'grid';
+    @Input() admin: boolean = false;
 
   ngOnInit(){
-    this.listarProductos();
-    this.isAdmin();
-  }
-
-  cargando = false;
-  private productService = inject(ProductService);
-
-  listarProductos(){
-    this.cargando = true;
-
-    this.productService.getAll().subscribe({
-      next: (res: Producto[]) => {
-        console.log('Respuesta del backend:', res);
-        this.productos = res;
-        this.cargando = false;
-      },
-      error: (err) => {
-        console.log('Error al cargar productos', err);
-      }
-    })
-  }
-
-  isAdmin(){
-    const user = localStorage.getItem('USER');
-
-    if(user){
-      const userData = JSON.parse(user);
-      if(userData.rol === 'ADMIN'){
-        this.admin = true;
-      }
-    }
+    this.responsiveOptions = [
+            {
+                breakpoint: '1400px',
+                numVisible: 2,
+                numScroll: 1
+            },
+            {
+                breakpoint: '1199px',
+                numVisible: 3,
+                numScroll: 1
+            },
+            {
+                breakpoint: '767px',
+                numVisible: 2,
+                numScroll: 1
+            },
+            {
+                breakpoint: '575px',
+                numVisible: 1,
+                numScroll: 1
+            }
+        ];
   }
 
   verProducto(id:number | undefined){
@@ -77,7 +75,6 @@ export class ListProductComponent implements OnInit{
   }
 
   activarMensajeAlertaDelete(producto:Producto){
-
     this.confirmationService.confirm({
       message: `¿Estas seguro de querer eliminar el producto: "<strong>${producto.nombre}</strong>"?`,
       header: 'Confirmar eliminación',
@@ -91,7 +88,6 @@ export class ListProductComponent implements OnInit{
         this.eliminarProducto(producto.id);
       }
     })
-
   }
 
   eliminarProducto(id:number | undefined){
@@ -99,7 +95,6 @@ export class ListProductComponent implements OnInit{
 
     this.productService.deleteProduct(id).subscribe({
       next: () => {
-        this.listarProductos();
 
         this.exito = true;
         this.messageService.add({
@@ -118,16 +113,6 @@ export class ListProductComponent implements OnInit{
       }
     })
   }
-
-  // agregarProductoAlCarrito(id:number | null | undefined){
-  //   this.carritoService.agregarProductoAlCarrito(id!, { cantidad: 1 }).subscribe({
-  //     next: (data) => {
-  //       console.log('Producto agregado al carrito: ', data);
-  //     },
-  //     error: (error) => {
-  //       console.error('Error al agregar producto al carrito: ', error);
-  //     }
-  //   })
-  // }
-
 }
+
+

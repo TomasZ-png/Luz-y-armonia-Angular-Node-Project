@@ -1,6 +1,19 @@
+<div class="main-text">
+  <h1>Aromatizá e ilumina tus momentos</h1>
+  <p>El placer de potenciar al máximo de tus sentidos, es con nuestras fragancias...</p>
+</div>
+
 <div class="buscador-container">
   <app-buscar-component [productos]="productos" ></app-buscar-component>
 </div>
 
-  <app-list-product-component></app-list-product-component>
+@for(seccion of secciones; track $index ){
+  <app-list-product-component
+    [titulo]="seccion.titulo"
+    [productos]="seccion.productos"
+    [tipo]="seccion.tipo"
+    [admin]="admin"
+  ></app-list-product-component>
+}
+
 

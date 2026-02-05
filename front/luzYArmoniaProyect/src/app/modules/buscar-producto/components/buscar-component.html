@@ -1,7 +1,7 @@
 <div class="card flex justify-center">
   <p-autocomplete
 
-    placeholder='Ej: "Vainilla"'
+    placeholder='Buscá tus aromas, velas y productos fabulosos para tu hogar'
     [(ngModel)]="valor"
     [suggestions]="items"
     (completeMethod)="search($event)"
@@ -9,7 +9,7 @@
   />
 
   <button
-    style="background-color: palevioletred; border: none;"
+    style="background-color: rgb(244, 166, 192);; border: none;"
     pButton
     icon="pi pi-search"
     (click)="onBuscar()"

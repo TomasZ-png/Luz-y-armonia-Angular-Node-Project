@@ -10,6 +10,9 @@ html, body {
   margin: 0;
   padding: 0;
   width: 100%;
+    background-color:#fff7fb
+;
+
 }
 
 body{
@@ -24,3 +27,5 @@ body.login-page{
   background-color: palevioletred;
   overflow: hidden;
 }
+
+

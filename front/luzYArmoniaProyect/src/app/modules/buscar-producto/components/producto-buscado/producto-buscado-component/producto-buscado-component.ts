@@ -8,10 +8,11 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { Button } from 'primeng/button';
 import { ConfirmDialog } from "primeng/confirmdialog";
+import { ListProductComponent } from "../../../../products/components/list-product-component/list-product-component";
 
 @Component({
   selector: 'app-producto-buscado-component',
-  imports: [BuscarComponent, ToastModule, Button, ConfirmDialog],
+  imports: [BuscarComponent, ToastModule, ConfirmDialog, ListProductComponent],
   templateUrl: './producto-buscado-component.html',
   providers: [ConfirmationService, MessageService],
   styleUrl: './producto-buscado-component.css',

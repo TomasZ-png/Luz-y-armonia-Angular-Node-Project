@@ -3,33 +3,11 @@
 <div style="display: flex; justify-content: center;">
   <app-buscar-component></app-buscar-component>
 </div>
-<p>Coincidencias encontradas de "{{valueSearch}}": {{productosBuscados.length}}</p>
+<p>Coincidencias encontradas de <strong>"{{valueSearch}}"</strong>: {{productosBuscados.length}}</p>
 
-<div class="products-container">
-  @for(producto of productosBuscados; track producto.id){
-    <div (click)="verProducto(producto.id)" class="product">
-      <div class="admin-buttons">
-        @if(admin){
-          <p-button (onClick)="redirectToUpdate(producto.id); $event.stopPropagation()"  icon="pi pi-pencil" severity="warn"/>
-          <p-button (onClick)="activarMensajeAlertaDelete(producto); $event.stopPropagation()" icon="pi pi-trash" severity="danger" />
-        }
-      </div>
-      <div class="img-container">
-          <img [src]="getPrimerImagen(producto)" alt="">
-      </div>
-      <div class="products-flags">
-        @if(producto.premium){
-          <span class="premium">
-            <span class="material-symbols-outlined">
-                crown</span>
-            </span>
-        }
-        <span class="flag product-aroma">{{producto.aroma?.aroma}}</span>
-      </div>
-      <div class="header-product-container">
-        <p class="titles-main">{{producto.nombre}}</p>
-        <p class="product-price">${{producto.precio}}</p>
-      </div>
-    </div>
-    }
-</div>
+<app-list-product-component
+  [tipo]="'grid'"
+  [productos]="productosBuscados"
+  [titulo]="''"
+  [admin]="admin"
+></app-list-product-component>

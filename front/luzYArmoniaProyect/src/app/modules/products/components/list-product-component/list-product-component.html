@@ -1,32 +1,137 @@
 <p-toast></p-toast>
 <p-confirmDialog></p-confirmDialog>
+<div>
 
-<div class="products-container">
-  @for(producto of productos; track producto.id){
-    <div (click)="verProducto(producto.id)" class="product">
-      <div class="admin-buttons">
-        @if(admin){
-          <p-button (onClick)="redirectToUpdate(producto.id); $event.stopPropagation()"  icon="pi pi-pencil" severity="warn"/>
-          <p-button (onClick)="activarMensajeAlertaDelete(producto); $event.stopPropagation()" icon="pi pi-trash" severity="danger" />
-        }
-      </div>
-      <div class="img-container">
-          <img [src]="getPrimerImagen(producto)" alt="">
-      </div>
-      <div class="products-flags">
-        @if(producto.premium){
-          <span class="premium">
-            <span class="material-symbols-outlined">
-                crown</span>
-            </span>
-        }
-        <span class="flag product-aroma">{{producto.aroma?.aroma}}</span>
-      </div>
-      <div class="header-product-container">
-        <p class="titles-main">{{producto.nombre}}</p>
-        <p class="product-price">${{producto.precio}}</p>
-      </div>
+  <div class="carrousel-recent-products">
+    <h3>Productos recientes</h3>
+    <div class="card">
+      <p-carousel [value]="productosRecientes" [numVisible]="4" [numScroll]="1" [circular]="true" [responsiveOptions]="responsiveOptions" autoplayInterval="5000">
+        <ng-template let-producto #item>
+          <div (click)="verProducto(producto.id)" class="product">
+            <div class="admin-buttons">
+              @if(admin){
+                <p-button (onClick)="redirectToUpdate(producto.id); $event.stopPropagation()"  icon="pi pi-pencil" severity="warn"/>
+                <p-button (onClick)="activarMensajeAlertaDelete(producto); $event.stopPropagation()" icon="pi pi-trash" severity="danger" />
+              }
+            </div>
+            <div class="img-container">
+              <img [src]="getPrimerImagen(producto)" alt="">
+            </div>
+            <div class="products-flags">
+              @if(producto.premium){
+                <span class="premium">
+                  <span class="material-symbols-outlined">
+                    crown</span>
+                  </span>
+                }
+                <span class="flag product-aroma">{{producto.aroma?.aroma}}</span>
+              </div>
+              <div class="header-product-container">
+                <p class="titles-main">{{producto.nombre}}</p>
+                <p class="product-price">${{producto.precio}}</p>
+              </div>
+            </div>
+        </ng-template>
+      </p-carousel>
     </div>
-    }
-</div>
+  </div>
 
+  <div class="carrousel-recent-products">
+    <h3>Nuestras Velas</h3>
+    <div class="card">
+      <p-carousel [value]="velas" [numVisible]="4" [numScroll]="1" [circular]="true" [responsiveOptions]="responsiveOptions" autoplayInterval="5000">
+        <ng-template let-producto #item>
+          <div (click)="verProducto(producto.id)" class="product">
+            <div class="admin-buttons">
+              @if(admin){
+                <p-button (onClick)="redirectToUpdate(producto.id); $event.stopPropagation()"  icon="pi pi-pencil" severity="warn"/>
+                <p-button (onClick)="activarMensajeAlertaDelete(producto); $event.stopPropagation()" icon="pi pi-trash" severity="danger" />
+              }
+            </div>
+            <div class="img-container">
+              <img [src]="getPrimerImagen(producto)" alt="">
+            </div>
+            <div class="products-flags">
+              @if(producto.premium){
+                <span class="premium">
+                  <span class="material-symbols-outlined">
+                    crown</span>
+                  </span>
+                }
+                <span class="flag product-aroma">{{producto.aroma?.aroma}}</span>
+              </div>
+              <div class="header-product-container">
+                <p class="titles-main">{{producto.nombre}}</p>
+                <p class="product-price">${{producto.precio}}</p>
+              </div>
+            </div>
+        </ng-template>
+      </p-carousel>
+    </div>
+  </div>
+
+  <div class="carrousel-recent-products">
+    <h3>Nuestros Difusores</h3>
+    <div class="card">
+      <p-carousel [value]="difusores" [numVisible]="4" [numScroll]="1" [circular]="true" [responsiveOptions]="responsiveOptions" autoplayInterval="5000">
+        <ng-template let-producto #item>
+          <div (click)="verProducto(producto.id)" class="product">
+            <div class="admin-buttons">
+              @if(admin){
+                <p-button (onClick)="redirectToUpdate(producto.id); $event.stopPropagation()"  icon="pi pi-pencil" severity="warn"/>
+                <p-button (onClick)="activarMensajeAlertaDelete(producto); $event.stopPropagation()" icon="pi pi-trash" severity="danger" />
+              }
+            </div>
+            <div class="img-container">
+              <img [src]="getPrimerImagen(producto)" alt="">
+            </div>
+            <div class="products-flags">
+              @if(producto.premium){
+                <span class="premium">
+                  <span class="material-symbols-outlined">
+                    crown</span>
+                  </span>
+                }
+                <span class="flag product-aroma">{{producto.aroma?.aroma}}</span>
+              </div>
+              <div class="header-product-container">
+                <p class="titles-main">{{producto.nombre}}</p>
+                <p class="product-price">${{producto.precio}}</p>
+              </div>
+            </div>
+        </ng-template>
+      </p-carousel>
+    </div>
+  </div>
+
+  <h3>Descubrí mas productos</h3>
+  <div class="products-container">
+    @for(producto of productos; track producto.id){
+      <div (click)="verProducto(producto.id)" class="product">
+        <div class="admin-buttons">
+          @if(admin){
+            <p-button (onClick)="redirectToUpdate(producto.id); $event.stopPropagation()"  icon="pi pi-pencil" severity="warn"/>
+            <p-button (onClick)="activarMensajeAlertaDelete(producto); $event.stopPropagation()" icon="pi pi-trash" severity="danger" />
+          }
+        </div>
+        <div class="img-container">
+          <img [src]="getPrimerImagen(producto)" alt="">
+        </div>
+        <div class="products-flags">
+          @if(producto.premium){
+            <span class="premium">
+              <span class="material-symbols-outlined">
+                crown</span>
+              </span>
+            }
+            <span class="flag product-aroma">{{producto.aroma?.aroma}}</span>
+          </div>
+          <div class="header-product-container">
+            <p class="titles-main">{{producto.nombre}}</p>
+            <p class="product-price">${{producto.precio}}</p>
+          </div>
+        </div>
+      }
+    </div>
+
+  </div>

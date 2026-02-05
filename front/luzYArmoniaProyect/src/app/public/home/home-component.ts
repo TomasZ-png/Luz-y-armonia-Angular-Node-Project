@@ -1,9 +1,8 @@
-import { Component, EventEmitter, inject, Input, input, OnInit, Output } from '@angular/core';
+import { Component, inject,  OnInit } from '@angular/core';
 import { ListProductComponent } from "../../modules/products/components/list-product-component/list-product-component";
 import { BuscarComponent } from "../../modules/buscar-producto/components/buscar-component";
 import { Producto } from '../../modules/products/interface/product.interface';
 import { ProductService } from '../../api/services/productService/productService.service';
-import { TipoProducto } from '../../modules/products/interface/tipoProducto.interface';
 
 @Component({
   selector: 'app-home-component',

@@ -10,27 +10,34 @@
       <p-carousel [value]="productos" [numVisible]="4" [numScroll]="1" [circular]="true" [responsiveOptions]="responsiveOptions" autoplayInterval="5000">
         <ng-template let-producto #item>
           <div (click)="verProducto(producto.id)" class="product">
+            <div class="premium-container">
+            @if(producto.premium){
+                <span class="premium">
+                  <span class="material-symbols-outlined" style="font-size: 15px;">
+                    crown
+                  </span>
+                  Premium
+                </span>
+              }
+            </div>
             @if(admin){
                 <div class="admin-buttons">
                 <p-button (onClick)="redirectToUpdate(producto.id); $event.stopPropagation()"  icon="pi pi-pencil" severity="warn"/>
                 <p-button (onClick)="activarMensajeAlertaDelete(producto); $event.stopPropagation()" icon="pi pi-trash" severity="danger" />
               </div>
-              }
+            }
             <div class="img-container">
               <img [src]="getPrimerImagen(producto)" alt="">
             </div>
-            <div class="products-flags">
-              @if(producto.premium){
-                <span class="premium">
-                  <span class="material-symbols-outlined">
-                    crown</span>
-                  </span>
-                }
-                <span class="flag product-aroma">{{producto.aroma?.aroma}}</span>
-              </div>
-              <div class="header-product-container">
-                <p class="titles-main">{{producto.nombre}}</p>
-                <p class="product-price">${{producto.precio}}</p>
+            <div class="product-info">
+              <div class="products-flags">
+
+                  <span class="flag product-aroma">{{producto.aroma?.aroma}}</span>
+                </div>
+                <div class="header-product-container">
+                  <p class="titles-main">{{producto.nombre}}</p>
+                  <p class="product-price">${{producto.precio}}</p>
+                </div>
               </div>
             </div>
         </ng-template>
@@ -46,29 +53,36 @@
     <div class="products-container">
       @for(producto of productos; track producto.id){
         <div (click)="verProducto(producto.id)" class="product">
-          @if(admin){
-              <div class="admin-buttons">
-              <p-button (onClick)="redirectToUpdate(producto.id); $event.stopPropagation()"  icon="pi pi-pencil" severity="warn"/>
-              <p-button (onClick)="activarMensajeAlertaDelete(producto); $event.stopPropagation()" icon="pi pi-trash" severity="danger" />
-            </div>
-            }
-          <div class="img-container">
-            <img [src]="getPrimerImagen(producto)" alt="">
-          </div>
-          <div class="products-flags">
+            <div class="premium-container">
             @if(producto.premium){
-              <span class="premium">
-                <span class="material-symbols-outlined">
-                  crown</span>
+                <span class="premium">
+                  <span class="material-symbols-outlined" style="font-size: 15px;">
+                    crown
+                  </span>
+                  Premium
                 </span>
               }
-              <span class="flag product-aroma">{{producto.aroma?.aroma}}</span>
             </div>
-            <div class="header-product-container">
-              <p class="titles-main">{{producto.nombre}}</p>
-              <p class="product-price">${{producto.precio}}</p>
+            @if(admin){
+                <div class="admin-buttons">
+                <p-button (onClick)="redirectToUpdate(producto.id); $event.stopPropagation()"  icon="pi pi-pencil" severity="warn"/>
+                <p-button (onClick)="activarMensajeAlertaDelete(producto); $event.stopPropagation()" icon="pi pi-trash" severity="danger" />
+              </div>
+            }
+            <div class="img-container">
+              <img [src]="getPrimerImagen(producto)" alt="">
             </div>
-          </div>
+            <div class="product-info">
+              <div class="products-flags">
+
+                  <span class="flag product-aroma">{{producto.aroma?.aroma}}</span>
+                </div>
+                <div class="header-product-container">
+                  <p class="titles-main">{{producto.nombre}}</p>
+                  <p class="product-price">${{producto.precio}}</p>
+                </div>
+              </div>
+            </div>
         }
     </div>
   }

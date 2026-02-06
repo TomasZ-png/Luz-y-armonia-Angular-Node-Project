@@ -70,7 +70,8 @@ input, select{
 
 button{
   padding:10px;
-  background-color: pink;
+  background-color: palevioletred;
+  color: white;
   border: none;
   border-radius: 5px;
   font-size: 18px;

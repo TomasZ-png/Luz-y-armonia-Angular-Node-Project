@@ -20,14 +20,16 @@ export class BuscarComponent  {
 
   private productoService = inject(ProductService);
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
   private fb = inject(FormBuilder);
+  private paramValue = this.route.snapshot.paramMap.get('value');
 
   @Output() buscar = new EventEmitter<string>();
   @Input() productos: Producto[] = [];
 
   items: string[] = [];
   buscarForm = this.fb.group({
-    valor: ['', [Validators.required]]
+    valor: [(this.paramValue)?.trim(), [Validators.required]]
   })
 
   onBuscar(){

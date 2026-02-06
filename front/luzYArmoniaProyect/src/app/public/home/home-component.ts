@@ -22,6 +22,8 @@ export class HomeComponent implements OnInit {
   secciones: any[] = [];
 
   ngOnInit(): void {
+    this.isAdmin();
+
     this.productoService.getAll().subscribe({
       next: (res: Producto[]) => {
         this.productos = res;

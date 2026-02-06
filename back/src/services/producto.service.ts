@@ -72,13 +72,30 @@ export class ProductoService {
     }
 
     async getProductByNameOrAromaOrProduct(valor:string){
-        const product = await this.productoRepository.getProductByNameOrAromaOrProduct(valor);
+        
+        if(!valor) {
+            throw new Error('El valor de la busqueda no puede estar vacio')
+        }
 
-        if(!product){
+        const valorLimpio = valor.toLowerCase().trim();
+
+        let palabras = valorLimpio.split(" ");
+
+        const palabrasBasura = ["de","la","el","y","con","para"];
+
+        palabras = palabras.filter(p => !palabrasBasura.includes(p) && p.length > 1);
+        
+        if(palabras.length === 0){
+            throw new Error('Busqueda vacia');
+        }
+
+        const products = await this.productoRepository.buscarProductosConPalabras(palabras);
+
+        if(!products){
             throw new Error('No se han encontrado productos con el valor ingresado.');
         }
 
-        return product;
+        return products;
     }
 
     async getAllProducts(){

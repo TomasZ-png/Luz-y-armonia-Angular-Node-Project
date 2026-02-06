@@ -277,4 +277,17 @@ activarMensajeAlertaDelete(producto:Producto){
     return `hace ${anios} ${anios === 1 ? 'año' : 'años'}`;
   }
 
+
+  disminuirCantidad(){
+    if(this.cantidadSeleccionada > 1) {
+      this.cantidadSeleccionada--
+    }
+  }
+
+  aumentarCantidad(){
+    if(this.cantidadSeleccionada < this.productoSeleccionado.stock) {
+      this.cantidadSeleccionada++
+    }
+  }
+
 }

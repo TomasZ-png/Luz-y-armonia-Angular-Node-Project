@@ -71,7 +71,7 @@
         @if(!isAdmin()){
           <label for="quantity">Cantidad:</label>
           <div class="quantity-section">
-            <button class="btn-qnty-less">-</button>
+            <button class="btn-qnty-less" (click)="disminuirCantidad()">-</button>
             <input
               id="quantity"
               type="number"
@@ -79,7 +79,7 @@
               [max]="productoSeleccionado.stock"
               [(ngModel)]="cantidadSeleccionada"
             />
-            <button class="btn-qnty-plus">+</button>
+            <button class="btn-qnty-plus" (click)="aumentarCantidad()">+</button>
 
           </div>
           <div class="buttons-section">

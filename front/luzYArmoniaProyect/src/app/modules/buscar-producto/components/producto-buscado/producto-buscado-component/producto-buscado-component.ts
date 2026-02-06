@@ -22,7 +22,7 @@ export class ProductoBuscadoComponent implements OnInit{
 
   private route = inject(ActivatedRoute);
   private router = inject(Router);
-  valueSearch = this.route.snapshot.paramMap.get('value');
+  valueSearch = '';
   private productService = inject(ProductService);
   private confirmationService = inject(ConfirmationService);
   private messageService = inject(MessageService);
@@ -32,8 +32,11 @@ export class ProductoBuscadoComponent implements OnInit{
   productosBuscados: Producto[] = [];
 
   ngOnInit(): void {
-    this.cargarProductosBuscados();
     this.isAdmin();
+    this.route.params.subscribe(params => {
+      this.valueSearch = params['value'];
+      this.cargarProductosBuscados();
+    })
   }
 
   cargarProductosBuscados(){

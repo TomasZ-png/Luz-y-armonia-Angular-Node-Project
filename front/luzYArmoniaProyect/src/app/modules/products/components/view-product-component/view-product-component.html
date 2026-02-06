@@ -23,17 +23,19 @@
       </div>
     </div>
     <div class="product-data">
-      <p class="date">{{formatearFecha(productoSeleccionado.fechaCreacion)}}</p>
+      <div class="date-premium-container">
+        @if (productoSeleccionado.premium) {
+          <p class="premium"><span class="material-symbols-outlined">
+            crown</span>
+            Premium
+          </p>
+        }
+        <p class="date">{{formatearFecha(productoSeleccionado.fechaCreacion)}}</p>
+      </div>
       <div>
         <div class="title-section">
           <div class="title-premium">
             <h2 class="titles-main">{{productoSeleccionado.nombre}}</h2>
-            @if (productoSeleccionado.premium) {
-              <p class="premium"><span class="material-symbols-outlined">
-                crown</span>
-                Premium
-              </p>
-            }
           </div>
           @if (!isAdmin()) {
 
@@ -51,15 +53,25 @@
           }
 
         </div>
-        <p class="price">${{productoSeleccionado.precio}}</p>
-        <p>{{productoSeleccionado.aroma?.aroma}}</p>
+        <div class="price-section">
+          <div>
+            <p class="price">${{productoSeleccionado.precio}}</p>
+            <p class="envio">Precio por unidad • Envío gratis en compras mayores a $50.000</p>
+          </div>
+        </div>
+        <div class="stock-section" [style.color]="colorState">
+          <span class="material-symbols-outlined">
+            {{iconState}}
+          </span>
+          <p>{{messageState}} - {{productoSeleccionado.stock}} {{productoSeleccionado.stock === 1 ? 'unidad disponible' : 'unidades disponibles'}}</p>
+        </div>
 
-        <p>Stock: {{productoSeleccionado.stock}} u.</p>
       </div>
       <div>
         @if(!isAdmin()){
+          <label for="quantity">Cantidad:</label>
           <div class="quantity-section">
-            <label for="quantity">Cantidad:</label>
+            <button class="btn-qnty-less">-</button>
             <input
               id="quantity"
               type="number"
@@ -67,6 +79,8 @@
               [max]="productoSeleccionado.stock"
               [(ngModel)]="cantidadSeleccionada"
             />
+            <button class="btn-qnty-plus">+</button>
+
           </div>
           <div class="buttons-section">
             @if(!sinStock){

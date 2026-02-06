@@ -25,7 +25,6 @@ import { ImageModule } from 'primeng/image';
 
 })
 
-
 export class ViewProductComponent implements OnInit{
 
 private router = inject(ActivatedRoute);
@@ -48,6 +47,9 @@ favorito: boolean = false;
 compraExito: boolean = false;
 cantidadSeleccionada: number = 1;
 sinStock: boolean = false;
+colorState: string = '';
+messageState: string = '';
+iconState: string = '';
 
 ngOnInit(): void {
   const id = Number(this.router.snapshot.paramMap.get('id'));
@@ -59,6 +61,7 @@ ngOnInit(): void {
     this.imagenSeleccionada = this.imagenesProducto?.[0] || null;
 
     this.productoSinStockDisponible();
+    this.cargarEstadoStock();
 
     this.favoritoService.productoEnFavoritos(this.productoSeleccionado.id!).subscribe({
       next: (res) => {
@@ -67,6 +70,24 @@ ngOnInit(): void {
       }
     });
   });
+}
+
+cargarEstadoStock(){
+  if(this.productoSeleccionado.stock > 5){
+    this.colorState = 'green';
+    this.messageState = 'En Stock';
+    this.iconState = 'check_circle';
+  }
+  else if(this.productoSeleccionado.stock <= 5 && this.productoSeleccionado.stock > 1){
+    this.colorState = 'orange';
+    this.messageState = 'Stock limitado';
+    this.iconState = 'info';
+  }
+  else if(this.productoSeleccionado.stock === 1){
+    this.colorState = 'red';
+    this.messageState = 'Última unidad';
+    this.iconState = 'warning';
+  }
 }
 
 mostrarImagenSeleccionada(id:number){

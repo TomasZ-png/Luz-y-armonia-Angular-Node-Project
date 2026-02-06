@@ -39,6 +39,44 @@ export class ProductoRepository{
         })
     }
 
+    async buscarProductosConPalabras(palabras: string[]){
+        return await prisma.producto.findMany({
+            where: {
+                AND: palabras.map(palabra => ({
+                    OR: [
+                        {
+                            nombre: {
+                                contains: palabra,
+                                mode: 'insensitive'
+                            }
+                        },
+                        {
+                            aroma: {
+                                aroma: {
+                                    contains: palabra,
+                                    mode: 'insensitive'
+                                }
+                            }
+                        },
+                        {
+                            Tipo_de_productos: {
+                                tipo: {
+                                    contains: palabra,
+                                    mode: 'insensitive'
+                                }
+                            }
+                        }
+                    ]
+                }))
+            },
+            include: {
+                aroma: true,
+                Tipo_de_productos: true,
+                ImagenProducto: true
+            }
+        })
+    }
+
     async getProductByNameOrAromaOrProduct(valor:string){
         return await prisma.producto.findMany({
             where: {

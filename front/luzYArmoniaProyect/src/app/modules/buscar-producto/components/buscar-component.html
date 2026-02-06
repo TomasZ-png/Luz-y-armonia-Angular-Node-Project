@@ -1,18 +1,9 @@
 <div class="card flex justify-center">
-  <p-autocomplete
 
-    placeholder='Buscá tus aromas, velas y productos fabulosos para tu hogar'
-    [(ngModel)]="valor"
-    [suggestions]="items"
-    (completeMethod)="search($event)"
-    (keydown.enter)="onBuscar()"
-  />
-
-  <button
-    style="background-color: rgb(244, 166, 192);; border: none;"
-    pButton
-    icon="pi pi-search"
-    (click)="onBuscar()"
-  >
-  </button>
+  <form (ngSubmit)="onBuscar()" [formGroup]="buscarForm">
+    <div class="search-container">
+      <input formControlName="valor" class="input-buscar" type="text" placeholder='Buscá tus aromas, velas y productos fabulosos para tu hogar'>
+      <button type="submit"><i class="pi pi-search"></i></button>
+    </div>
+  </form>
 </div>

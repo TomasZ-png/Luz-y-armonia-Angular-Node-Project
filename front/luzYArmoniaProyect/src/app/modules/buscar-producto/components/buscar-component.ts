@@ -1,10 +1,8 @@
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { AutoCompleteModule, AutoComplete } from 'primeng/autocomplete';
+import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ProductService } from '../../../api/services/productService/productService.service';
-import { ButtonDirective } from "primeng/button";
 import { Producto } from '../../products/interface/product.interface';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 interface AutoCompleteCompleteEvent {
     originalEvent: Event;
@@ -13,24 +11,29 @@ interface AutoCompleteCompleteEvent {
 
 @Component({
   selector: 'app-buscar-component',
-  imports: [AutoComplete, FormsModule, ButtonDirective],
+  imports: [FormsModule, ReactiveFormsModule],
   templateUrl: './buscar-component.html',
   standalone: true,
   styleUrl: './buscar-component.css',
 })
-export class BuscarComponent {
+export class BuscarComponent  {
 
   private productoService = inject(ProductService);
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
+  private fb = inject(FormBuilder);
+  private paramValue = this.route.snapshot.paramMap.get('value');
 
   @Output() buscar = new EventEmitter<string>();
   @Input() productos: Producto[] = [];
 
   items: string[] = [];
-  valor: string = '';
+  buscarForm = this.fb.group({
+    valor: [(this.paramValue)?.trim(), [Validators.required]]
+  })
 
   onBuscar(){
-    this.router.navigate([`/buscar/${this.valor}`])
+    this.router.navigate([`/buscar/${this.buscarForm.get('valor')?.value}`])
   }
 
   search(event: AutoCompleteCompleteEvent) {

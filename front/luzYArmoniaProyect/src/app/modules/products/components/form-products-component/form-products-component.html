@@ -42,13 +42,44 @@
     </div>
   </div>
 
+  <div class="mini-description labels-column">
+    <label for="mini-des">Mini descripción:
+      @if(isInvalid('miniDescripcion')){
+        <span class="error">*La mini descripción es obligatoria</span>
+      }
+    </label>
+    <input type="text" id="mini-des" formControlName="miniDescripcion" placeholder="Una breve descripción del producto">
+  </div>
 
-  <label for="des">Descripción:
-    @if(isInvalid('descripcion')){
-      <span class="error">*La descripcion es obligatoria</span>
-    }
-  </label>
-  <input type="text" id="des" formControlName="descripcion" placeholder="Descripcion del producto">
+  <div class="two-inputs">
+    <div class="labels-column">
+      <label for="dur">Duración:
+        @if(isInvalid('duracion')){
+          <span class="error">*La duración es obligatoria</span>
+        }
+      </label>
+      <input type="text" id="dur" formControlName="duracion" placeholder="Duración del producto (ej: 2 horas, 3 días, etc)">
+    </div>
+
+    <div class="labels-column">
+      <label for="mat">Material:
+        @if(isInvalid('material')){
+          <span class="error">*El material es obligatorio</span>
+        }
+      </label>
+      <input type="text" id="mat" formControlName="material" placeholder="Material del producto (ej: cera, vidrio, etc)">
+    </div>
+  </div>
+
+  <div class="labels-column">
+    <label for="des">Descripción:
+      @if(isInvalid('descripcion')){
+        <span class="error">*La descripcion es obligatoria</span>
+      }
+    </label>
+    <textarea formControlName="descripcion" id="des" placeholder="Descripcion del producto"></textarea>
+  </div>
+  <!-- <input type="text" id="des" formControlName="descripcion" placeholder="Descripcion del producto"> -->
 
   <div class="two-inputs">
     <div class="labels-column">

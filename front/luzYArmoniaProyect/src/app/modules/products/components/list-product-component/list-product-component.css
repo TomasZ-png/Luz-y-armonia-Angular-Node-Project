@@ -93,6 +93,11 @@
 .header-product-container .product-price{
   font-size: 1.8rem;
   font-weight: bold;
+  margin-top: 10px;
+}
+
+.linea-separadora{
+  background-color: #979797;
 }
 
 .premium-container{
@@ -124,6 +129,13 @@
 
 .titulo-section{
   color: #6b3515;
+}
+
+.description{
+  font-size: 14px;
+  margin-top: -14px;
+  font-style: italic;
+  color: #7a7a7a;
 }
 
 @media (max-width: 1200px) {

@@ -9,17 +9,28 @@
 .inputs-container{
   display: flex;
   flex-direction: column;
-  min-width: 500px;
+  min-width: 600px;
 }
 
 .two-inputs{
   display: flex;
   justify-content: space-between;
+
 }
+
 
 .labels-column{
   display: flex;
   flex-direction: column;
+}
+
+#des{
+  height: 100px;
+  max-width: 100%;
+  min-width: 100%;
+  font-size: 16px;
+  font-family: poppins;
+  margin-bottom: 20px;
 }
 
 .images-container{
@@ -60,7 +71,7 @@
   top: 222;
 }
 
-input, select{
+input, select, textarea{
   margin-bottom: 20px;
   padding: 10px;
   border-radius: 5px;

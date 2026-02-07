@@ -36,22 +36,8 @@
         <div class="title-section">
           <div class="title-premium">
             <h2 class="titles-main">{{productoSeleccionado.nombre}}</h2>
+            <p>{{productoSeleccionado.miniDescripcion}}</p>
           </div>
-          @if (!isAdmin()) {
-
-            <span
-            (click)="agregarAFavoritos(productoSeleccionado.id!)"
-            class="favorite material-symbols-outlined"
-            [class.filled]="favorito"
-            >
-              @if (favorito) {
-                heart_check
-              } @else {
-                favorite
-              }
-            </span>
-          }
-
         </div>
         <div class="price-section">
           <div>
@@ -67,11 +53,11 @@
         </div>
 
       </div>
-      <div>
+      <div class="secondary-section">
         @if(!isAdmin()){
           <label for="quantity">Cantidad:</label>
           <div class="quantity-section">
-            <button class="btn-qnty-less">-</button>
+            <button class="btn-qnty-less" (click)="disminuirCantidad()">-</button>
             <input
               id="quantity"
               type="number"
@@ -79,7 +65,7 @@
               [max]="productoSeleccionado.stock"
               [(ngModel)]="cantidadSeleccionada"
             />
-            <button class="btn-qnty-plus">+</button>
+            <button class="btn-qnty-plus" (click)="aumentarCantidad()">+</button>
 
           </div>
           <div class="buttons-section">
@@ -89,6 +75,17 @@
                 <span class="material-symbols-outlined">add_shopping_cart</span>
                 Agregar al carrito
               </button>
+              @if (!isAdmin()) {
+
+            <span
+            (click)="agregarAFavoritos(productoSeleccionado.id!)"
+            class="favorite material-icons"
+            [class.filled]="favorito"
+            >
+                favorite
+            </span>
+
+          }
             } @else {
               <p class="sinStock"> <span class="material-symbols-outlined">
                 info
@@ -102,10 +99,76 @@
           </div>
         }
       </div>
+      <div>
+
+        <hr class="line">
+        <h3>Descripción</h3>
+        <p class="descripcion">{{productoSeleccionado.descripcion}}</p>
+        <table class="table-info">
+          <tr>
+            @if (productoSeleccionado.mililitros!=null) {
+              <td>
+                <p class="info-title">Contenido neto:</p>
+              </td>
+              <td>
+                <p class="info-descripcion">{{productoSeleccionado.mililitros}} mililitros</p>
+              </td>
+            }
+            @if (productoSeleccionado.alto != null && productoSeleccionado.ancho != null) {
+              <td>
+                <p class="info-title">Tamaño: </p>
+              </td>
+              <td>
+                <p class="info-descripcion">Alto: {{productoSeleccionado.alto}}cm | Ancho: {{productoSeleccionado.ancho}}cm</p>
+              </td>
+            }
+          </tr>
+          <tr>
+            <td>
+              <p class="info-title">Duración: </p>
+            </td>
+            <td>
+              <p class=".info-descripcion">{{productoSeleccionado.duracion}}</p>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <p class="info-title">Aroma: </p>
+            </td>
+            <td class="info-descripcion">{{productoSeleccionado.aroma?.aroma}}</td>
+          </tr>
+          <tr>
+            <td>
+              <p class="info-title">Material: </p>
+            </td>
+            <td class="info-descripcion">{{productoSeleccionado.material}}</td>
+          </tr>
+        </table>
+      </div>
+      <div class="icons-product">
+        <div class="icon-product">
+          <span class="material-icons">
+            local_florist
+          </span>
+          <p>100% Natural sin toxicos</p>
+        </div>
+        <div class="icon-product">
+          <span class="material-icons">
+          volunteer_activism
+          </span>
+          <p>Hechos a mano con amor</p>
+        </div>
+        <div class="icon-product">
+          <span class="material-icons">
+            sentiment_satisfied_alt
+          </span>
+          <p>Bienestar asegurado</p>
+        </div>
+      </div>
     </div>
   </div>
 <hr>
-  <div class="about-container">
+  <!-- <div class="about-container">
     <h2>Acerca del producto</h2>
     <div>
       <h4>Descripción:</h4>
@@ -120,7 +183,7 @@
           <p>Ancho: {{productoSeleccionado.ancho}}cm</p>
         }
     </div>
-  </div>
+  </div> -->
 </div>
 } @else {
   <p>El producto no existe</p>

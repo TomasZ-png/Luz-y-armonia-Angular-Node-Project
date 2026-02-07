@@ -40,3 +40,7 @@ footer {
   cursor: pointer;
   font-size: 24px;
 }
+
+.information-section li{
+  cursor: pointer;
+}

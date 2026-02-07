@@ -5,12 +5,11 @@
   width: 100%;
   padding: 20px;
   min-height: 100vh;
-    background-color: palevioletred;
-
+  color: white;
 }
 
 .title-container{
-  color: white
+  color: palevioletred;
 }
 
 .title-container h1{
@@ -27,7 +26,7 @@
   display: flex;
   flex-direction: column;
   width: 40%;
-  background-color: rgba(255, 255, 255, 0.658);
+  background-color: rgb(255, 169, 184);
   padding: 30px;
   border-radius: 5px;
 }

@@ -23,4 +23,8 @@ export class FooterComponent {
     window.open('https://www.facebook.com/mariela.nadin', '_blank');
   }
 
+  goToAboutUs() {
+    this.router.navigate(['/informacion/sobre-nosotros']);
+  }
+
 }

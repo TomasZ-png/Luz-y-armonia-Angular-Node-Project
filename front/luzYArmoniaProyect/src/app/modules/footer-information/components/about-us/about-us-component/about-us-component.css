@@ -1,0 +1,21 @@
+.total{
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  background-color: rgb(255, 220, 225);
+  border-radius: 15px;
+}
+
+.contenido{
+  text-align: center;
+  width: 60%;
+}
+
+.contenido p{
+  font-size: 24px;
+}
+
+.contenido h1{
+  font-size: 40px;
+  color: palevioletred;
+}

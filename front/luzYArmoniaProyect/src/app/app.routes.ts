@@ -49,6 +49,10 @@ export const routes: Routes = [
     component: ProductoBuscadoComponent
   },
   {
+    path: 'informacion',
+    loadChildren: () => import('./modules/footer-information/components/footer-information.routes').then(fi=>fi.footer_information_routes)
+  },
+  {
     path: '**',
     redirectTo: 'home'
   }

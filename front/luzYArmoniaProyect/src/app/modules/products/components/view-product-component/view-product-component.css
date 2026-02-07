@@ -49,14 +49,12 @@
 
 }
 
-.title-section{
-  display: flex;
+.title-premium h2{
+  margin-bottom: -10px;
 }
 
-.title-premium{
-  display: flex;
-  align-items: center;
-  gap: 10px;
+.title-premium p{
+  font-style: italic;
 }
 
 .favorite{

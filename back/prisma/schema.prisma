@@ -27,6 +27,9 @@ model Producto {
   idAroma             Int
   precio              Float
   stock               Int
+  miniDescripcion     String                @db.VarChar(50)
+  duracion            String                @db.VarChar(50)
+  material            String                @db.VarChar(100)
   alto                Float?
   ancho               Float?
   mililitros          Float?

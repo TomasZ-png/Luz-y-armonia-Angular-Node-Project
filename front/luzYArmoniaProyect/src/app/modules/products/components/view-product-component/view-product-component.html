@@ -36,9 +36,8 @@
         <div class="title-section">
           <div class="title-premium">
             <h2 class="titles-main">{{productoSeleccionado.nombre}}</h2>
+            <p>{{productoSeleccionado.miniDescripcion}}</p>
           </div>
-
-
         </div>
         <div class="price-section">
           <div>
@@ -129,7 +128,7 @@
               <p class="info-title">Duración: </p>
             </td>
             <td>
-              <p class=".info-descripcion"></p>
+              <p class=".info-descripcion">{{productoSeleccionado.duracion}}</p>
             </td>
           </tr>
           <tr>
@@ -142,7 +141,7 @@
             <td>
               <p class="info-title">Material: </p>
             </td>
-            <td class="info-descripcion"></td>
+            <td class="info-descripcion">{{productoSeleccionado.material}}</td>
           </tr>
         </table>
       </div>

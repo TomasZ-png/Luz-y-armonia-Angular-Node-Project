@@ -22,7 +22,7 @@ export class ProductoController{
             const {
                 nombre, descripcion, precio, stock,
                 alto, ancho, mililitros,
-                premium, idAroma, idTipoProducto
+                premium, idAroma, idTipoProducto, material, duracion, miniDescripcion
             } = req.body;
 
             const productData = {
@@ -33,6 +33,7 @@ export class ProductoController{
                 ancho: ancho ? Number(ancho) : null,
                 mililitros: mililitros ? Number(mililitros) : null,
                 premium: premium === 'true',
+                material, duracion, miniDescripcion,
                 idAroma: Number(idAroma),
                 idTipoProducto: Number(idTipoProducto),
                 ImagenProducto: {
@@ -78,12 +79,15 @@ export class ProductoController{
             const {
             nombre, descripcion, precio, stock,
             alto, ancho, mililitros,
-            premium, idAroma, idTipoProducto
+            premium, idAroma, idTipoProducto, material, duracion, miniDescripcion
             } = req.body;
 
             const productData = {
             nombre,
             descripcion,
+            material,
+            duracion,
+            miniDescripcion,
             precio: Number(precio),
             stock: Number(stock),
             alto: alto ? Number(alto) : null,

@@ -27,4 +27,8 @@ export class FooterComponent {
     this.router.navigate(['/informacion/sobre-nosotros']);
   }
 
+  goToPreguntas() {
+    this.router.navigate(['/informacion/preguntas-frecuentes']);
+  }
+
 }

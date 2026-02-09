@@ -43,6 +43,8 @@ CREATE TABLE "Producto" (
     "estadoProducto" VARCHAR(100) NOT NULL DEFAULT 'DISPONIBLE',
     "premium" BOOLEAN DEFAULT false,
     "idTipoProducto" INTEGER NOT NULL,
+    "puntuacionTotal" DOUBLE PRECISION DEFAULT 0,
+    "cantidadResenias" INTEGER DEFAULT 0,
     CONSTRAINT "Producto_pkey" PRIMARY KEY ("id"),
     CONSTRAINT fk_tipo_producto
     FOREIGN KEY ("idTipoProducto") REFERENCES "Tipo_de_productos"("id")
@@ -104,6 +106,17 @@ CREATE TABLE "Producto_Compra" (
     FOREIGN KEY ("idCompra") REFERENCES "Compra"("id")
 );
 
+CREATE TABLE "Resenia" (
+    "id" SERIAL PRIMARY KEY,
+    "idUsuario" INTEGER NOT NULL,
+    "idProducto" INTEGER NOT NULL,
+    "calificacion" INTEGER NOT NULL,
+    "comentario" TEXT,
+    "fecha" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY ("idUsuario") REFERENCES "Usuario"("id"),
+    FOREIGN KEY ("idProducto") REFERENCES "Producto"("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "Usuario_correo_key" ON "Usuario"("correo");
 
@@ -113,6 +126,10 @@ CREATE UNIQUE INDEX "Aroma_aroma_key" ON "Aroma"("aroma");
 ALTER TABLE "Mi_Carrito_Producto"
 ADD CONSTRAINT mi_carrito_producto_unique
 UNIQUE ("idCarrito", "idProducto");
+
+ALTER TABLE "favorito"
+ADD CONSTRAINT favorito_producto_unique
+UNIQUE ("idUsuario", "idProducto");
 
 -- AddForeignKey
 ALTER TABLE "Producto" ADD CONSTRAINT "fk_producto_aroma" FOREIGN KEY ("idAroma") REFERENCES "Aroma"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

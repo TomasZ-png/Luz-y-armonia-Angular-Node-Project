@@ -130,4 +130,14 @@ export class ProductoRepository{
             data: {estadoProducto: estado}
         })
     }
+
+    async actualizarReseniasYPuntuacion(idProducto: number, nuevaPuntuacion: number){
+        return await prisma.producto.update({
+            where: {id: idProducto},
+            data: {
+                puntuacionTotal: nuevaPuntuacion,
+                cantidadResenias: {increment: 1}
+            }
+        })
+    }
 }

@@ -14,10 +14,13 @@ import { CompraService } from '../../../../api/services/compraService/compra.ser
 import { CompraProducto, Compra } from '../../interface/compra.interface';
 import { FormsModule } from '@angular/forms';
 import { ImageModule } from 'primeng/image';
+import { RatingModule } from 'primeng/rating';
+import { ReseniaService } from '../../../../api/services/reseniaService/resenia.service';
+import { Resenia } from '../../interface/resenia.interface';
 
 @Component({
   selector: 'app-view-product-component',
-  imports: [Button, Toast, ConfirmDialog, FormsModule, ImageModule],
+  imports: [Button, Toast, ConfirmDialog, FormsModule, ImageModule, RatingModule],
   templateUrl: './view-product-component.html',
   styleUrl: './view-product-component.css',
   standalone: true,
@@ -42,6 +45,7 @@ private messageService = inject(MessageService);
 private carritoService = inject(CarritoService);
 private favoritoService = inject(FavoritoService);
 private compraService = inject(CompraService);
+private reseniaService = inject(ReseniaService);
 idCompra: number = 0;
 favorito: boolean = false;
 compraExito: boolean = false;
@@ -50,6 +54,11 @@ sinStock: boolean = false;
 colorState: string = '';
 messageState: string = '';
 iconState: string = '';
+comentario: string = '';
+calificacion: number = 0;
+comentarios: Resenia[] = [];
+yaPuntuado: boolean = false;
+puntuacionPromedio: number = 0;
 
 ngOnInit(): void {
   const id = Number(this.router.snapshot.paramMap.get('id'));
@@ -62,6 +71,7 @@ ngOnInit(): void {
 
     this.productoSinStockDisponible();
     this.cargarEstadoStock();
+    this.cargarComentarios();
 
     this.favoritoService.productoEnFavoritos(this.productoSeleccionado.id!).subscribe({
       next: (res) => {
@@ -288,6 +298,67 @@ activarMensajeAlertaDelete(producto:Producto){
     if(this.cantidadSeleccionada < this.productoSeleccionado.stock) {
       this.cantidadSeleccionada++
     }
+  }
+
+  esYaPuntuado(){
+    const user = localStorage.getItem('USER');
+    let idUser = 0;
+    if(user){
+      const dataUser = JSON.parse(user);
+      idUser = dataUser.id
+    }
+
+    for(const puntuacion of this.comentarios){
+      if(puntuacion.Usuario.id === idUser){
+        this.yaPuntuado = true;
+      }
+    }
+  }
+
+  comentar(){
+    if(this.yaPuntuado){
+      return
+    }
+
+    const data = {
+      calificacion: this.calificacion,
+      comentario: this.comentario
+    }
+
+    this.reseniaService.createResenia(this.productoSeleccionado.id!, data).subscribe({
+      next: () => {
+        this.cargarComentarios();
+        this.comentario = ''
+        this.calificacion = 0;
+        this.messageService.add({
+            severity: 'success',
+            summary: 'Calificado',
+            detail: 'Calificaste este producto'
+        })
+      },
+      error: (err) => {
+        this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'No se pudo calificar este producto'
+        })
+
+        console.log(err);
+      },
+    })
+  }
+
+  cargarComentarios(){
+    this.reseniaService.getAllReseniasFromProducts(this.productoSeleccionado.id!).subscribe({
+      next: (res: Resenia[]) => {
+        this.comentarios = res;
+        this.esYaPuntuado();
+        this.puntuacionPromedio = Number(this.productoSeleccionado.puntuacionTotal.toFixed(1))
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    })
   }
 
 }

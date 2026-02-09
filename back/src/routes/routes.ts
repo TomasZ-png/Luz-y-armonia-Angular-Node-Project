@@ -8,6 +8,7 @@ import favoritoRouter from "./favorito/favorito.routes";
 import compraRouter from "./compra/compra.routes";
 import mercadoPagoRouter from "./pagoRouter/pago.routes";
 import webhookRouter from "./webhookRouter/webhook.routes";
+import reseniaRouter from "./resenia/resenia.routes";
 
 export class AppRoutes{
 
@@ -23,6 +24,7 @@ export class AppRoutes{
         router.use('/compra', compraRouter)
         router.use('/pagos', mercadoPagoRouter)
         router.use('/webhook', webhookRouter)
+        router.use('/resenia', reseniaRouter)
 
         return router;
     }

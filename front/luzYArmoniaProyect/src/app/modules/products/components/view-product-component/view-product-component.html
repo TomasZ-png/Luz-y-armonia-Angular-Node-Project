@@ -30,7 +30,13 @@
             Premium
           </p>
         }
-        <p class="date">{{formatearFecha(productoSeleccionado.fechaCreacion)}}</p>
+        <div class="puntuacion-fecha">
+          <p class="date">{{formatearFecha(productoSeleccionado.fechaCreacion)}}</p>
+          <div class="puntuacion">
+            <p-rating [(ngModel)]="puntuacionPromedio" [readonly]="true" />
+            <p>({{puntuacionPromedio}})</p>
+          </div>
+        </div>
       </div>
       <div>
         <div class="title-section">
@@ -184,6 +190,39 @@
         }
     </div>
   </div> -->
+  <div class="comentarios-section">
+    <div>
+      <h3>Comentarios:</h3>
+    </div>
+    @if(!yaPuntuado && !isAdmin() && !sinStock){
+      <div class="total-comentar-section">
+        <div class="comentar-section">
+          <label for="comentario">Calificar:</label>
+          <div class="card flex justify-center">
+            <p-rating  [(ngModel)]="calificacion" />
+          </div>
+          <div class="comentar">
+            <input [(ngModel)]="comentario" id="comentario" type="text" placeholder="Deja tu comentario...">
+            <button (click)="comentar()">Comentar</button>
+          </div>
+        </div>
+      </div>
+    }
+    <div class="comentarios">
+      @for(comentario of comentarios; track comentario.id){
+        @if (comentario.comentario.length > 0) {
+            <div class="comentario">
+            <div class="nombre-comentario">
+              <p>{{comentario.Usuario.nombre}} {{comentario.Usuario.apellido}}</p>
+              <p-rating [(ngModel)]="comentario.calificacion" [readonly]="true" />
+              <p class="fecha">{{formatearFecha(comentario.fecha)}}</p>
+            </div>
+            <p>{{comentario.comentario}}</p>
+          </div>
+          }
+      }
+    </div>
+  </div>
 </div>
 } @else {
   <p>El producto no existe</p>

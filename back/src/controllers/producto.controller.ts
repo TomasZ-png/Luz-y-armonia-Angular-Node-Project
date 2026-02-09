@@ -99,11 +99,6 @@ export class ProductoController{
             ImagenProducto: {
                     create: imagenes
                 }
-            // ...(imagenes && {
-            //     ImagenProducto: {
-            //     create: imagenes
-            //     }
-            // })
             };
 
             const imagenesEliminadas = req.body.imagenesEliminadas || req.body['imagenesEliminadas[]'] || req.body['imagenesEliminadas'];

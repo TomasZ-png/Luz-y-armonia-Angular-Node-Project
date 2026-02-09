@@ -1,0 +1,21 @@
+<div class="total">
+  <div class="contenido">
+
+    <h1 class="titles-main">Luz y Armonía</h1>
+    <h2>Preguntas Frecuentes</h2>
+
+    <div class="card">
+            <p-accordion [value]="['1']">
+                @for (tab of tabs; track tab.title) {
+                    <p-accordion-panel [value]="tab.value">
+                        <p-accordion-header>{{ tab.title }}</p-accordion-header>
+                        <p-accordion-content>
+                            <p class="m-0">{{ tab.content }}</p>
+                        </p-accordion-content>
+                    </p-accordion-panel>
+                }
+            </p-accordion>
+        </div>
+
+  </div>
+</div>

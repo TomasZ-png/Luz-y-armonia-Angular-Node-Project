@@ -24,6 +24,6 @@
 
 @media (max-width: 425px) {
   .main-container {
-    padding: 0; /* Reducir padding en móvil */
+    padding: 5px; /* Reducir padding en móvil */
   }
 }

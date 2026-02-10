@@ -38,25 +38,16 @@ export class ListProductComponent implements OnInit{
   ngOnInit(){
     this.responsiveOptions = [
             {
-                breakpoint: '1400px',
-                numVisible: 2,
-                numScroll: 1
-            },
-            {
-                breakpoint: '1199px',
+                breakpoint: '1300px',
                 numVisible: 3,
                 numScroll: 1
             },
             {
-                breakpoint: '767px',
+                breakpoint: '690px',
                 numVisible: 2,
                 numScroll: 1
             },
-            {
-                breakpoint: '575px',
-                numVisible: 1,
-                numScroll: 1
-            }
+
         ];
   }
 

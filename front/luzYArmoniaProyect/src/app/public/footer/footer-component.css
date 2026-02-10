@@ -44,3 +44,10 @@ footer {
 .information-section li{
   cursor: pointer;
 }
+
+@media (max-width: 800px){
+  footer{
+    display: flex;
+    flex-direction: column;
+  }
+}

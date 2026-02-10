@@ -140,7 +140,6 @@ nav{
 
 @media (max-width: 768px) {
   .nav-container {
-    flex-direction: column;
     gap: 1rem;
   }
 
@@ -162,6 +161,36 @@ nav{
 
   .dropdown-container:hover .dropdown-menu {
     transform: translateX(-50%) translateY(0);
+  }
+
+  /* Al reducir pantalla: ocultar textos en el nav y dejar solo los iconos */
+  .nav-list {
+    font-size: 0; /* oculta el texto heredado */
+  }
+
+  /* Restaurar tamaño solo para los iconos y el contador */
+  .nav-list .material-symbols-outlined,
+  .nav-list .contador-carrito {
+    font-size: 1.5rem;
+    line-height: 1;
+  }
+
+  /* Reducir el gap para que los iconos queden más compactos */
+  .item-nav a {
+    gap: 0.1rem;
+  }
+}
+
+@media (max-width: 540px){
+  .nav-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .function-container{
+    margin-top: -30px;
   }
 }
 

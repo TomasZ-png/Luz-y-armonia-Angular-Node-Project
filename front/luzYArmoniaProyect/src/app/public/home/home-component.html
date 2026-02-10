@@ -7,13 +7,16 @@
   <app-buscar-component [productos]="productos" ></app-buscar-component>
 </div>
 
-@for(seccion of secciones; track $index ){
-  <app-list-product-component
+<div>
+
+  @for(seccion of secciones; track $index){
+    <app-list-product-component
     [titulo]="seccion.titulo"
     [productos]="seccion.productos"
     [tipo]="seccion.tipo"
     [admin]="admin"
-  ></app-list-product-component>
-}
+    ></app-list-product-component>
+  }
+</div>
 
 

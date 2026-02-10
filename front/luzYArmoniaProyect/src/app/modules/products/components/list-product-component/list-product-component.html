@@ -52,7 +52,7 @@
 
   @if (tipo === 'grid') {
     <h3 class="titulo-section">{{titulo}}</h3>
-    <div class="products-container">
+    <div class="products-container grid">
       @for(producto of productos; track producto.id){
         <div (click)="verProducto(producto.id)" class="product">
             <div class="premium-container">

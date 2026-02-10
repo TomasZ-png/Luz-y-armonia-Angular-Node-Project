@@ -4,12 +4,26 @@
   min-height: 100vh;
 }
 
-.main-container {
+/* .main-container {
   max-width: 1600px;
   margin: 0 auto;
   padding: 16px;
   flex: 1;
   background-color: #fff7fb
 
+} */
+
+.main-container {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 16px;
+  flex: 1;
+  background-color: #fff7fb;
+  width: 100%; /* AGREGAR ESTO */
 }
 
+@media (max-width: 425px) {
+  .main-container {
+    padding: 0; /* Reducir padding en móvil */
+  }
+}

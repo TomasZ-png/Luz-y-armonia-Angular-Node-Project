@@ -5,22 +5,23 @@
 <div class="total-container">
   <div class="product-view-container">
     <div class="imagenes-container">
-      <div class="card-imagenes">
-        @for (img of imagenesProducto; track img.id) {
-          <img [src]="img_url + img.url" alt="imagen" (mouseover)="mostrarImagenSeleccionada(img.id)">
-        }
-      </div>
       <div class="image-preview">
-          <p-image
-            class="imagen-seleccionada"
-            [src]="img_url + imagenSeleccionada?.url"
-            [alt]="'imagen ' + imagenSeleccionada?.id"
-            [preview]="true"
-            width="450"
-            objectFit="contain"
-          >
-        </p-image>
-      </div>
+        <p-image
+        class="imagen-seleccionada"
+        [src]="img_url + imagenSeleccionada?.url"
+        [alt]="'imagen ' + imagenSeleccionada?.id"
+        [preview]="true"
+        max-width="600px"
+        width="100%"
+        [imageStyle]="{'width': '100%', 'height': '100%', 'object-fit': 'contain'}"
+        >
+      </p-image>
+    </div>
+    <div class="card-imagenes">
+      @for (img of imagenesProducto; track img.id) {
+        <img [src]="img_url + img.url" alt="imagen" (mouseover)="mostrarImagenSeleccionada(img.id)">
+      }
+    </div>
     </div>
     <div class="product-data">
       <div class="date-premium-container">
@@ -214,7 +215,10 @@
             <div class="comentario">
             <div class="nombre-comentario">
               <p>{{comentario.Usuario.nombre}} {{comentario.Usuario.apellido}}</p>
-              <p-rating [(ngModel)]="comentario.calificacion" [readonly]="true" />
+              <p-rating
+                [(ngModel)]="comentario.calificacion"
+                [readonly]="true"
+              />
               <p class="fecha">{{formatearFecha(comentario.fecha)}}</p>
             </div>
             <p>{{comentario.comentario}}</p>

@@ -22,6 +22,9 @@
   height: fit-content;
   position: sticky;
   top: 0;
+  width: 100%;
+  justify-content: center;
+
 }
 
 .date-premium-container{
@@ -42,7 +45,6 @@
   background-color: rgb(228, 194, 0);
   color: rgb(255, 255, 255);
 }
-
 
 .date{
   margin-bottom: -10px;
@@ -84,24 +86,29 @@
 }
 
 .imagen-seleccionada{
+  width: 100%;
   max-width: 700px;
-  max-height: 600px;
+  height: 100%;
+  object-fit: contain;
 }
 
 .imagen-seleccionada p-image{
   border: 2px solid rgb(141, 141, 141);
   object-fit: contain;
+  width: 100%;
+  max-width: 600px;
 }
 
+
 .card-imagenes img{
+  width: 100%;
   max-width: 90px;
-  max-height: 90px;
+  max-height: 80px;
   border: 1px solid rgb(141, 141, 141);
   opacity: 0.5;
   transition: 0.08s ease-in-out all;
   cursor: pointer;
   object-fit: contain;
-
 }
 
 .card-imagenes img:hover{
@@ -111,12 +118,13 @@
 }
 
 .image-preview{
-  width: 700px;
+  width: 100%;
+  max-width: 600px;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 600px;
-
+  height: 550px;
+  overflow: hidden;
 }
 
 .product-data{
@@ -124,6 +132,7 @@
   background-color: white;
   border-radius: 10px;
   width: 100%;
+  max-width: 600px;
   padding: 25px;
 }
 
@@ -157,7 +166,6 @@
   align-items: center;
   gap: 5px;
 }
-
 
 .title-section{
   display: flex;
@@ -351,7 +359,8 @@
 
 .comentario{
   background-color: white;
-  width: 800px;
+  width: 100%;
+  max-width: 800px;
   padding: 10px;
   margin-bottom: 10px;
 }
@@ -382,3 +391,185 @@
   align-items: center;
 }
 
+@media (max-width: 768px){
+  .total-container{
+    padding: 0px;
+  }
+
+  .comentarios-section{
+    padding: 15px
+  }
+
+  .product-view-container{
+    flex-direction: column;
+  }
+
+  .imagenes-container{
+    position: relative;
+    flex-direction: column;
+  }
+
+  .card-imagenes{
+    flex-direction: row;
+    overflow-x: auto;
+    max-width: 600px;
+  }
+
+  .buttons-section{
+    flex-direction: column;
+  }
+
+  .icons-product{
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .imagen-seleccionada{
+    max-width: 100%;
+  }
+
+  .image-preview{
+    max-width: 100%;
+  }
+
+  .comentar input{
+    width: 100%; /* Era 50% */
+  }
+
+  .comentar button{
+    padding: 10px;
+  }
+
+  .comentario{
+    max-width: 100%; /* Era 800px fijo */
+  }
+
+  /* Ajustar botones */
+  .buttons-section{
+    flex-direction: column;
+  }
+
+  .buttons-section button{
+    width: 100%;
+  }
+
+  /* Ajustar íconos */
+  .icons-product{
+    flex-direction: column;
+  }
+
+  .icon-product{
+    width: 100%;
+  }
+
+  /* Ajustar tabla de información */
+  .table-info{
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  /* Ajustar títulos */
+  .product-data .titles-main{
+    font-size: 28px; /* Era 40px */
+  }
+
+  .product-data .price{
+    font-size: 35px; /* Era 45px */
+  }
+
+  .product-data{
+    max-width: 700px;
+
+  }
+}
+
+@media (max-width: 425px){
+  .product-view-container{
+    flex-direction: column;
+  }
+
+  .imagenes-container{
+    position: relative;
+    flex-direction: column;
+  }
+
+  .card-imagenes{
+    flex-direction: row;
+    overflow-x: auto;
+    max-width: 600px;
+  }
+
+  .buttons-section{
+    flex-direction: column;
+  }
+
+  .icons-product{
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .imagen-seleccionada{
+    max-width: 100%;
+  }
+
+  .image-preview{
+    max-width: 100%;
+    max-height: 300px;
+  }
+
+  .comentar{
+    flex-direction: column;
+  }
+
+  .comentar input{
+    width: 100%; /* Era 50% */
+  }
+
+  .comentar button{
+    padding: 10px;
+
+  }
+
+  .comentario{
+    max-width: 100%; /* Era 800px fijo */
+  }
+
+  /* Ajustar botones */
+  .buttons-section{
+    flex-direction: column;
+  }
+
+  .buttons-section button{
+    width: 100%;
+  }
+
+  /* Ajustar íconos */
+  .icons-product{
+    flex-direction: column;
+  }
+
+  .icon-product{
+    width: 100%;
+  }
+
+  /* Ajustar tabla de información */
+  .table-info{
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  /* Ajustar títulos */
+  .product-data .titles-main{
+    font-size: 28px; /* Era 40px */
+  }
+
+  .product-data .price{
+    font-size: 35px; /* Era 45px */
+  }
+}
+
+@media (max-width: 400px){
+  .date-premium-container{
+    flex-direction: column;
+  }
+}

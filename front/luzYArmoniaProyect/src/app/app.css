@@ -22,6 +22,10 @@
   width: 100%; /* AGREGAR ESTO */
 }
 
+button{
+  font-family: poppins;
+}
+
 @media (max-width: 425px) {
   .main-container {
     padding: 5px; /* Reducir padding en móvil */

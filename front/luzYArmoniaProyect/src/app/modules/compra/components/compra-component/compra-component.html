@@ -1,33 +1,55 @@
-<div>
-  <h2>Mis compras</h2>
-  <div class="containers">
-    <div class="compras-container">
-      @if (misCompras && misCompras.length > 0) {
-        @for (compra of comprasOrdenadas; track compra.id) {
-          <div (click)="redirectToVistaCompra(compra.id)" class="compra-container">
-            <div class="compra-section">
-              <p>Id: #{{compra.id}}</p>
-              <p>Fecha: {{formatearFecha(compra.fecha) }}</p>
-              <p>Productos: {{compra.productos?.length}}</p>
-              <p>Total: ${{compra.total}}</p>
-            </div>
-            @for(producto of compra.productos; track producto.id){
-              <div class="producto-container">
-                <div class="product-section">
-                  <img [src]="getPrimerImagen(producto.producto!)" alt="imagen">
-                  <div class="data-container">
-                    <h3 class="titles-main">{{producto.producto?.nombre}}</h3>
-                    <p class="precio-unitario">${{producto.producto?.precio}}</p>
-                    <p>Cantidad: {{producto.cantidad}}</p>
+<h2>Mis compras</h2>
+<div >
+  <div>
+    <div class="containers">
+      <div class="compras-container">
+        @if (misCompras && misCompras.length > 0) {
+          @for (compra of comprasOrdenadas; track compra.id) {
+            <div class="compra-container">
+              <div class="compra-section">
+                <div class="left-header-container">
+                  <div class="left-header-block">
+                    <p class="idPedido">Pedido #{{compra.id}}</p>
+                    <p class="chiquito-gris">{{formatearFecha(compra.fecha) }}</p>
                   </div>
+                  <p>{{compra.estado}}</p>
+                </div>
+                <div class="right-header-container">
+                  <p class="chiquito-gris">Total</p>
+                  <p class="precio">${{compra.total}}</p>
+                  <p class="chiquito-gris">{{compra.productos!.length}} {{compra.productos!.length > 1 ? 'productos' : 'producto'}}</p>
                 </div>
               </div>
-            }
-          </div>
+              <hr>
+              <div class="productos-compra">
+                @for(producto of compra.productos; track producto.id){
+                  <div  class="producto-container">
+                    <div (click)="redirectToVistaProducto(producto.producto!)" class="product-section">
+                      <img [src]="getPrimerImagen(producto.producto!)" alt="imagen">
+                      <div class="data-container">
+                        <h3 class="titles-main">{{producto.producto?.nombre}}</h3>
+                        <p class="chiquito-gris">Cantidad: {{producto.cantidad}}</p>
+                        <p class="precio-unitario">${{producto.producto?.precio}}</p>
+                      </div>
+                    </div>
+                  </div>
+                }
+              </div>
+              <hr>
+              <div class="buttons-section">
+                <button (click)="redirectToVistaCompra(compra.id)"><span class="material-symbols-outlined">
+                  description
+                  </span>Ver detalles</button>
+                <button><span class="material-symbols-outlined">
+                  shopping_cart
+                  </span>Comprar de nuevo</button>
+              </div>
+            </div>
           }
-      } @else {
-        <p style="text-align: center;">No hay compras registradas. Descubre productos que te pueden encantar!</p>
-      }
+        } @else {
+          <p style="text-align: center;">No hay compras registradas. Descubre productos que te pueden encantar!</p>
+        }
+      </div>
     </div>
   </div>
-</div>
+  </div>

@@ -33,7 +33,9 @@ export class BuscarComponent  {
   })
 
   onBuscar(){
-    this.router.navigate([`/buscar/${this.buscarForm.get('valor')?.value}`])
+    if(((this.buscarForm.get('valor')?.value)?.trim())!.length > 0){
+      this.router.navigate([`/buscar/${this.buscarForm.get('valor')?.value}`])
+    }
   }
 
   search(event: AutoCompleteCompleteEvent) {

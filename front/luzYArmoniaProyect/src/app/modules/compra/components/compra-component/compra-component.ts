@@ -18,6 +18,9 @@ export class CompraComponent implements OnInit {
   private compraService = inject(CompraService);
   private routes = inject(Router);
   comprasOrdenadas: Compra[] = [];
+  icono: string = '';
+  color: string = '';
+  texto: string = '';
 
   ngOnInit(): void {
     this.cargarMisCompras();
@@ -51,6 +54,30 @@ export class CompraComponent implements OnInit {
 
   redirectToVistaCompra(idCompra:number){
     return this.routes.navigate([`compra/procesar-comprar/${idCompra}`]);
+  }
+
+  redirectToVistaProducto(producto:Producto){
+    return this.routes.navigate([`producto/${producto.id}`]);
+  }
+
+  establecerEstadoCompra(compra: Compra){
+    if(compra.estado === 'PENDIENTE_PAGO'){
+      this.color = 'rgb(255, 174, 0)';
+      this.icono = 'history_toggle_off';
+      this.texto = 'Pago pendiente';
+    } else if(compra.estado === 'CANCELADA'){
+      this.color = 'red';
+      this.icono = 'cancel';
+      this.texto = 'Cancelada';
+    } else if(compra.estado === 'EXPIRADA'){
+      this.color = 'rgb(114, 114, 114)';
+      this.icono = 'hourglass_disabled';
+      this.texto = 'Expirada';
+    } else {
+      this.color = 'green';
+      this.icono = 'check_circle';
+      this.texto = 'Pagado';
+    }
   }
 
 }

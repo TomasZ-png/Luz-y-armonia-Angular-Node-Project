@@ -1,10 +1,9 @@
-@if(isLogged()){
-  <app-header-component></app-header-component>
-}
+
+<app-header-component></app-header-component>
+
 <!-- <p-toast></p-toast> -->
 <div class="main-container">
   <router-outlet></router-outlet>
 </div>
-@if(isLogged()){
   <app-footer-component></app-footer-component>
-}
+

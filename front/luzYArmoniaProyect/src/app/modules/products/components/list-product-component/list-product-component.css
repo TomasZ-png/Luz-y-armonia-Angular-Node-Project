@@ -1,7 +1,8 @@
 .products-container{
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  justify-items: center;
+  gap: 25px;
 }
 
 .admin-buttons{
@@ -31,7 +32,8 @@
   border-radius: 5px;
   transition: 0.2s ease-in-out;
   cursor: pointer;
-  width: 280px;
+  width: 100%;
+  max-width: 280px;
   color: #6b3515;
 }
 
@@ -138,21 +140,146 @@
   color: #7a7a7a;
 }
 
-@media (max-width: 1200px) {
-  .products-container{
-    grid-template-columns: repeat(3, 1fr);
-    justify-items: center;
+/* Estilos personalizados para el carrusel de PrimeNG */
+
+/* Personalizar las flechas de navegación */
+::ng-deep .p-carousel .p-carousel-prev,
+::ng-deep .p-carousel .p-carousel-next {
+  background-color: palevioletred !important; /* Color de fondo */
+  color: white !important; /* Color del ícono */
+  border-radius: 50% !important; /* Hacer circular */
+  width: 35px !important; /* Ancho más pequeño */
+  height: 35px !important; /* Alto más pequeño */
+  border: none !important;
+  transition: 0.2s ease-in-out !important;
+}
+
+::ng-deep .p-carousel .p-carousel-prev:hover,
+::ng-deep .p-carousel .p-carousel-next:hover {
+  background-color: rgb(243, 109, 154) !important; /* Color hover */
+}
+
+/* Mover las flechas más cerca del borde (ajustar position) */
+::ng-deep .p-carousel .p-carousel-prev {
+  left: 5px !important; /* Ajustar posición izquierda */
+}
+
+::ng-deep .p-carousel .p-carousel-next {
+  right: 5px !important; /* Ajustar posición derecha */
+}
+
+::ng-deep .p-carousel .p-carousel-indicators {
+  padding: 10px 0 !important;
+  gap: 8px !important; /* Espaciado entre indicadores */
+}
+
+::ng-deep .p-carousel .p-carousel-indicator button {
+  background-color: #ffc0cb !important; /* Color inactivo (pink claro) */
+  width: 10px !important;
+  height: 10px !important;
+  border-radius: 50% !important;
+  border: none !important;
+  transition: all 0.3s ease-in-out !important;
+  opacity: 0.5 !important; /* Menos visible cuando está inactivo */
+}
+
+/* ESTE ES EL IMPORTANTE - indicador activo */
+::ng-deep .p-carousel .p-carousel-indicator.p-highlight button {
+  background-color: palevioletred !important; /* Color activo */
+  width: 12px !important;
+  height: 12px !important;
+  opacity: 1 !important; /* Totalmente visible */
+  transform: scale(1.1) !important; /* Efecto de crecimiento */
+}
+
+/* FLECHAS MENOS MOLESTAS - Opción 1: Semi-transparentes */
+::ng-deep .p-carousel .p-carousel-prev,
+::ng-deep .p-carousel .p-carousel-next {
+  background-color: rgba(219, 112, 147, 0.7) !important; /* Semi-transparente */
+  color: white !important;
+  border-radius: 50% !important;
+  width: 32px !important; /* Más pequeñas */
+  height: 32px !important;
+  border: none !important;
+  transition: all 0.2s ease-in-out !important;
+  opacity: 0.6 !important; /* Más discretas por defecto */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important; /* Sombra sutil */
+}
+
+::ng-deep .p-carousel .p-carousel-prev:hover,
+::ng-deep .p-carousel .p-carousel-next:hover {
+  background-color: palevioletred !important;
+  opacity: 1 !important; /* Totalmente visible al hacer hover */
+  transform: scale(1.05) !important; /* Efecto hover */
+}
+
+/* Posicionamiento más discreto */
+::ng-deep .p-carousel .p-carousel-prev {
+  left: 8px !important;
+}
+
+::ng-deep .p-carousel .p-carousel-next {
+  right: 8px !important;
+}
+
+
+
+@media (max-width: 960px){
+  .product{
+    max-width: 100%;
+    max-width: 200px;
+  }
+
+  .img-container{
+    width: 100%;
+    max-height: 180px;
+  }
+  .img-container img{
+    width: 100%;
+    max-width: 180px;
+    max-height: 180px;
   }
 }
-@media (max-width: 700px) {
-  .products-container{
-    grid-template-columns: repeat(2, 1fr);
-    justify-items: center;
+
+@media (max-width: 768px){
+  .product{
+    width: 100%;
+    max-width: 150px;
   }
-}
-@media (max-width: 330px) {
-  .products-container{
-    grid-template-columns: repeat(1, 1fr);
-    justify-items: center;
+
+  .product .description{
+    display: none;
+  }
+
+  .product .titles-main{
+    font-size: 16px;
+  }
+
+  .product .product-price{
+    font-size: 14px;
+  }
+
+  .product-aroma{
+    font-size: 11px;
+  }
+
+  .flag {
+    padding: 1px;
+    width: 50px;
+  }
+
+  .img-container{
+    width: 100%;
+    max-height: 180px;
+  }
+  .img-container img{
+    width: 100%;
+    max-width: 180px;
+    max-height: 180px;
+  }
+
+  .p-button-text.p-button-secondary {
+    font-size: 9px;
+    color: #6b3515;
   }
 }

@@ -7,7 +7,56 @@
     <div class="carrousel-recent-products">
     <h3 class="titulo-section">{{titulo}}</h3>
     <div class="card">
-      <p-carousel [value]="productos" [numVisible]="4" [numScroll]="1" [circular]="true" [responsiveOptions]="responsiveOptions" autoplayInterval="5000">
+      <p-carousel
+        [value]="productos"
+        [numVisible]="4"
+        [numScroll]="1"
+        [circular]="true"
+        [responsiveOptions]="responsiveOptions"
+        autoplayInterval="5000"
+        [pt]="{
+          indicator: {
+      style: {
+        'background-color': 'transparent',
+        'margin': '0 4px'
+      }
+    },
+    indicatorButton: {
+      style: {
+        'width': '10px',
+        'height': '10px',
+        'border-radius': '50%',
+        'background-color': '#ffc0cb',
+        'border': 'none',
+        'opacity': '0.5',
+        'transition': 'all 0.3s ease'
+      },
+      class: 'custom-indicator'
+    },
+    previousButton: {
+      style: {
+        'background-color': 'rgba(219, 112, 147, 0.7)',
+        'color': 'white',
+        'width': '32px',
+        'height': '32px',
+        'border-radius': '50%',
+        'border': 'none',
+        'opacity': '0.6'
+      }
+    },
+    nextButton: {
+      style: {
+        'background-color': 'rgba(219, 112, 147, 0.7)',
+        'color': 'white',
+        'width': '32px',
+        'height': '32px',
+        'border-radius': '50%',
+        'border': 'none',
+        'opacity': '0.6'
+      }
+    }
+        }"
+        >
         <ng-template let-producto #item>
           <div (click)="verProducto(producto.id)" class="product">
             <div class="premium-container">
@@ -52,7 +101,7 @@
 
   @if (tipo === 'grid') {
     <h3 class="titulo-section">{{titulo}}</h3>
-    <div class="products-container">
+    <div class="products-container grid">
       @for(producto of productos; track producto.id){
         <div (click)="verProducto(producto.id)" class="product">
             <div class="premium-container">

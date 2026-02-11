@@ -32,3 +32,27 @@
 .input-buscar:focus{
   outline: none;
 }
+
+@media (max-width: 768px){
+  .input-buscar{
+    width: 400px;
+  }
+}
+
+@media (max-width: 560px){
+  .input-buscar{
+    width: 400px;
+  }
+}
+
+@media (max-width: 425px){
+  .input-buscar{
+    width: 300px;
+  }
+}
+
+@media (max-width: 375px){
+  .input-buscar{
+    width: 200px;
+  }
+}

@@ -21,7 +21,6 @@ export const productRoutes: Routes = [
       },
       {
         path: ':id',
-        canActivate: [AuthGuard],
         component: ViewProductComponent
       }
     ]

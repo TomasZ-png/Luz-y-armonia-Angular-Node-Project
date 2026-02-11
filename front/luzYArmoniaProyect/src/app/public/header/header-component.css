@@ -24,8 +24,13 @@ nav{
   gap: 15px;
   cursor: pointer;
 }
+
 .items-nav li a{
   text-decoration: none;
+}
+
+.login{
+  color: white;
 }
 
 .header{
@@ -130,7 +135,6 @@ nav{
   color: palevioletred;
   padding: 5px;
   border-radius: 50px;
-  font-size: 14px;
   object-fit: fill;
   height: 19px;
   display: flex;
@@ -142,6 +146,8 @@ nav{
   .nav-container {
     gap: 1rem;
   }
+
+
 
   .items-nav {
     flex-wrap: wrap;
@@ -173,6 +179,10 @@ nav{
   .nav-list .contador-carrito {
     font-size: 1.5rem;
     line-height: 1;
+  }
+
+  .header .contador-carrito{
+    font-size: 14px;
   }
 
   /* Reducir el gap para que los iconos queden más compactos */

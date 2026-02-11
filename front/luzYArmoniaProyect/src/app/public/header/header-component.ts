@@ -62,6 +62,10 @@ export class HeaderComponent implements OnInit, OnChanges{
     }
   }
 
+  isLogged(){
+    return this.loginService.isLoggedIn();
+  }
+
   redirectToAgregar(){
     this.router.navigate(['producto/agregar'])
   }

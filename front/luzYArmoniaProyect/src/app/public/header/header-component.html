@@ -7,6 +7,7 @@
     </div>
     <div class="function-container">
       <ul class="items-nav">
+        @if(isLogged()){
         @if (!admin) {
           <li routerLink="/carrito" class="item-nav">
             <a class="nav-list header">
@@ -110,7 +111,12 @@
               </ul>
             </div>
           </li>
-        </ul>
-      </div>
+        }
+        @else {
+          <li routerLink="/login" class="item-nav login">Iniciar Sesion</li>
+          <li routerLink="/login/registrarse" class="item-nav login">Registrarse</li>
+        }
+      </ul>
+    </div>
   </div>
   </nav>

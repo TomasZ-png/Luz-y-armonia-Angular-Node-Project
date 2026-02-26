@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CompraService } from '../../../../api/services/compraService/compra.service';
 import { Compra } from '../../../products/interface/compra.interface';
 import { Producto } from '../../../products/interface/product.interface';
@@ -14,6 +14,7 @@ import { environment } from '../../../../../environments/environment';
 export class VistaCompraComponent implements OnInit{
 
   private router = inject(ActivatedRoute);
+  private route = inject(Router);
   private compraService = inject(CompraService);
   private idCompra = Number(this.router.snapshot.paramMap.get('id'));
   backImageUrl = environment.img_url;
@@ -82,6 +83,10 @@ export class VistaCompraComponent implements OnInit{
       this.icono = 'check_circle';
       this.texto = 'Pagado';
     }
+  }
+
+  redirectToVistaProducto(producto:Producto){
+    return this.route.navigate([`producto/${producto.id}`]);
   }
 
 }

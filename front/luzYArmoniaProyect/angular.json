@@ -25,8 +25,8 @@
               },
               {
                 "glob": "**/*",
-                "input": "src/app/public/footer/img",
-                "output": "img"
+                "input": "src/app/shared/images",
+                "output": "assets/images"
               }
             ],
             "styles": [
@@ -93,8 +93,8 @@
               },
               {
                 "glob": "**/*",
-                "input": "src/app/public/footer/img",
-                "output": "img"
+                "input": "src/app/shared/images",
+                "output": "assets/images"
               }
             ],
             "styles": [

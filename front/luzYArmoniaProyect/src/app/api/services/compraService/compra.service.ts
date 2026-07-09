@@ -20,7 +20,7 @@ export class CompraService{
   }
 
   obtenerCompra(idCompra: number): Observable<Compra>{
-    return this.http.get<Compra>(`${this.url}/${idCompra}`);
+    return this.http.get<Compra>(`${this.url}/${idCompra}`, { withCredentials: true });
   }
 
   comprarProducto(idProducto:number, cantidad:number): Observable<Compra> {

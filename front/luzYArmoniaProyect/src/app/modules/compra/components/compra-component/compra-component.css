@@ -144,6 +144,7 @@ hr{
   width: 30%;
   border: gray 2px solid;
   color: rgb(104, 104, 104);
+  /* lis */
 }
 
 @media (max-width: 425px){
@@ -169,7 +170,4 @@ hr{
     width: 50%;
   }
 
-  .product-section{
-
-  }
 }

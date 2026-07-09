@@ -38,8 +38,11 @@ export class VistaCompraComponent implements OnInit{
         this.establecerEstadoCompra();
         console.log(this.pagoPendiente)
       },
-      error: (error: any) => {
-        console.log(error.message)
+      error: (error) => {
+        console.log(error.message);
+        if(error.status === 403){
+          this.route.navigate(['/error'])
+        }
       },
     })
   }

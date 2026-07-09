@@ -22,6 +22,17 @@ export class CompraController {
             }
 
             const compra = await compraService.getCompraById(idCompra);
+
+            if(!compra){
+                return;
+            }
+
+            const idUsuario = req.user?.id;
+
+            if(idUsuario !== compra.idUsuario){
+                return res.status(403).json({ error: "Acceso Denegado" });
+            }
+
             res.status(200).json(compra);
         } catch (error) {
             

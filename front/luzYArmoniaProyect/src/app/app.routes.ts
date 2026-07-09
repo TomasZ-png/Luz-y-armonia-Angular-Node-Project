@@ -7,6 +7,7 @@ import { FavoritoComponent } from './modules/favoritos/components/favorito-compo
 import { CompraComponent } from './modules/compra/components/compra-component/compra-component';
 import { BuscarComponent } from './modules/buscar-producto/components/buscar-component';
 import { ProductoBuscadoComponent } from './modules/buscar-producto/components/producto-buscado/producto-buscado-component/producto-buscado-component';
+import { ErrorComponent } from './modules/error-component/error-component';
 
 
 export const routes: Routes = [
@@ -50,6 +51,10 @@ export const routes: Routes = [
   {
     path: 'informacion',
     loadChildren: () => import('./modules/footer-information/components/footer-information.routes').then(fi=>fi.footer_information_routes)
+  },
+  {
+    path: 'error',
+    component: ErrorComponent
   },
   {
     path: '**',

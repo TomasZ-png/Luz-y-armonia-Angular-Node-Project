@@ -1,7 +1,9 @@
+
 .total-container{
   display: flex;
   justify-content: space-around;
   gap: 40px;
+  width: 100%;
 }
 
 .total{
@@ -11,9 +13,10 @@
 
 .compra-details{
   padding: 15px;
-  border: solid 1px rgb(165, 165, 165);
+  border: 1px solid rgba(182, 182, 182, 0.5);
   border-radius: 5px;
-  width: 600px;
+  width: 50%;
+  background-color: white;
 }
 
 .compra-info{
@@ -30,6 +33,7 @@
   border: 2px solid;
   padding: 5px;
   border-radius: 5px;
+  width: auto;
 }
 
 .titles-main{
@@ -37,31 +41,31 @@
   font-weight: 700;
 }
 
-.producto-container{
-  display: flex;
-  gap: 20px;
-  padding: 15px;
-  border: solid 1px rgb(165, 165, 165);
-  border-radius: 5px;
+.productos-container{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
 }
 
-.producto-container .img-producto{
-  width: 90px;
-  object-fit: contain;
+.producto-container{
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  border-radius: 5px;
 }
 
 .payment-container{
-  width: 300px;
-  height: 200px;
-  border: solid 1px rgb(165, 165, 165);
+  width: 30%;
+  border: 1px solid rgba(182, 182, 182, 0.5);
   border-radius: 5px;
   padding: 15px;
+  background-color: white;
+  max-height: 470px;
 }
 
 .payment-container button{
   width: 100%;
   padding: 10px;
-  background-color: rgb(0, 140, 255);
+  background-color: palevioletred;
   color: rgb(255, 255, 255);
   font-size: 18px;
   border: none;
@@ -71,5 +75,157 @@
 }
 
 .payment-container .title-pay{
-  text-align: center  ;
+  font-size: 25px;
+  margin-bottom: 15px;
+    color: rgb(80, 51, 34);
+
+}
+
+.linea-separadora{
+  height: 2px;
+  border: none;
+  border-radius: 15px;
+  background-color: pink;
+  width: 100%;
+}
+
+.productos-compra{
+  display: flex;
+  flex-direction: column;
+}
+
+.product-section{
+  display: flex;
+  gap: 10px;
+  background-color: rgb(255, 227, 232);
+  padding: 10px;
+  border-radius: 10px;
+  align-items: center;
+  transition: 0.2s ease-in-out;
+}
+
+.productos-compra{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.producto-container img{
+  width: 100px;
+  max-height: 100px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+}
+
+.product-section img{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.titles-main{
+  font-size: 20px;
+}
+
+.compras-container{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+}
+
+.chiquito-gris{
+  font-size: 16px;
+  color: gray;
+}
+
+.precio{
+  font-size: 30px;
+  color: palevioletred;
+  font-weight: 600;
+
+}
+
+.precio-unitario{
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.data-container p, h3{
+  margin: 5px 0;
+}
+
+.fecha{
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 1px;
+}
+
+.idPedido-fecha h3{
+  font-size: 28px;
+}
+
+.table-resumen-info{
+  width: 100%;
+}
+
+.total-text{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: -10px;
+}
+
+.title{
+  font-size: 20px;
+  color: rgb(80, 51, 34);
+  font-weight: 600;
+}
+
+.total-price{
+  font-weight: 600;
+  font-size: 27px;
+  color: palevioletred;
+}
+
+.payment-methods-container{
+  margin-top: -30px;
+}
+
+.metodo-pago-container{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6px;
+  border: palevioletred solid 2px;
+  border-radius: 10px;
+  padding: 5px 10px;
+  background-color: rgb(255, 225, 231);
+  margin-bottom: 20px;
+}
+
+.metodo-pago-container img{
+  width: 50px;
+  object-fit: contain;
+}
+
+.metodo-pago-container span{
+  color: palevioletred;
+}
+
+@media(max-width: 768px){
+  .total-container{
+    flex-direction: column;
+  }
+
+  .compra-details{
+    width: 100%;
+  }
+
+  .payment-container{
+    width: 100%;
+  }
+
 }

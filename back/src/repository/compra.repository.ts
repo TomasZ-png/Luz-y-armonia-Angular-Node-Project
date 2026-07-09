@@ -32,6 +32,7 @@ export class CompraRepository {
 
         return {
             id: compra.id,
+            idUsuario: compra.idUsuario,
             fecha: compra.fecha,
             total: compra.total,
             estado: compra.estado,

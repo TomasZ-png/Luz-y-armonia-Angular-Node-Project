@@ -1,72 +1,95 @@
-<h2>Pagar Compra</h2>
+<div class="total">
+  <div>
+    <h2>Finalizar Compra</h2>
+    <div class="total-container">
+      <div class="compra-details">
+        <div class="compra-info">
+          <div class="idPedido-fecha" style="display: flex; flex-direction: column;">
+            <h3 style="font-size: 25px; color: rgb(80, 51, 34);">
+              Pedido #{{compra.id}}</h3>
+            <p class="chiquito-gris fecha">
+              <span class="material-symbols-outlined" style="font-size: 20px;">
+                calendar_month
+              </span>{{formatearFecha(compra.fecha)}}
+            </p>
+          </div>
+        </div>
+        <hr class="linea-separadora">
+        <div class="status-container">
+          @if(compra.estado !== 'CREADA'){
+            <p class="status" [style.color]="color">
+              <span class="material-symbols-outlined">
+                {{icono}}
+              </span>
+              {{texto}}
+            </p>
+          }
+        </div>
+        <h3>Productos del pedido</h3>
+        <div class="productos-container">
+          @for(producto of compra.productos; track producto.idProducto){
+            <div class="producto-container">
+              <div class="product-section">
+                <img [src]="getPrimerImagen(producto.producto!)" alt="imagen">
+                <div class="data-container">
+                  <h3 class="titles-main">{{producto.producto?.nombre}}</h3>
+                  <p class="chiquito-gris">Cantidad: {{producto.cantidad}}</p>
+                  <p class="precio-unitario">${{producto.producto?.precio}}</p>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+        <div class="envio-container">
+          <div class="title-envio" style="display: flex; align-items: center; gap: 5px;">
+            <span class="material-icons">
+              local_shipping
+            </span>
+            <h4>Información de envío</h4>
+          </div>
+          <p><strong>Dirección</strong>:</p>
+          <p><strong>Tiempo estimado</strong>: 5-10 días hábiles</p>
+          <p><strong>Envío</strong>: Gratis a partir de $50000</p>
+        </div>
 
-<div class="total-container">
-  <div class="compra-details">
-    <div class="compra-info">
-      <div style="display: flex; align-items: center; gap: 20px;">
-        <h3>Id de compra: #{{compra.id}}</h3>
-        <p>Fecha: {{formatearFecha(compra.fecha)}}</p>
       </div>
-      <div class="status-container">
-        @if(compra.estado !== 'CREADA'){
-
-          <P class="status" [style.color]="color">
-            <span class="material-symbols-outlined">
-              {{icono}}
-            </span>
-            {{texto}}
-          </P>
-        }
-        <!-- @if(compra.estado === 'PAGADA'){
-          <P class="status" style="color: green;">
-            <span class="material-symbols-outlined">
-              check_circle
-            </span>
-            Pagado
-          </P>
-        } @else if (compra.estado === 'PENDIENTE_PAGO') {
-          <P class="status" style="color: rgb(255, 174, 0);">
-            <span class="material-symbols-outlined">
-              history_toggle_off
-            </span>
-            Pago pendiente
-          </P>
-        } @else if (compra.estado === 'CANCELADA') {
-          <P class="status" style="color: red;">
-            <span class="material-symbols-outlined">
-              cancel
-            </span>
-            Cancelada
-          </P>
-        } @else {
-          <P class="status" style="color: rgb(114, 114, 114);">
-            <span class="material-symbols-outlined">
-              hourglass_disabled
-            </span>
-            Expirada
-          </P>
-        } -->
-      </div>
-      </div>
-    <div class="producto-container">
-      @for(item of compra.productos; track item.idProducto){
-        <img class="img-producto" [src]="getPrimerImagen(item.producto!)" alt="">
-        <div class="product-details">
-          <p class="titles-main">{{item.producto?.nombre}}</p>
-          <p>Precio: ${{item.producto?.precio}}</p>
-          <p>Cantidad: {{item.cantidad}}</p>
+      @if(pagoPendiente){
+        <div class="payment-container">
+          <h3 class="title-pay titles-main">Resumen de pago</h3>
+          <table class="chiquito-gris table-resumen-info">
+            <tr>
+              <td>Subtotal({{compra.productos!.length}} {{compra.productos!.length > 1 ? 'productos' : 'producto'}})</td>
+              <td>${{compra.total}}</td>
+            </tr>
+            <tr>
+              <td>Envío</td>
+              <td>Gratis</td>
+            </tr>
+            <tr>
+              <td>Descuentos</td>
+              <td>-$0 </td>
+            </tr>
+          </table>
+          <hr class="linea-separadora">
+          <div class="total-text">
+            <p class="title">Total a pagar:</p>
+            <p class="total-price">${{compra.total}}</p>
+          </div>
+          <div class="payment-methods-container">
+            <h4>Método de pago:</h4>
+              <div class="metodo-pago-container">
+                <div style="display: flex;">
+                  <img src="assets/images/mercado-pago-logo.png" alt="mercado-Pago-Imagen">
+                  <p>Mercado Pago</p>
+                </div>
+                  <span class="material-icons">
+                    check_circle
+                  </span>
+              </div>
+          </div>
+          <button (click)="pagar()">Pagar ahora</button>
         </div>
       }
     </div>
-
   </div>
-  @if(pagoPendiente){
-    <div class="payment-container">
-      <h3 class="title-pay">Pagar con Mercado Pago</h3>
-      <!-- <img src="front\luzYArmoniaProyect\src\app\shared\images\MP_RGB_HANDSHAKE_color_horizontal.png" alt="mercado pago"> -->
-      <hr>
-      <p class="total">Total a pagar: ${{compra.total}}</p>
-      <button (click)="pagar()">Pagar</button>
-    </div>
-  }
 </div>

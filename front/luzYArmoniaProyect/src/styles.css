@@ -12,7 +12,7 @@ html, body {
   background-color:#fff7fb;
 }
 
-body{
+body, button{
   font-family: 'Poppins', sans-serif;
 }
 
@@ -24,4 +24,18 @@ body.login-page{
   overflow: hidden;
 }
 
+.envio-container{
+  background-color: rgb(231, 255, 229);
+  color: green;
+  padding: 10px;
+  border-radius: 10px;
+}
 
+.envio-container p{
+  margin: 1px;
+  font-size: 16px;
+}
+
+.title-envio{
+  margin: -10px 0;
+}

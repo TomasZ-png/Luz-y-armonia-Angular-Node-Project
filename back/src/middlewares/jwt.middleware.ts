@@ -25,8 +25,6 @@ export const jwtMiddleware = (req: Request, res: Response, next: NextFunction) =
     console.log('USER EN JWT:', req.user);
     next();
 
-
-
   } catch (error: any) {
     // Token inválido o expirado, continuar sin usuario
     console.error('JWT Error:', error.message);

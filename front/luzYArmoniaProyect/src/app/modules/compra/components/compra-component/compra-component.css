@@ -1,6 +1,6 @@
 .containers{
   width: 100%;
-  max-width: 800px;
+  padding: 0 20px;
 }
 
 .compra-container{
@@ -9,7 +9,7 @@
   padding: 20px;
   background-color: white;
   width: 100%;
-  max-width: 800px;
+  max-width: none;
 }
 
 .compra-section{
@@ -58,15 +58,20 @@ hr{
 }
 
 .productos-compra{
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 10px;
 }
 
 .producto-container img{
-  width: 100px;
+  max-width: 100px;
   max-height: 100px;
   object-fit: contain;
+}
+
+.product-section img{
+  margin: 0;
+  flex-shrink: 0;
 }
 
 .titles-main{
@@ -139,4 +144,30 @@ hr{
   width: 30%;
   border: gray 2px solid;
   color: rgb(104, 104, 104);
+  /* lis */
+}
+
+@media (max-width: 425px){
+  .compra-section{
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .right-header-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: -15px;
+  }
+
+  .buttons-section button:first-child{
+    width: 50%;
+  }
+
+  .buttons-section button:last-child{
+    width: 50%;
+  }
+
 }

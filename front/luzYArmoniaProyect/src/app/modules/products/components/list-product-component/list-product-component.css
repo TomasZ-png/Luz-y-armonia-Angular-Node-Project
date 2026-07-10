@@ -1,285 +1,174 @@
-.products-container{
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  justify-items: center;
-  gap: 25px;
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600&display=swap');
+
+.titulo-section {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  color: #2f2430;
+  margin: 0 0 18px;
 }
 
-.admin-buttons{
+
+.products-container.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 24px;
+}
+
+.product-card {
+  position: relative;
+  background: #ffffff;
+  border: 1px solid #f3c6d9;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  margin-right: 10px;
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 28px rgba(181, 86, 127, 0.16);
+}
+
+.card-top {
+  position: relative;
+}
+
+.img-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: #f8dbe7;
+}
+
+.img-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+.product-card:hover .img-container img {
+  transform: scale(1.06);
+  filter: brightness(1.05);
+}
+
+.product-card:hover .img-container::after {
+  opacity: 1;
+}
+
+.img-container::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 40%, rgba(232, 182, 79, 0.35), transparent 65%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+/* Badge premium */
+.premium-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 10px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #f3d9a8, #e8b64f);
+  color: #5a3d0f;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  box-shadow: 0 4px 10px rgba(232, 182, 79, 0.35);
+}
+
+.premium-badge .material-symbols-outlined {
+  font-size: 13px;
+}
+
+/* Botones admin, ocultos hasta hover */
+.admin-buttons {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
   display: flex;
-  justify-content: flex-end;
-  gap: 5px;
+  gap: 6px;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.product-card:hover .admin-buttons {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.product-info {
+  padding: 16px 16px 18px;
+}
+
+.flag {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: #f8dbe7;
+  color: #b5567f;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
   margin-bottom: 10px;
 }
 
-.admin-buttons span{
-  color: rgba(122, 122, 122, 0.589);
-  transition: 0.2s ease-in-out;
-  cursor: pointer;
+.titles-main {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px;
+  color: #2f2430;
+  margin: 0 0 4px;
 }
 
-.admin-buttons span:hover{
-  color: rgb(0, 0, 0);
-
-}
-
-.product{
-  display: flex;
-  background-color: #ffd8e0;
-  /* background-color: #ffd1da; */
-  flex-direction: column;
-  border: 1px solid rgba(165, 42, 42, 0.377);
-  border-radius: 5px;
-  transition: 0.2s ease-in-out;
-  cursor: pointer;
-  width: 100%;
-  max-width: 280px;
-  color: #6b3515;
-}
-
-.product:hover{
-  border: 1px solid rgba(165, 42, 42, 0.781);
-}
-
-.product .product-price{
-  margin-top: -10px;
-  margin-bottom: 5px;
-
-}
-
-.img-container{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 250px;
-  padding: 5px;
-}
-
-.img-container img{
-  width: 250px;
-  height: 250px;
-  object-fit: contain;
-}
-
-.product-info{
-  background-color: white;
-  padding: 0 20px ;
-  height: 100%;
-}
-
-.products-flags{
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 15px;
-  margin-bottom: -10px;
-}
-
-.flag{
-  border-radius: 10px;
-  color: #6b3515;
-  width: 80px;
-  text-align: center;
-  background-color: #e6beae;
-  border: 1px solid #6b3515;
-  padding: 2px;
-  font-size: 15px;
-}
-
-
-.header-product-container .titles-main{
-  font-weight: bold;
-  font-size: 1.5rem;
-}
-
-.header-product-container .product-price{
-  font-size: 1.8rem;
-  font-weight: bold;
-  margin-top: 10px;
-}
-
-.linea-separadora{
-  background-color: #979797;
-}
-
-.premium-container{
-  display: flex;
-  justify-content: flex-end;
-  padding: 10px;
-  position: absolute;
-}
-
-.premium{
-  background-color: rgb(250, 204, 0);
-  border-radius: 10px;
-  color: rgb(255, 255, 255);
-  text-align: center;
-  border-radius: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 5px;
-  font-size: small;
-  width: 85px;
-  gap: 3px;
-}
-
-.carrousel-recent-products{
-  margin-bottom: 30px;
-
-}
-
-.titulo-section{
-  color: #6b3515;
-}
-
-.description{
-  font-size: 14px;
-  margin-top: -14px;
+.description {
+  font-size: 12.5px;
   font-style: italic;
-  color: #7a7a7a;
+  color: #9b8b96;
+  margin: 0 0 12px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 32px;
 }
 
-/* Estilos personalizados para el carrusel de PrimeNG */
-
-/* Personalizar las flechas de navegación */
-::ng-deep .p-carousel .p-carousel-prev,
-::ng-deep .p-carousel .p-carousel-next {
-  background-color: palevioletred !important; /* Color de fondo */
-  color: white !important; /* Color del ícono */
-  border-radius: 50% !important; /* Hacer circular */
-  width: 35px !important; /* Ancho más pequeño */
-  height: 35px !important; /* Alto más pequeño */
-  border: none !important;
-  transition: 0.2s ease-in-out !important;
+.linea-separadora {
+  height: 1px;
+  background: #f3c6d9;
+  margin: 0 0 10px;
 }
 
-::ng-deep .p-carousel .p-carousel-prev:hover,
-::ng-deep .p-carousel .p-carousel-next:hover {
-  background-color: rgb(243, 109, 154) !important; /* Color hover */
+.product-price {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #b5567f;
+  margin: 0;
 }
 
-/* Mover las flechas más cerca del borde (ajustar position) */
-::ng-deep .p-carousel .p-carousel-prev {
-  left: 5px !important; /* Ajustar posición izquierda */
+/* Carousel wrapper necesita que el item respire */
+.carrousel-recent-products .card {
+  padding: 4px 44px;
 }
 
-::ng-deep .p-carousel .p-carousel-next {
-  right: 5px !important; /* Ajustar posición derecha */
-}
-
-::ng-deep .p-carousel .p-carousel-indicators {
-  padding: 10px 0 !important;
-  gap: 8px !important; /* Espaciado entre indicadores */
-}
-
-::ng-deep .p-carousel .p-carousel-indicator button {
-  background-color: #ffc0cb !important; /* Color inactivo (pink claro) */
-  width: 10px !important;
-  height: 10px !important;
-  border-radius: 50% !important;
-  border: none !important;
-  transition: all 0.3s ease-in-out !important;
-  opacity: 0.5 !important; /* Menos visible cuando está inactivo */
-}
-
-/* ESTE ES EL IMPORTANTE - indicador activo */
-::ng-deep .p-carousel .p-carousel-indicator.p-highlight button {
-  background-color: palevioletred !important; /* Color activo */
-  width: 12px !important;
-  height: 12px !important;
-  opacity: 1 !important; /* Totalmente visible */
-  transform: scale(1.1) !important; /* Efecto de crecimiento */
-}
-
-/* FLECHAS MENOS MOLESTAS - Opción 1: Semi-transparentes */
-::ng-deep .p-carousel .p-carousel-prev,
-::ng-deep .p-carousel .p-carousel-next {
-  background-color: rgba(219, 112, 147, 0.7) !important; /* Semi-transparente */
-  color: white !important;
-  border-radius: 50% !important;
-  width: 32px !important; /* Más pequeñas */
-  height: 32px !important;
-  border: none !important;
-  transition: all 0.2s ease-in-out !important;
-  opacity: 0.6 !important; /* Más discretas por defecto */
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important; /* Sombra sutil */
-}
-
-::ng-deep .p-carousel .p-carousel-prev:hover,
-::ng-deep .p-carousel .p-carousel-next:hover {
-  background-color: palevioletred !important;
-  opacity: 1 !important; /* Totalmente visible al hacer hover */
-  transform: scale(1.05) !important; /* Efecto hover */
-}
-
-/* Posicionamiento más discreto */
-::ng-deep .p-carousel .p-carousel-prev {
-  left: 8px !important;
-}
-
-::ng-deep .p-carousel .p-carousel-next {
-  right: 8px !important;
-}
-
-
-
-@media (max-width: 960px){
-  .product{
-    max-width: 100%;
-    max-width: 200px;
-  }
-
-  .img-container{
-    width: 100%;
-    max-height: 180px;
-  }
-  .img-container img{
-    width: 100%;
-    max-width: 180px;
-    max-height: 180px;
-  }
-}
-
-@media (max-width: 768px){
-  .product{
-    width: 100%;
-    max-width: 150px;
-  }
-
-  .product .description{
-    display: none;
-  }
-
-  .product .titles-main{
-    font-size: 16px;
-  }
-
-  .product .product-price{
-    font-size: 14px;
-  }
-
-  .product-aroma{
-    font-size: 11px;
-  }
-
-  .flag {
-    padding: 1px;
-    width: 50px;
-  }
-
-  .img-container{
-    width: 100%;
-    max-height: 180px;
-  }
-  .img-container img{
-    width: 100%;
-    max-width: 180px;
-    max-height: 180px;
-  }
-
-  .p-button-text.p-button-secondary {
-    font-size: 9px;
-    color: #6b3515;
+/* Responsive */
+@media (max-width: 600px) {
+  .products-container.grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 14px;
   }
 }

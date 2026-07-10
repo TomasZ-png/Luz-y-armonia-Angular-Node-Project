@@ -1,77 +1,86 @@
-<h2>Mis compras</h2>
-<div class="containers">
-  <div class="compras-container">
+<div class="compras-page">
+  <div class="favoritos-header">
+    <h2>Mis compras</h2>
     @if (misCompras && misCompras.length > 0) {
-      @for (compra of comprasOrdenadas; track compra.id) {
-        <div class="compra-container">
-          <div class="compra-section">
-            <div class="left-header-container">
+      <span class="contador">{{misCompras.length}} pedido{{misCompras.length > 1 ? 's' : ''}}</span>
+    }
+  </div>
+
+  <div class="containers">
+    <div class="compras-container">
+      @if (misCompras && misCompras.length > 0) {
+        @for (compra of comprasOrdenadas; track compra.id) {
+          <div class="compra-card">
+            <div class="compra-header">
               <div class="left-header-block">
                 <p class="idPedido">Pedido #{{ compra.id }}</p>
                 <p class="chiquito-gris">{{ formatearFecha(compra.fecha) }}</p>
               </div>
+
               @if (compra.estado === 'PAGADA') {
-                <P class="status" style="color: green">
-                  <span class="material-symbols-outlined"> check_circle </span>
+                <span class="status-badge status-pagada">
+                  <span class="material-symbols-outlined">check_circle</span>
                   Pagado
-                </P>
+                </span>
               } @else if (compra.estado === 'PENDIENTE_PAGO') {
-                <P class="status" style="color: rgb(255, 174, 0)">
-                  <span class="material-symbols-outlined"> history_toggle_off </span>
+                <span class="status-badge status-pendiente">
+                  <span class="material-symbols-outlined">history_toggle_off</span>
                   Pago pendiente
-                </P>
+                </span>
               } @else if (compra.estado === 'CANCELADA') {
-                <P class="status" style="color: red">
-                  <span class="material-symbols-outlined"> cancel </span>
+                <span class="status-badge status-cancelada">
+                  <span class="material-symbols-outlined">cancel</span>
                   Cancelada
-                </P>
+                </span>
               } @else {
-                <P class="status" style="color: rgb(114, 114, 114)">
-                  <span class="material-symbols-outlined"> hourglass_disabled </span>
+                <span class="status-badge status-expirada">
+                  <span class="material-symbols-outlined">hourglass_disabled</span>
                   Expirada
-                </P>
-                
+                </span>
               }
+
+              <div class="right-header-container">
+                <p class="chiquito-gris">Total</p>
+                <p class="precio">${{ compra.total }}</p>
+                <p class="chiquito-gris">
+                  {{ compra.productos!.length }}
+                  {{ compra.productos!.length > 1 ? 'productos' : 'producto' }}
+                </p>
+              </div>
             </div>
-            <div class="right-header-container">
-              <p class="chiquito-gris">Total</p>
-              <p class="precio">${{ compra.total }}</p>
-              <p class="chiquito-gris">
-                {{ compra.productos!.length }}
-                {{ compra.productos!.length > 1 ? 'productos' : 'producto' }}
-              </p>
-            </div>
-          </div>
-          <hr />
-          <div class="productos-compra">
-            @for (producto of compra.productos; track producto.id) {
-              <div class="producto-container">
-                <div (click)="redirectToVistaProducto(producto.producto!)" class="product-section">
-                  <img [src]="getPrimerImagen(producto.producto!)" alt="imagen" />
+
+            <div class="productos-compra">
+              @for (producto of compra.productos; track producto.id) {
+                <div class="producto-item" (click)="redirectToVistaProducto(producto.producto!)">
+                  <img [src]="getPrimerImagen(producto.producto!)" alt="{{producto.producto?.nombre}}" />
                   <div class="data-container">
                     <h3 class="titles-main">{{ producto.producto?.nombre }}</h3>
                     <p class="chiquito-gris">Cantidad: {{ producto.cantidad }}</p>
                     <p class="precio-unitario">${{ producto.producto?.precio }}</p>
                   </div>
                 </div>
-              </div>
-            }
+              }
+            </div>
+
+            <div class="buttons-section">
+              <button class="btn-detalles" (click)="redirectToVistaCompra(compra.id)">
+                <span class="material-symbols-outlined">description</span>
+                Ver detalles
+              </button>
+              <button class="btn-recomprar">
+                <span class="material-symbols-outlined">shopping_cart</span>
+                Comprar de nuevo
+              </button>
+            </div>
           </div>
-          <hr />
-          <div class="buttons-section">
-            <button (click)="redirectToVistaCompra(compra.id)">
-              <span class="material-symbols-outlined"> description </span>Ver detalles
-            </button>
-            <button>
-              <span class="material-symbols-outlined"> shopping_cart </span>Comprar de nuevo
-            </button>
-          </div>
+        }
+      } @else {
+        <div class="empty-state">
+          <span class="material-symbols-outlined empty-icon">receipt_long</span>
+          <p class="empty-title">No hay compras registradas</p>
+          <p class="empty-subtitle">Descubrí productos que te pueden encantar y hacé tu primer pedido.</p>
         </div>
       }
-    } @else {
-      <p style="text-align: center">
-        No hay compras registradas. Descubre productos que te pueden encantar!
-      </p>
-    }
+    </div>
   </div>
 </div>

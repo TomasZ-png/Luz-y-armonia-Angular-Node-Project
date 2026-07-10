@@ -1,25 +1,36 @@
-<div>
-  <h2>Mis favoritos</h2>
+<div class="favoritos-page">
+  <div class="favoritos-header">
+    <h2>Mis favoritos</h2>
+    @if (favoritos && favoritos.length > 0) {
+      <span class="contador">{{favoritos.length}} producto{{favoritos.length > 1 ? 's' : ''}}</span>
+    }
+  </div>
+
   <div class="containers">
     <div class="productos-container">
       @if (favoritos && favoritos.length > 0) {
         @for (favorito of favoritos; track favorito.id) {
-          <div class="producto-container">
+          <div class="producto-card">
+            <button class="eliminar-btn" (click)="eliminarProducto(favorito.id!)" aria-label="Quitar de favoritos">
+              <span class="material-symbols-outlined">close</span>
+            </button>
             <div class="product-section" (click)="verProducto(favorito.id)">
-              <img [src]="getPrimerImagen(favorito)" alt="imagen">
+              <div class="imagen-wrapper">
+                <img [src]="getPrimerImagen(favorito)" alt="{{favorito.nombre}}">
+              </div>
               <div class="data-container">
                 <h3 class="titles-main">{{favorito.nombre}}</h3>
-
                 <p class="precio-unitario">${{favorito.precio}}</p>
               </div>
             </div>
-            <span class="material-symbols-outlined eliminar-product" (click)="eliminarProducto(favorito.id!)">
-              close_small
-            </span>
           </div>
         }
       } @else {
-        <p style="text-align: center; width: 450px; color: gray;">No hay productos en tus favoritos todavia. Descubre excelentes productos que te pueden interesar y agregalos a tus favoritos!</p>
+        <div class="empty-state">
+          <span class="material-symbols-outlined empty-icon">favorite</span>
+          <p class="empty-title">Todavía no tenés favoritos</p>
+          <p class="empty-subtitle">Descubrí fragancias que te van a encantar y guardalas acá.</p>
+        </div>
       }
     </div>
   </div>

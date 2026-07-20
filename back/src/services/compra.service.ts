@@ -2,13 +2,17 @@
     import { CompraRepository } from "../repository/compra.repository";
     import { MiCarritoRepository } from "../repository/miCarrito.repository";
     import { ProductoRepository } from "../repository/producto.repository";
+import { VarianteRepository } from "../repository/variante.repository";
+import { prisma } from "../prisma";
+import { error } from "console";
 
     export class CompraService {
 
         constructor(
             private compraRepository: CompraRepository,
             private productoRepository: ProductoRepository,
-            private carritoRepository: MiCarritoRepository
+            private carritoRepository: MiCarritoRepository,
+            private varianteRepository: VarianteRepository
         ){}
 
         async getCompraById(idCompra: number){
@@ -26,20 +30,20 @@
             return compra;
         }
 
-        async comprarUnidad (idUsuario: number, idProducto: number, cantidad: number){
-            const producto = await this.productoRepository.getProductById(idProducto);
+        async comprarUnidad (idUsuario: number, idVariante: number, cantidad: number){
+            const variante = await this.varianteRepository.getVarianteById(idVariante);
             
-            if(producto!.stock < cantidad){
+            if(variante!.stock < cantidad){
                 throw new Error('La cantidad supera el stock del producto');
             }
 
             const compra = await this.compraRepository.createCompra(idUsuario);
             
             await this.compraRepository.crearProductoCompra(
-                idProducto, cantidad, compra.id
+                idVariante, cantidad, compra.id
             );
 
-            const total = producto!.precio * cantidad;
+            const total = variante!.precio * cantidad;
             await this.compraRepository.actualizarTotal(compra.id, total);
 
             return compra;
@@ -58,12 +62,12 @@
 
             for(const item of carritoUser!.Mi_Carrito_Producto){
                 await this.compraRepository.crearProductoCompra(
-                    item.Producto.id,
+                    item.VarianteProducto.id,
                     item.cantidad,
                     compra.id
                 );
 
-                total += item.Producto.precio * item.cantidad;
+                total += item.VarianteProducto.precio * item.cantidad;
             }
 
             await this.compraRepository.actualizarTotal(compra.id, total);
@@ -113,26 +117,61 @@
                 console.log('El estado de la compra no es pendiente de pago, no se puede marcar como pagada');
                 return;
             }
-            
-            const productosDeLaCompra:Producto_Compra[] = await this.compraRepository.getItemsOfCompraByCompraId(compraId);
-            
-            for(const item of productosDeLaCompra){
-                const producto = await this.productoRepository.getProductById(item.idProducto);
+                        
+            await prisma.$transaction(async (tx) => {
+                const productos = await tx.producto_Compra.findMany({
+                    where: {idCompra: compraId},
+                    include: {VarianteProducto: true}
+                });
 
-                if(!producto || producto.stock < item.cantidad){
-                    throw new Error(`La cantidad elegida supera el stock del producto ${item.idProducto}`);
+                if(productos.length === 0){
+                    throw new Error('La compra no posee productos.')
                 }
-            }
 
-            for(const item of productosDeLaCompra){
-                const producto = await this.productoRepository.getProductById(item.idProducto);
+                for(const item of productos){
+                    if(item.VarianteProducto.stock < item.cantidad){
+                        throw new Error('Stock insuficiente.');
+                    }
+                }
 
-                const nuevoStock = producto!.stock - item.cantidad;
-                await this.productoRepository.actualizarStock(item.idProducto, nuevoStock);
-            }
-            
-            await this.compraRepository.actualizarEstadoCompra(compraId, 'PAGADA');
-            console.log('Compra marcada como paga');
+                for(const item of productos){
+                    await tx.varianteProducto.update({
+                        where: { id: item.VarianteProducto.id },
+                        data: { 
+                            stock: {
+                                decrement: item.cantidad
+                            },
+                        }
+                    });
+
+                    const varianteActualizada = await tx.varianteProducto.findUnique({
+                        where: {id: item.VarianteProducto.id}
+                    });
+
+                    await tx.varianteProducto.update({
+                        where: {id: item.VarianteProducto.id},
+                        data: {
+                            estado: varianteActualizada?.stock === 0 ? 'AGOTADO' : 'DISPONIBLE'
+                        }
+                    });
+
+                    const variantes = await tx.varianteProducto.findMany({
+                        where: {idProducto: item.VarianteProducto.idProducto}
+                    });
+
+                    const tieneStock = variantes.some(v=>v.stock>0);
+
+                    await tx.producto.update({
+                        where:{id: item.VarianteProducto.idProducto},
+                        data:{estadoProducto: tieneStock ? 'DISPONIBLE' : 'AGOTADO'}
+                    });
+                }
+
+                await tx.compra.update({
+                    where:{id:compraId},
+                    data: {estado: 'PAGADA'}
+                });
+            })
         }
 
         async marcarCompraComoCancelada(compraId:number){
@@ -144,6 +183,4 @@
 
             await this.compraRepository.actualizarEstadoCompra(compraId, 'CANCELADA');
         }
-
-
     }

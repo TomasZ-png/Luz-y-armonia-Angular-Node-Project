@@ -15,37 +15,38 @@ export class ProductoController{
         try {
             const files = req.files as Express.Multer.File[] | undefined;
 
-            const imagenes = files?.map(file => ({
+            const imagenes = (files ?? []).map(file => ({
                 url: `/uploads/productos/${file.filename}`
             }));
 
             const {
-                nombre, descripcion, precio, stock,
+                nombre, descripcion,
                 alto, ancho, mililitros,
-                premium, idAroma, idTipoProducto, material, duracion, miniDescripcion
+                premium, idTipoProducto, 
+                material, duracion, 
+                miniDescripcion, variantes
             } = req.body;
 
+            // const variantesParseadas = JSON.parse(variantes);
+
             const productData = {
-                nombre, descripcion,
-                precio: Number(precio),
-                stock: Number(stock),
+                nombre, 
+                descripcion,
+                material, 
+                duracion, 
+                miniDescripcion,
                 alto: alto ? Number(alto) : null,
                 ancho: ancho ? Number(ancho) : null,
                 mililitros: mililitros ? Number(mililitros) : null,
-                premium: premium === 'true',
-                material, duracion, miniDescripcion,
-                idAroma: Number(idAroma),
+
+                premium: premium,
+                
                 idTipoProducto: Number(idTipoProducto),
-                ImagenProducto: {
-                    create: imagenes
-                }
             }
 
-            const product = await productoService.createProduct(productData);
-            res.status(201).json({ message: 'Producto creado correctamente', producto: product});
+            const producto = await productoService.createProduct(productData, variantes, imagenes!);
+            res.status(201).json({ message: 'Producto creado correctamente', producto: producto});
         } catch (error:any) {
-            console.error('PRISMA ERROR 👉', error.message);
-            console.error('PRISMA META 👉', error.meta);
             res.status(400).json({
                 message: error.message,
                 meta: error.meta
@@ -57,9 +58,6 @@ export class ProductoController{
         try {
             const id = Number(req.params.id);
 
-            console.log('BODY 👉', req.body);
-            console.log('FILES 👉', req.files);
-
             if(isNaN(id)){
                 return res.status(400).json({message: 'El id debe ser numerico.'});
             }
@@ -70,35 +68,42 @@ export class ProductoController{
                 return res.status(404).json({message: 'Producto no encontrado'})
             }
 
-            const files = req.files as Express.Multer.File[] | undefined;
+            const files = req.body.imagenes as Express.Multer.File[] | undefined;
 
-            const imagenes = files?.map(file => ({
+            
+            const imagenes = (files ?? []).map(file => ({
                 url: `/uploads/productos/${file.filename}`
             }));
+            
+            // if(!files?.length){
+            //     return res.status(400).json({message: 'Debe haber al menos una imagen.'});
+            // }
 
             const {
-            nombre, descripcion, precio, stock,
-            alto, ancho, mililitros,
-            premium, idAroma, idTipoProducto, material, duracion, miniDescripcion
+                nombre, descripcion,
+                alto, ancho, mililitros,
+                premium, idTipoProducto, 
+                material, duracion, 
+                miniDescripcion
             } = req.body;
 
+            const variantes = req.body.variantes;
+            const variantesEliminadas = req.body.variantesEliminadas ?? [];
+
             const productData = {
-            nombre,
-            descripcion,
-            material,
-            duracion,
-            miniDescripcion,
-            precio: Number(precio),
-            stock: Number(stock),
-            alto: alto ? Number(alto) : null,
-            ancho: ancho ? Number(ancho) : null,
-            mililitros: mililitros ? Number(mililitros) : null,
-            premium: premium === 'true',
-            idAroma: Number(idAroma),
-            idTipoProducto: Number(idTipoProducto),
-            ImagenProducto: {
-                    create: imagenes
-                }
+                nombre,
+                descripcion,
+                material,
+                duracion,
+                miniDescripcion,
+
+                alto: alto ? Number(alto) : null,
+                ancho: ancho ? Number(ancho) : null,
+                mililitros: mililitros ? Number(mililitros) : null,
+                
+                premium: premium,
+                
+                idTipoProducto: Number(idTipoProducto),
             };
 
             const imagenesEliminadas = req.body.imagenesEliminadas || req.body['imagenesEliminadas[]'] || req.body['imagenesEliminadas'];
@@ -130,7 +135,7 @@ export class ProductoController{
                 })
             }
 
-            const productoModificado = await productoService.updateProduct(id, productData);
+            const productoModificado = await productoService.updateProduct(id, productData, variantes, variantesEliminadas, imagenes);
             res.status(200).json(productoModificado);
         } catch (error:any) {
             res.status(400).json({error: error.message});
@@ -181,25 +186,4 @@ export class ProductoController{
         }
     }
 
-    async deleteProduct(req:Request, res:Response){
-        try {
-            const id = Number(req.params.id);
-            if(isNaN(id)){
-                return res.status(400).json({ message: 'El id debe ser numerico.'});
-            }
-
-            const producto = await productoService.getProductoById(id);
-
-            if(!producto){
-                return res.status(404).json({ message: 'Producto no encontrado.'})
-            }
-            
-            await productoService.deleteProduct(id);
-            res.status(200).json({message: 'Producto eliminado correctamente.'});
-        } catch (error: any) {
-            res.status(400).json({error: error.message});
-        }
-    }
-
-    
 }

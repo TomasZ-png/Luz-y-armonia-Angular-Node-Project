@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { CompraRepository } from '../repository/compra.repository';
+import { VarianteProducto } from '@prisma/client';
 
 const MP_ACCESS_TOKEN = process.env.MP_ACCESS_TOKEN!;
 const MP_API_URL = 'https://api.mercadopago.com/checkout/preferences';
@@ -31,10 +32,10 @@ export class MercadoPagoService {
 
     const preference = {
       items: items.map(item => ({
-        id: item.Producto.id.toString(),
-        title: item.Producto.nombre,
+        id: item.VarianteProducto.id.toString(),
+        title: item.VarianteProducto.Producto.nombre,
         quantity: item.cantidad,
-        unit_price: item.Producto.precio,
+        unit_price: item.VarianteProducto.precio,
         currency_id: 'ARS',
       })),
       external_reference: compra.id.toString(),

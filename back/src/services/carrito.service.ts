@@ -1,8 +1,12 @@
 import { MiCarritoRepository } from "../repository/miCarrito.repository";
 import { ProductoRepository } from '../repository/producto.repository';
+import { VarianteRepository } from '../repository/variante.repository';
 
 export class CarritoService {
-    constructor(private carritoRepository: MiCarritoRepository, private productoRepository:ProductoRepository ){}
+    constructor(private carritoRepository: MiCarritoRepository, 
+                private productoRepository:ProductoRepository,
+                private varianteRepository: VarianteRepository,
+            ){}
 
     async getCarritoByUserId(idUsuario:number){
         let carrito = await this.carritoRepository.getCarritoByUserId(idUsuario);
@@ -15,7 +19,7 @@ export class CarritoService {
         return carrito;
     }
 
-    async agregarProductoAlCarrito(userId: number, productoId:number, cantidad:number){
+    async agregarProductoAlCarrito(userId: number, varianteId:number, cantidad:number){
         let carrito = await this.carritoRepository.getCarritoByUserId(userId);
 
         if(!carrito){
@@ -23,20 +27,20 @@ export class CarritoService {
             carrito = await this.carritoRepository.getCarritoByUserId(userId);
         }
 
-        const producto = await this.productoRepository.getProductById(productoId);
+        const variante = await this.varianteRepository.getVarianteById(varianteId);
 
-        if(!producto) {
-            throw new Error('El producto no existe');
+        if(!variante) {
+            throw new Error('La variante no existe');
         }
 
-        if(producto.stock < cantidad){
+        if(variante.stock < cantidad){
             throw new Error('La cantidad supera al stock');
         }
 
-        return await this.carritoRepository.agregarProductoAlCarrito(carrito!.id, productoId, cantidad);
+        return await this.carritoRepository.agregarProductoAlCarrito(carrito!.id, varianteId, cantidad);
     }
 
-    async eliminarProductoDelCarrito(userId:number, productoId:number){
+    async eliminarProductoDelCarrito(userId:number, varianteId:number){
         let carrito = await this.carritoRepository.getCarritoByUserId(userId);
 
         if(!carrito){
@@ -44,6 +48,6 @@ export class CarritoService {
             carrito = await this.carritoRepository.getCarritoByUserId(userId);
         }
 
-        return await this.carritoRepository.eliminarProductoDelCarrito(carrito!.id, productoId);
+        return await this.carritoRepository.eliminarProductoDelCarrito(carrito!.id, varianteId);
     }
 }

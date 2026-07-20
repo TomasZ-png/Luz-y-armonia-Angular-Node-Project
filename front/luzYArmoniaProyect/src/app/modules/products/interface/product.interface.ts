@@ -20,7 +20,7 @@ export interface Producto {
   premium: boolean | null,
   idTipoProducto: number,
   Tipo_de_productos?: TipoProducto,
-  aroma?: Aroma,
+  aromas?: Aroma[],
   puntuacionTotal: number,
   cantidadResenias: number,
 

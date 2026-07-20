@@ -21,7 +21,6 @@ INSERT INTO "Tipo_de_productos" (tipo) VALUES ('VELA'), ('DIFUSOR'), ('BODY SPLA
 CREATE TABLE "Aroma" (
     "id" SERIAL NOT NULL,
     "aroma" TEXT NOT NULL,
-
     CONSTRAINT "Aroma_pkey" PRIMARY KEY ("id")
 );
 
@@ -30,9 +29,6 @@ CREATE TABLE "Producto" (
     "id" SERIAL NOT NULL,
     "nombre" TEXT NOT NULL,
     "descripcion" TEXT NOT NULL,
-    "idAroma" INTEGER NOT NULL,
-    "precio" DOUBLE PRECISION NOT NULL,
-    "stock" INTEGER NOT NULL,
     "miniDescripcion" VARCHAR(50) NOT NULL,
     "duracion" VARCHAR(50) NOT NULL,
     "material" VARCHAR(100) NOT NULL,
@@ -48,6 +44,19 @@ CREATE TABLE "Producto" (
     CONSTRAINT "Producto_pkey" PRIMARY KEY ("id"),
     CONSTRAINT fk_tipo_producto
     FOREIGN KEY ("idTipoProducto") REFERENCES "Tipo_de_productos"("id")
+);
+
+CREATE TABLE "VarianteProducto" (
+    "id" SERIAL PRIMARY KEY,
+    "idProducto" INTEGER NOT NULL,
+    "idAroma" INTEGER NOT NULL, 
+    "precio" DOUBLE PRECISION NOT NULL,
+    "stock" INTEGER NOT NULL,
+    "sku" TEXT NOT NULL UNIQUE,
+    "estado" TEXT NOT NULL DEFAULT 'DISPONIBLE',
+    CONSTRAINT aroma_producto_fk FOREIGN KEY ("idProducto") REFERENCES "Producto"("id"),
+    CONSTRAINT producto_aroma_fk FOREIGN KEY ("idAroma") REFERENCES "Aroma"("id")
+    ON DELETE CASCADE
 );
 
 CREATE TABLE "ImagenProducto"(
@@ -72,10 +81,10 @@ CREATE TABLE "Mi_Carrito" (
 CREATE TABLE "Mi_Carrito_Producto"(
     "id" SERIAL PRIMARY KEY,
     "idCarrito" INTEGER NOT NULL,
-    "idProducto" INTEGER NOT NULL,
+    "idVariante" INTEGER NOT NULL,
     "cantidad" INTEGER NOT NULL DEFAULT 1, 
     FOREIGN KEY ("idCarrito") REFERENCES "Mi_Carrito"("id") ON DELETE CASCADE,
-    FOREIGN KEY ("idProducto") REFERENCES "Producto"("id")
+    FOREIGN KEY ("idVariante") REFERENCES "VarianteProducto"("id")
 );
 
 CREATE TABLE "favorito"(
@@ -85,7 +94,6 @@ CREATE TABLE "favorito"(
     FOREIGN KEY ("idUsuario") REFERENCES "Usuario"("id"),
     FOREIGN KEY ("idProducto") REFERENCES "Producto"("id") ON DELETE CASCADE
 );
-
 
 CREATE TABLE "Compra"(
     "id" SERIAL PRIMARY KEY,
@@ -99,10 +107,10 @@ CREATE TABLE "Compra"(
 
 CREATE TABLE "Producto_Compra" (
     "id" SERIAL PRIMARY KEY,
-    "idProducto" INTEGER NOT NULL,
+    "idVariante" INTEGER NOT NULL,
     "cantidad" INTEGER NOT NULL DEFAULT 1,
     "idCompra" INTEGER NOT NULL,
-    FOREIGN KEY ("idProducto") REFERENCES "Producto"("id"),
+    FOREIGN KEY ("idVariante") REFERENCES "VarianteProducto"("id"),
     FOREIGN KEY ("idCompra") REFERENCES "Compra"("id")
 );
 
@@ -125,14 +133,15 @@ CREATE UNIQUE INDEX "Aroma_aroma_key" ON "Aroma"("aroma");
 
 ALTER TABLE "Mi_Carrito_Producto"
 ADD CONSTRAINT mi_carrito_producto_unique
-UNIQUE ("idCarrito", "idProducto");
+UNIQUE ("idCarrito", "idVariante");
 
 ALTER TABLE "favorito"
 ADD CONSTRAINT favorito_producto_unique
 UNIQUE ("idUsuario", "idProducto");
 
--- AddForeignKey
-ALTER TABLE "Producto" ADD CONSTRAINT "fk_producto_aroma" FOREIGN KEY ("idAroma") REFERENCES "Aroma"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "VarianteProducto"
+ADD CONSTRAINT variante_producto_unique
+UNIQUE("idProducto", "idAroma");
 
 INSERT INTO "Aroma" (aroma) VALUES ('Vainilla');
 -- 12345678

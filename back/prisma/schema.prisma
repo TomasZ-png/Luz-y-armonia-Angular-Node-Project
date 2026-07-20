@@ -22,37 +22,32 @@ model Usuario {
 }
 
 model Producto {
-  id                  Int                   @id @default(autoincrement())
-  nombre              String
-  descripcion         String
-  idAroma             Int
-  precio              Float
-  stock               Int
-  miniDescripcion     String                @db.VarChar(50)
-  duracion            String                @db.VarChar(50)
-  material            String                @db.VarChar(100)
-  alto                Float?
-  ancho               Float?
-  mililitros          Float?
-  fechaCreacion       DateTime              @default(now()) @db.Timestamp(6)
-  estadoProducto      String                @default("DISPONIBLE") @db.VarChar(100)
-  premium             Boolean?              @default(false)
-  idTipoProducto      Int
-  puntuacionTotal     Float?                @default(0)
-  cantidadResenias    Int?                  @default(0)
-  ImagenProducto      ImagenProducto[]
-  Mi_Carrito_Producto Mi_Carrito_Producto[]
-  aroma               Aroma                 @relation(fields: [idAroma], references: [id], map: "fk_producto_aroma")
-  Tipo_de_productos   Tipo_de_productos     @relation(fields: [idTipoProducto], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_tipo_producto")
-  Producto_Compra     Producto_Compra[]
-  Resenia             Resenia[]
-  favorito            favorito[]
+  id                Int                @id @default(autoincrement())
+  nombre            String
+  descripcion       String
+  miniDescripcion   String             @db.VarChar(50)
+  duracion          String             @db.VarChar(50)
+  material          String             @db.VarChar(100)
+  alto              Float?
+  ancho             Float?
+  mililitros        Float?
+  fechaCreacion     DateTime           @default(now()) @db.Timestamp(6)
+  estadoProducto    String             @default("DISPONIBLE") @db.VarChar(100)
+  premium           Boolean?           @default(false)
+  idTipoProducto    Int
+  puntuacionTotal   Float?             @default(0)
+  cantidadResenias  Int?               @default(0)
+  ImagenProducto    ImagenProducto[]
+  Tipo_de_productos Tipo_de_productos  @relation(fields: [idTipoProducto], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_tipo_producto")
+  Resenia           Resenia[]
+  VarianteProducto  VarianteProducto[]
+  favorito          favorito[]
 }
 
 model Aroma {
-  id       Int        @id @default(autoincrement())
-  aroma    String     @unique
-  Producto Producto[]
+  id               Int                @id @default(autoincrement())
+  aroma            String             @unique
+  VarianteProducto VarianteProducto[]
 }
 
 model Tipo_de_productos {
@@ -76,14 +71,14 @@ model Mi_Carrito {
 }
 
 model Mi_Carrito_Producto {
-  id         Int        @id @default(autoincrement())
-  idCarrito  Int
-  idProducto Int
-  cantidad   Int        @default(1)
-  Mi_Carrito Mi_Carrito @relation(fields: [idCarrito], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  Producto   Producto   @relation(fields: [idProducto], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  id               Int              @id @default(autoincrement())
+  idCarrito        Int
+  idVariante       Int
+  cantidad         Int              @default(1)
+  Mi_Carrito       Mi_Carrito       @relation(fields: [idCarrito], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  VarianteProducto VarianteProducto @relation(fields: [idVariante], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
-  @@unique([idCarrito, idProducto], map: "mi_carrito_producto_unique")
+  @@unique([idCarrito, idVariante], map: "mi_carrito_producto_unique")
 }
 
 model favorito {
@@ -108,12 +103,12 @@ model Compra {
 }
 
 model Producto_Compra {
-  id         Int      @id @default(autoincrement())
-  idProducto Int
-  cantidad   Int      @default(1)
-  idCompra   Int
-  Compra     Compra   @relation(fields: [idCompra], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  Producto   Producto @relation(fields: [idProducto], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  id               Int              @id @default(autoincrement())
+  idVariante       Int
+  cantidad         Int              @default(1)
+  idCompra         Int
+  Compra           Compra           @relation(fields: [idCompra], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  VarianteProducto VarianteProducto @relation(fields: [idVariante], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
@@ -126,4 +121,20 @@ model Resenia {
   fecha        DateTime @default(now()) @db.Timestamp(6)
   Producto     Producto @relation(fields: [idProducto], references: [id], onDelete: NoAction, onUpdate: NoAction)
   Usuario      Usuario  @relation(fields: [idUsuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model VarianteProducto {
+  id                  Int                   @id @default(autoincrement())
+  idProducto          Int
+  idAroma             Int
+  precio              Float
+  stock               Int
+  sku                 String                @unique
+  estado              String                @default("DISPONIBLE")
+  Mi_Carrito_Producto Mi_Carrito_Producto[]
+  Producto_Compra     Producto_Compra[]
+  Producto            Producto              @relation(fields: [idProducto], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "aroma_producto_fk")
+  Aroma               Aroma                 @relation(fields: [idAroma], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "producto_aroma_fk")
+
+  @@unique([idProducto, idAroma], map: "variante_producto_unique")
 }

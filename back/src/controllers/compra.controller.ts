@@ -4,12 +4,14 @@ import { CompraRepository } from "../repository/compra.repository";
 import { MiCarritoRepository } from "../repository/miCarrito.repository";
 import { ProductoRepository } from "../repository/producto.repository";
 import { CompraService } from "../services/compra.service";
+import { VarianteRepository } from "../repository/variante.repository";
 
 const compraRepository = new CompraRepository();
 const productoRepository = new ProductoRepository();
 const carritoRepository = new MiCarritoRepository();
+const varianteRepository = new VarianteRepository();
 
-const compraService = new CompraService(compraRepository, productoRepository, carritoRepository);
+const compraService = new CompraService(compraRepository, productoRepository, carritoRepository, varianteRepository);
 
 export class CompraController {
 
@@ -43,31 +45,22 @@ export class CompraController {
     async comprarPorUnidad(req:Request, res:Response){
         try {
             const idUsuario = req.user?.id;
-            const idProducto = Number(req.params.id);
+            const idVariante = Number(req.params.id);
             const { cantidad } = req.body;
 
             if(!idUsuario){
                 return res.status(401).json({ error: 'No autenticado' });
             }
 
-            if(!idProducto){
+            if(!idVariante){
                 return res.status(401).json({ error: 'El producto no existe' });
             }
 
             if(!cantidad || cantidad === 0){
                 return res.status(401).json({ error: 'Datos invalidos, cantidad no valida' });
             }
-
-            // const producto = await productoRepository.getProductById(idProducto);
             
-            // if(producto!.stock < cantidad){
-            //     return res.status(400).json({error: 'La cantidad es mayor al stock disponible'});
-            // }
-            
-            const compra = await compraService.comprarUnidad(idUsuario, idProducto, cantidad);
-            // const stockActualizado = producto!.stock - cantidad;
-
-            // await productoRepository.actualizarStock(idProducto, stockActualizado)
+            const compra = await compraService.comprarUnidad(idUsuario, idVariante, cantidad);
             res.status(200).json(compra);
         } catch (error:any) {
             res.status(400).json({message: error.message});            

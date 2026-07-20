@@ -45,13 +45,13 @@ export class BuscarComponent  {
       .map(p => p.nombre)
       .filter(nombre => nombre.toLowerCase().includes(query));
 
-    const aromas = this.productos
-      .map(p => p.aroma?.aroma)
-      .filter((aroma): aroma is string => !!aroma && aroma.toLowerCase().includes(query));
+    // const aromas = this.productos
+    //   .map(p => p.aromas?.aroma)
+    //   .filter((aroma): aroma is string => !!aroma && aroma.toLowerCase().includes(query));
 
     this.items = Array.from(new Set([
       ...nombres,
-      ...aromas
+      // ...aromas
     ]))
   }
 

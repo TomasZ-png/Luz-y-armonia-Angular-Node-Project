@@ -18,6 +18,22 @@
 
 }
 
+.aromas-container{
+  display: flex;
+  flex-wrap: wrap;
+  grid-auto-columns: auto;
+  gap: 10px;
+}
+
+.label-aroma{
+  border: solid 1px palevioletred;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  border-radius: 15px;
+  cursor: pointer;
+}
 
 .labels-column{
   display: flex;

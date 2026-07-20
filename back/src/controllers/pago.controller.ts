@@ -13,10 +13,10 @@ export class MercadoPagoController{
             const pref = await mercadoPagoService.crearPreferencia(id);
             res.json(pref);
         } catch (error: any) {
-            console.error('🔥 ERROR COMPLETO:', error);
-            console.error('🔥 RESPONSE DATA:', error?.response?.data);
-            console.error('🔥 RESPONSE STATUS:', error?.response?.status);
-            console.error('🔥 MESSAGE:', error?.message);
+            // console.error('🔥 ERROR COMPLETO:', error);
+            // console.error('🔥 RESPONSE DATA:', error?.response?.data);
+            // console.error('🔥 RESPONSE STATUS:', error?.response?.status);
+            // console.error('🔥 MESSAGE:', error?.message);
             res.status(500).json({ 
                 error: 'Error creando preferencia',
                 details: error?.response?.data || error?.message

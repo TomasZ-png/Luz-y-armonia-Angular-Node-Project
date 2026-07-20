@@ -32,6 +32,15 @@ export class FormProductsComponent implements OnInit, OnChanges{
   imagenesParaMostrar: {url:string; esNueva:boolean; id?:number, file?:File}[] = [];
   imagenesEliminadas: number[] = [];
   private backImageUrl = `${environment.img_url}`;
+  aromasSeleccionados: number[] = [];
+
+  onAromaChange(event: any, aroma: Aroma){
+    if(event.target.checked){
+      this.aromasSeleccionados.push(aroma.id);
+    } else {
+      this.aromasSeleccionados = this.aromasSeleccionados.filter(id => id !== aroma.id)
+    }
+  }
 
   formProduct = this.fb.group({
     idTipoProducto: [null as Number | null, [Validators.required]],
@@ -40,7 +49,6 @@ export class FormProductsComponent implements OnInit, OnChanges{
     duracion: ['', [Validators.required]],
     material: ['', [Validators.required]],
     descripcion: ['', [Validators.required]],
-    idAroma: [null as Number | null, [Validators.required]],
     precio: [null as Number | null, [Validators.required]],
     stock: [null as Number | null, [Validators.required]],
     alto: [null as Number | null],
@@ -83,7 +91,6 @@ export class FormProductsComponent implements OnInit, OnChanges{
           this.formProduct.patchValue({
             nombre: this.producto.nombre,
             descripcion: this.producto.descripcion,
-            idAroma: this.producto.idAroma,
             precio: this.producto.precio,
             stock: this.producto.stock,
             alto: this.producto.alto,
@@ -106,6 +113,11 @@ export class FormProductsComponent implements OnInit, OnChanges{
                 esNueva: false
               })
             );
+
+            if(this.producto.aromas){
+              this.aromasSeleccionados = this.producto.aromas.map(a => a.id);
+            }
+
             // Asegurar que al cargar el producto en edición se ajusten los validators
             this.aplicarTipoProductoEnFormulario();
           }
@@ -148,11 +160,6 @@ export class FormProductsComponent implements OnInit, OnChanges{
       formData.append('imagenes', img);
     })
 
-    console.log('FORMDATA REAL:');
-      for (const e of formData.entries()) {
-      console.log(e);
-    }
-
     if(this.modo === 'crear'){
       this.formProduct.reset({
         premium:false
@@ -164,6 +171,15 @@ export class FormProductsComponent implements OnInit, OnChanges{
     this.imagenesEliminadas.forEach(id => {
       formData.append('imagenesEliminadas[]', id.toString());
     })
+
+    if(this.aromasSeleccionados.length === 0){
+      alert('Selecciona al menos un aroma');
+      return;
+    }
+
+    this.aromasSeleccionados.forEach(id => {
+      formData.append('idAromas[]', id.toString())
+    });
 
     this.submitForm.emit(formData as any);
   }

@@ -13,9 +13,14 @@ export class MiCarritoRepository{
             include: {
                 Mi_Carrito_Producto:{
                     include: {
-                        Producto: {
+                        VarianteProducto: {
                             include: {
-                                ImagenProducto: true
+                                Aroma: true,
+                                Producto: {
+                                    include: {
+                                        ImagenProducto: true
+                                    }
+                                }
                             }
                         },
                         
@@ -25,12 +30,12 @@ export class MiCarritoRepository{
         });
     }
 
-    async agregarProductoAlCarrito(idCarrito:number, idProducto:number, cantidad:number){
+    async agregarProductoAlCarrito(idCarrito:number, idVariante:number, cantidad:number){
         return await prisma.mi_Carrito_Producto.upsert({
             where: {
-                idCarrito_idProducto: {
+                idCarrito_idVariante: {
                     idCarrito,
-                    idProducto
+                    idVariante
                 }
             },
             update: {
@@ -40,18 +45,18 @@ export class MiCarritoRepository{
             },
             create:{
                 idCarrito,
-                idProducto,
+                idVariante,
                 cantidad
             }
         })
     }
 
-    async eliminarProductoDelCarrito(idCarrito:number, idProducto:number){
+    async eliminarProductoDelCarrito(idCarrito:number, idVariante:number){
         return await prisma.mi_Carrito_Producto.delete({
             where: {
-                idCarrito_idProducto: {
+                idCarrito_idVariante: {
                     idCarrito,
-                    idProducto
+                    idVariante
                 }
             }
         })

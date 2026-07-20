@@ -17,7 +17,7 @@
     }
   </select>
 
-  <div class="two-inputs">
+  <div class="">
     <div class="labels-column">
       <label for="name">Nombre:
         @if(isInvalid('nombre')){
@@ -27,18 +27,23 @@
       <input type="text" id="name" formControlName="nombre" placeholder="Nombre del producto">
     </div>
 
-    <div class="labels-column">
-      <label for="arom">Aroma:
-        @if(isInvalid('idAroma')){
-          <span class="error">*El aroma es obligatorio</span>
-        }
-      </label>
-      <select formControlName="idAroma" id="arom">
-        <option [ngValue]="null" disabled>-- Seleccione un aroma --</option>
-        @for(aroma of aromas; track aroma.id){
-          <option [ngValue]="aroma.id">{{aroma.aroma}}</option>
-        }
-      </select>
+  </div>
+
+  <div class="labels-column">
+    <label for="arom">Aromas:
+      @if(isInvalid('idAroma')){
+        <span class="error">*El aroma es obligatorio</span>
+      }
+    </label>
+    <div class="aromas-container">
+      @for(aroma of aromas; track aroma.id){
+        <label class="label-aroma">
+          <input type="checkbox"
+                [value]="aroma.id"
+                (change)="onAromaChange($event, aroma)">
+          {{aroma.aroma}}
+        </label>
+      }
     </div>
   </div>
 

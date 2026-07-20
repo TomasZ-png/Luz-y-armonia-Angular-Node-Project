@@ -1,4 +1,4 @@
 export interface Aroma{
-  id?: number,
+  id: number,
   aroma: string
 }

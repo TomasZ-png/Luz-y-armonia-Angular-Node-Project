@@ -16,11 +16,15 @@ export class CompraRepository {
             include: {
                 Producto_Compra: {
                     include: {
-                        Producto: {
+                        VarianteProducto: {
                             include: {
-                                ImagenProducto: true,
-                                aroma: true,
-                                Tipo_de_productos: true
+                                Producto: {
+                                    include: {
+                                        ImagenProducto: true,
+                                        Aroma: true,
+                                        Tipo_de_productos: true
+                                    }
+                                }
                             }
                         }
                     }
@@ -40,7 +44,7 @@ export class CompraRepository {
             productos: compra.Producto_Compra.map(pc => ({
                 id: pc.id,
                 cantidad: pc.cantidad,
-                producto: pc.Producto
+                producto: pc.VarianteProducto
             }))
         }
     }
@@ -51,11 +55,15 @@ export class CompraRepository {
             include: {
                 Producto_Compra: {
                     include: {
-                        Producto: {
+                        VarianteProducto: {
                             include: {
-                                ImagenProducto: true,
-                                aroma: true,
-                                Tipo_de_productos: true
+                                Producto: {
+                                    include: {
+                                        ImagenProducto: true,
+                                        Aroma: true,
+                                        Tipo_de_productos: true
+                                    }
+                                }
                             }
                         }
                     }
@@ -72,14 +80,14 @@ export class CompraRepository {
             productos: compra.Producto_Compra.map(pc => ({
                 id: pc.id,
                 cantidad: pc.cantidad,
-                producto: pc.Producto
+                variante: pc.VarianteProducto
             }))
         }))
     }
 
-    async crearProductoCompra(idProducto:number, cantidad:number, idCompra:number){
+    async crearProductoCompra(idVariante:number, cantidad:number, idCompra:number){
         return await prisma.producto_Compra.create({
-            data:{idProducto, cantidad, idCompra}
+            data:{idVariante, cantidad, idCompra}
         })
     }
 
@@ -111,7 +119,11 @@ export class CompraRepository {
                 idCompra: compraId
             },
             include: {
-                Producto: true
+                VarianteProducto: {
+                    include: {
+                        Producto: true
+                    }
+                }
             }
         })
     }

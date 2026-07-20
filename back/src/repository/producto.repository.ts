@@ -14,25 +14,16 @@ export class ProductoRepository{
         })
     }
 
-    async actualizarStock(id:number, nuevoStock:number){
-        return await prisma.producto.update({
-            where: {id},
-            data: {stock: nuevoStock}
-        })
-    }
-
-    async deleteProduct(id:number){
-        return await prisma.producto.delete({
-            where: {id}
-        })
-    }
-
     async getProductById(id:number){
         return await prisma.producto.findUnique({
             where: {id},
 
             include: {
-                aroma: true,
+                VarianteProducto: {
+                    include: {
+                        Aroma: true
+                    }
+                },
                 Tipo_de_productos: true,
                 ImagenProducto: true
             }
@@ -51,10 +42,14 @@ export class ProductoRepository{
                             }
                         },
                         {
-                            aroma: {
-                                aroma: {
-                                    contains: palabra,
-                                    mode: 'insensitive'
+                            VarianteProducto: {
+                                some: {
+                                    Aroma: {
+                                        aroma: {
+                                            contains: palabra,
+                                            mode: 'insensitive'
+                                        }
+                                    }
                                 }
                             }
                         },
@@ -70,7 +65,10 @@ export class ProductoRepository{
                 }))
             },
             include: {
-                aroma: true,
+                VarianteProducto: {
+                    include: {
+                        Aroma: true
+                    }},
                 Tipo_de_productos: true,
                 ImagenProducto: true
             }
@@ -88,10 +86,14 @@ export class ProductoRepository{
                         }
                     },
                     {
-                        aroma: {
-                            aroma: {
-                                contains: valor,
-                                mode: 'insensitive'
+                        VarianteProducto: {
+                            some: {
+                                Aroma: {
+                                    aroma: {
+                                        contains: valor,
+                                        mode: 'insensitive'
+                                    }
+                                }
                             }
                         }
                     },
@@ -107,7 +109,10 @@ export class ProductoRepository{
             },
 
             include: {
-                aroma: true,
+                VarianteProducto: {
+                    include: {
+                        Aroma: true
+                    }},
                 Tipo_de_productos: true,
                 ImagenProducto: true
             }
@@ -117,7 +122,10 @@ export class ProductoRepository{
     async getAll(){
         return await prisma.producto.findMany({
             include: {
-                aroma: true,
+                VarianteProducto: {
+                    include: {
+                        Aroma: true
+                    }},
                 Tipo_de_productos: true,
                 ImagenProducto: true
             }
